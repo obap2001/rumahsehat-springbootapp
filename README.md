@@ -1,6 +1,6 @@
 # Tugas Akhir
 
-## Kelompok 78 - ANS
+# Kelompok 78 - Rumah Sehat
 
 ## Authors
 
