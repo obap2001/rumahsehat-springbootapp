@@ -48,5 +48,6 @@
 | 2006596970 | Abdul Ghani Suryo Adhipramono    | 11                           |
 | 1906299074 | Oba Pakpahan                     | 18                           |
 | 2006597393 | Pavita Maheswari Iswandaru Putri | 17                           |
+| 2006596560 | Amelia Maharani Nurmalitasari    | 5                            |
 
 ---
