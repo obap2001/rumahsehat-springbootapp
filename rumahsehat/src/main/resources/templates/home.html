@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Home</title>
+  <meta charset="UTF-8">
+  <title>Beranda</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
 <body>
-  <h2>Welcome to Rumah Sehat</h2>
+  <nav th:replace="fragments/fragment :: navbar"></nav>
+  <div class="d-flex justify-content-center">
+    <h2 th:text="'Hello '+${#httpServletRequest.remoteUser}+'!'">Login as</h2>
+  </div>
+  <h2 style="text-align: center">Welcome to Rumah Sehat</h2>
 </body>
 </html>
