@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import org.hibernate.annotations.GenericGenerator;
 
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -18,7 +17,9 @@ import java.io.Serializable;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@MappedSuperclass
+@Entity
+@Table(name = "user")
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class UserModel implements Serializable {
     @Id
     @GeneratedValue(generator = "system-uuid")
@@ -53,5 +54,11 @@ public class UserModel implements Serializable {
     @NotNull
     @Column(name = "is_sso", nullable = false)
     private Boolean isSso;
+
+    // @ManyToOne(fetch = FetchType.EAGER)
+    // @JoinColumn(name = "id_role", referencedColumnName = "id", nullable = false)
+    // @OnDelete(action = OnDeleteAction.CASCADE)
+    // @JsonIgnore
+    // private RoleModel role;
 }
 
