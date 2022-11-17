@@ -1,0 +1,45 @@
+package tk.apap.rumahsehat.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Optional;
+
+import tk.apap.rumahsehat.model.ResepModel;
+import tk.apap.rumahsehat.repository.ResepDb;
+
+@Service
+@Transactional
+public class ResepServiceImpl implements ResepService {
+
+    @Autowired
+    ResepDb resepDb;
+
+    @Override
+    public void addResep(ResepModel resep) {
+        resepDb.save(resep);
+    }
+
+    @Override
+    public List<ResepModel> getListResep() {
+        return resepDb.findall();
+    }
+
+    @Override
+    public void deleteResep(ResepModel resep) {
+        resepDb.delete(resep);
+    }
+
+    @Override
+    public ResepModel getResepById(Long id) {
+        Optional<ResepModel> resep = resepDb.findResepById(id);
+        if (resep.isPresent()) {
+            return resep.get();
+        }
+        else {
+            return null;
+        }
+    }
+}
