@@ -77,28 +77,29 @@ public class PageController {
       
       UserModel user = userService.getUserByUsername(username);
 
-        if (user == null) {
-        user = new UserModel();
-        user.setEmail(username + "@ui.ac.id");
-        user.setNama(attributes.getNama());
-        user.setPassword("rumahsehat");
-        user.setUsername(username);
-        user.setIsSso(true);
-        user.setRole("admin");
-        userService.addUser(user);
-        }
-    //   AdminModel admin = adminService.getUserByUsername(username);
+      if (user == null) {
+      user = new UserModel();
+      user.setEmail(username + "@ui.ac.id");
+      user.setNama(attributes.getNama());
+      user.setPassword("rumahsehat");
+      user.setUsername(username);
+      user.setIsSso(true);
+      user.setRole("admin");
+      userService.addUser(user);
+      }
+
+      // AdminModel admin = adminService.getUserByUsername(username);
   
-    //   if (admin == null) {
-    //     admin = new AdminModel();
-    //     admin.setEmail(username + "@ui.ac.id");
-    //     admin.setNama(attributes.getNama());
-    //     admin.setPassword("rumahsehat");
-    //     admin.setUsername(username);
-    //     admin.setIsSso(true);
-    //     admin.setRole("admin");
-    //     adminService.addAdmin(admin);
-    //   }
+      // if (admin == null) {
+      //   admin = new AdminModel();
+      //   admin.setEmail(username + "@ui.ac.id");
+      //   admin.setNama(attributes.getNama());
+      //   admin.setPassword("rumahsehat");
+      //   admin.setUsername(username);
+      //   admin.setIsSso(true);
+      //   admin.setRole("admin");
+      //   adminService.addAdmin(admin);
+      // }
   
       Authentication authentication = new UsernamePasswordAuthenticationToken(username, "rumahsehat");
       
@@ -125,4 +126,16 @@ public class PageController {
           }
           return new ModelAndView("redirect:" + Setting.SERVER_LOGOUT + Setting.CLIENT_LOGOUT);
       }
+
+    @RequestMapping("/user/viewall")
+    private String manajemenUser(Model model) {
+      Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+      User user = (User) auth.getPrincipal();
+      String username = user.getUsername();
+      UserModel userModel = userService.getUserByUsername(username);
+      if (userModel.getRole().equals("admin")) {
+        return "manajemen-user";
+      }
+        return "home";
+    }
 }
