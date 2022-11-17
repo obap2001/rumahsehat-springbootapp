@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tambah Dokter</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+    <div class="container">
+        <div class="card m-4 p-4">
+            <div class="card-body">
+                <div class="justify-content-center">
+                    <h2>Tambah Dokter Baru</h2>
+                    <br>
+                    <form th:action="@{/dokter/add}" th:object="${dokter}" method="POST">
+                    
+                        <label>Username</label>
+                        <input type="text" class="form-control" name="username">
+
+                        <label>Nama</label>
+                        <input type="text" class="form-control" name="nama">
+                        
+                        <label>E-mail</label>
+                        <input type="text" class="form-control" name="email">
+                        
+                        <label>Password</label>
+                        <input required type="password" name="password" class="form-control" pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$" title="Password harus mengandung minimal 8 karakter & angka, huruf besar, huruf kecil, dan simbol."/>
+
+                        <label>Tarif Dokter</label>
+                        <input type="text" class="form-control" name="tarif">
+
+                        <br>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <a class="btn btn-link" href="/">Home</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

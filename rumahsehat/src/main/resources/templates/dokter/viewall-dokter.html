@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Rumah Sehat</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="container">
+  <div class="card m-4 p-4">
+    <div class="card-body">
+      <div class="justify-content-center">
+        <h2>Daftar Dokter</h2>
+        <br>
+        <a th:href="@{/dokter/add}" class="btn btn-primary">Tambah Dokter</a>
+        <a class="btn btn-primary" href="/">Beranda</a>
+        <br><br>
+        <div th:if="*{listDokter.size() != 0}">
+          <table class="table">
+            <thead>
+            <tr>
+              <th style='text-align:center; vertical-align:middle'>No</th>
+              <th style='text-align:center; vertical-align:middle'>Nama</th>
+              <th style='text-align:center; vertical-align:middle'>Username</th>
+              <th style='text-align:center; vertical-align:middle'>Email</th>
+              <th style='text-align:center; vertical-align:middle'>Tarif</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="dokter, iterationStatus : ${listDokter}"
+                th:style="${iterationStatus.even} ? 'font-weight:bold;'">
+              <td th:text="${iterationStatus.count}" style='text-align:center; vertical-align:middle'></td>
+              <td th:text="${dokter.nama}" style='text-align:center; vertical-align:middle'></td>
+              <td th:text="${dokter.username}" style='text-align:center; vertical-align:middle'></td>
+              <td th:text="${dokter.email}" style='text-align:center; vertical-align:middle'></td>
+              <td th:text="${dokter.tarif}" style='text-align:center; vertical-align:middle'></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div th:unless="*{listDokter.size() != 0}">
+          <h2 th:text="'Belum terdapat user dokter yang terdaftar'"></h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
