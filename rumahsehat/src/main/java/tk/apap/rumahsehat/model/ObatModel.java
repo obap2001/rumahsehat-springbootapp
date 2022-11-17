@@ -39,7 +39,7 @@ public class  ObatModel implements Serializable {
 
   @NotNull
   @Column(name = "stok", nullable = false)
-  @Value("100") // TODO check
+  @Value("100") 
   private int stok;
 
   @OneToMany(mappedBy = "obat", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
