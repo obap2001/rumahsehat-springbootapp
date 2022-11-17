@@ -77,6 +77,94 @@ public class PageController {
       
       UserModel user = userService.getUserByUsername(username);
 
+      if (user == null) {
+      user = new UserModel();
+      user.setEmail(username + "@ui.ac.id");
+      user.setNama(attributes.getNama());
+      user.setPassword("rumahsehat");
+      user.setUsername(username);
+      user.setIsSso(true);
+      user.setRole("admin");
+      userService.addUser(user);
+      }
+
+      // AdminModel admin = adminService.getUserByUsername(username);
+  
+      // if (admin == null) {
+      //   admin = new AdminModel();
+      //   admin.setEmail(username + "@ui.ac.id");
+      //   admin.setNama(attributes.getNama());
+      //   admin.setPassword("rumahsehat");
+      //   admin.setUsername(username);
+      //   admin.setIsSso(true);
+      //   admin.setRole("admin");
+      //   adminService.addAdmin(admin);
+      // }
+  
+      Authentication authentication = new UsernamePasswordAuthenticationToken(username, "rumahsehat");
+      
+      SecurityContext securityContext = SecurityContextHolder.getContext();
+      securityContext.setAuthentication(authentication);
+  
+      HttpSession httpSession = request.getSession(true);
+      httpSession.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, securityContext);
+  
+      return new ModelAndView("redirect:/");
+    }
+  
+  
+    @GetMapping(value="/login-sso")
+    public ModelAndView loginSSO() {
+      return new ModelAndView("redirect:" + Setting.SERVER_LOGIN + Setting.CLIENT_LOGIN);
+    }
+  
+    @GetMapping(value = "/logout-sso")
+      public ModelAndView logoutSSO(Principal principal) {
+          UserModel user = userService.getUserByUsername(principal.getName());
+          if (user.getIsSso() == false){
+              return new ModelAndView("redirect:/logout");
+          }
+          return new ModelAndView("redirect:" + Setting.SERVER_LOGOUT + Setting.CLIENT_LOGOUT);
+      }
+
+    @RequestMapping("/user/viewall")
+    private String manajemenUser(Model model) {
+      Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+      User user = (User) auth.getPrincipal();
+      String username = user.getUsername();
+      UserModel userModel = userService.getUserByUsername(username);
+      if (userModel.getRole().equals("admin")) {
+        return "manajemen-user";
+      }
+        return "home";
+    }
+
+    @RequestMapping("/login")
+    private String login(Model model) {
+    //   model.addAttribute("port", serverProperties.getPort());
+      return "login";
+    }
+  
+    private WebClient webClient = WebClient.builder().build();
+  
+    @GetMapping("/validate-ticket")
+    public ModelAndView adminLoginSSO(
+        @RequestParam(value = "ticket", required = false) String ticket,
+        HttpServletRequest request
+    ) {
+      ServiceResponse serviceResponse = this.webClient.get().uri(
+        String.format(
+          Setting.SERVER_VALIDATE_TICKET,
+          ticket,
+          Setting.CLIENT_LOGIN
+        )
+      ).retrieve().bodyToMono(ServiceResponse.class).block();
+  
+      Attributes attributes = serviceResponse.getAuthenticationSuccess().getAttributes();
+      String username = serviceResponse.getAuthenticationSuccess().getUser();
+      
+      UserModel user = userService.getUserByUsername(username);
+
         if (user == null) {
         user = new UserModel();
         user.setEmail(username + "@ui.ac.id");
