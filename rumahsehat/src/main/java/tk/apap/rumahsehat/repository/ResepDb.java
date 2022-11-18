@@ -10,6 +10,6 @@ import java.util.Optional;
 @Repository
 public interface ResepDb extends JpaRepository<ResepModel, Long> {
     Optional<ResepModel> findResepById(Long id);
-    List<ResepModel> findall();
+    List<ResepModel> findAll();
     void delete(ResepModel resep);
 }
