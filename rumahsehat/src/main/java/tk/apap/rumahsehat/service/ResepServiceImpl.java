@@ -24,7 +24,7 @@ public class ResepServiceImpl implements ResepService {
 
     @Override
     public List<ResepModel> getListResep() {
-        return resepDb.findall();
+        return resepDb.findAll();
     }
 
     @Override
