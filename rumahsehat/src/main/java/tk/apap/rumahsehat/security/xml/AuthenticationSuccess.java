@@ -16,5 +16,4 @@ public class AuthenticationSuccess {
     
     @XmlElement(name = "attributes", namespace = "http://www.yale.edu/tp/cas")
     private Attributes attributes;
-
 }
