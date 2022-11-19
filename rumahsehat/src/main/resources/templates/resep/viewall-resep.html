@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rumah Sehat</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="justify-content-center">
+                <h2>Daftar Resep</h2>
+                <br>
+                <a th:href="@{/resep/add}" class="btn btn-primary">Tambah Resep</a>
+                <a class="btn btn-primary" href="/">Beranda</a>
+                <br><br>
+                <div th:if="*{listResep.size() != 0}">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th style='text-align:center; vertical-align:middle'>No</th>
+                            <th style='text-align:center; vertical-align:middle'>Tanggal Dibuat</th>
+                            <th style='text-align:center; vertical-align:middle'>Apoteker</th>
+                            <th style='text-align:center; vertical-align:middle'>Jumlah</th>
+                            <th style='text-align:center; vertical-align:middle'>Appointment</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="resep, iterationStatus : ${listResep}"
+                            th:style="${iterationStatus.even} ? 'font-weight:bold;'">
+                            <td th:text="${iterationStatus.count}" style='text-align:center; vertical-align:middle'></td>
+                            <td th:text="${resep.createdAt}" style='text-align:center; vertical-align:middle'></td>
+                            <td th:text="${resep.apoteker}" style='text-align:center; vertical-align:middle'></td>
+                            <td th:text="${resep.listJumlah}" style='text-align:center; vertical-align:middle'></td>
+                            <td th:text="${resep.appointment}" style='text-align:center; vertical-align:middle'></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div th:unless="*{listResep.size() != 0}">
+                    <h2 th:text="'Tidak ada resep yang dibuat!'"></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
