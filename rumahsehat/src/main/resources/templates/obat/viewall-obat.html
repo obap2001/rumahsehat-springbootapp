@@ -38,7 +38,7 @@
               <td th:text="${obat.stok}" style='text-align:center; vertical-align:middle'></td>
               <td>
 <!--                <a th:if="${role.equals('Apoteker')}">-->
-                <a th:href="@{/obat/ubah-stok}" class="btn btn-primary">Ubah Stock</a>
+                <a th:href="@{/obat/} + ${obat.id} + @{/ubah-stok}" class="btn btn-primary">Ubah Stock</a>
               </td>
             </tr>
             </tbody>
