@@ -1,56 +1,65 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Rumah Sehat</title>
-  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
-  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <meta charset="UTF-8">
+    <title>Rumah Sehat</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
 <body>
 <nav th:replace="fragments/fragment :: navbar"></nav>
 <div class="container">
-  <div class="card m-4 p-4">
-    <div class="card-body">
-      <div class="justify-content-center">
-        <h2>Daftar Obat</h2>
-        <br>
-        <a class="btn btn-primary" href="/">Beranda</a>
-        <br><br>
-        <div th:if="*{listObat.size() != 0}">
-          <table class="table">
-            <thead>
-            <tr>
-              <th style='text-align:center; vertical-align:middle'>No</th>
-              <th style='text-align:center; vertical-align:middle'>Id</th>
-              <th style='text-align:center; vertical-align:middle'>Nama</th>
-              <th style='text-align:center; vertical-align:middle'>Harga</th>
-              <th style='text-align:center; vertical-align:middle'>Stok</th>
-              <th style='text-align:center; vertical-align:middle'></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="obat, iterationStatus : ${listObat}"
-                th:style="${iterationStatus.even} ? 'font-weight:bold;'">
-              <td th:text="${iterationStatus.count}" style='text-align:center; vertical-align:middle'></td>
-              <td th:text="${obat.id}" style='text-align:center; vertical-align:middle'></td>
-              <td th:text="${obat.nama}" style='text-align:center; vertical-align:middle'></td>
-              <td th:text="${obat.harga}" style='text-align:center; vertical-align:middle'></td>
-              <td th:text="${obat.stok}" style='text-align:center; vertical-align:middle'></td>
-              <td>
-<!--                <a th:if="${role.equals('Apoteker')}">-->
-                <a th:href="@{/obat/ubah-stok}" class="btn btn-primary">Ubah Stock</a>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-        <div th:unless="*{listObat.size() != 0}">
-          <h2 th:text="'Belum terdapat data obat.'"></h2>
-        </div>
-      </div>
-    </div>
-  </div>
+    <h1 style="text-align: center">Data Obat</h1>
+    <div class="alert alert-primary" role="alert" th:text="${success}" th:if="${success}"></div>
+    <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
+
+    <table id="table_result" class="display" style="width:100%">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nama</th>
+            <th>Harga</th>
+            <th>Stok</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Data 1</td>
+            <td>Data 2</td>
+            <td>Data 3</td>
+            <td>Data 4</td>
+            <td>Data 5</td>
+        </tr>
+        </tbody>
+    </table>
+
 </div>
 
+
+<script th:inline="javascript">
+    $(document).ready(function () {
+        $('#table_result').DataTable({
+            "ajax": {
+                "url": "/api/data-obat",
+                "dataSrc": ''
+            },
+            "searching": true,
+            "ordering": true,
+            "columns": [
+                {"data": "id"},
+                {"data": "nama"},
+                {"data": "harga"},
+                {"data": "stok"},
+                {"data": null,
+                    "render": function(id) {
+                        return '<a class="btn btn-warning btn-sm" href=' + '/obat/'+id+'/ubah-stok' + '>' +
+                            '<i className="fa-sharp fa-solid fa-pen"></i>'+'Ubah Stok' + '</a>';
+                    }
+                },
+            ]
+        });
+    });
+</script>
 </body>
 </html>
