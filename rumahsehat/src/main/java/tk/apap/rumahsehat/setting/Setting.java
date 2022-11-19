@@ -1,4 +1,4 @@
-package tk.apap.rumahsehat.Setting;
+package tk.apap.rumahsehat.setting;
 
 public class Setting {
   final public static String CLIENT_BASE_URL = "http://localhost:8080";
