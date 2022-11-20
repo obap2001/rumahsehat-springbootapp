@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import tk.apap.rumahsehat.model.ObatModel;
 import tk.apap.rumahsehat.service.ObatService;
 import tk.apap.rumahsehat.service.UserService;
 
@@ -32,5 +32,19 @@ public class ObatController {
             return "obat/viewall-obat";
 //        }else
 //            return "redirect:/";
+    }
+
+    @GetMapping("/{id}/ubah-stok")
+    public String updateObatFormPage(@PathVariable( value = "id") String id, Model model) {
+        ObatModel obat = obatService.getObatById(id);
+        model.addAttribute("obat", obat);
+        return "obat/form-update-stok-obat";
+    }
+
+    @PostMapping("/ubah-stok")
+    public String updateObatSubmitPage(@ModelAttribute ObatModel obat, Model model) {
+        ObatModel updatedObat= obatService.updateObat(obat);
+        model.addAttribute("obat", updatedObat);
+        return "obat/update-obat";
     }
 }
