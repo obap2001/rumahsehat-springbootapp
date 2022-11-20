@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.ModelAndView;
 
-import tk.apap.rumahsehat.Setting.Setting;
+import tk.apap.rumahsehat.setting.Setting;
 import tk.apap.rumahsehat.model.AdminModel;
 import tk.apap.rumahsehat.model.UserModel;
 import tk.apap.rumahsehat.security.xml.Attributes;
