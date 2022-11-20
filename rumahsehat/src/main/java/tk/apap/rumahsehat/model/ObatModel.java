@@ -1,5 +1,6 @@
 package tk.apap.rumahsehat.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@JsonIgnoreProperties(value={"listJumlah"}, allowSetters = true)
 @Table(name = "obat")
 public class  ObatModel implements Serializable {
     @Id
