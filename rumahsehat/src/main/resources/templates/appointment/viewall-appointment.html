@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rumah Sehat</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="container">
+    <h1 style="text-align: center">List Appointment</h1>
+    <div class="alert alert-primary" role="alert" th:text="${success}" th:if="${success}"></div>
+    <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
+
+    <table id="table_result" class="display" style="width:100%">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nama</th>
+            <th>Harga</th>
+            <th>Stok</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Data 1</td>
+            <td>Data 2</td>
+            <td>Data 3</td>
+            <td>Data 4</td>
+            <td>Data 5</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+
+<script th:inline="javascript">
+    $(document).ready(function () {
+        $('#table_result').DataTable({
+            "ajax": {
+                "url": "/api/list-appointment",
+                "dataSrc": ''
+            },
+            "searching": true,
+            "ordering": true,
+            "columns": [
+                {"data": "id"},
+                {"data": "nama"},
+                {"data": "harga"},
+                {"data": "stok"},
+                {"data": null,
+                    "render": function(id) {
+                        return '<a class="btn btn-warning btn-sm" href=' + '/obat/'+id+'/ubah-stok' + '>' +
+                            '<i className="fa-sharp fa-solid fa-pen"></i>'+'Ubah Stok' + '</a>';
+                    }
+                },
+            ]
+        });
+    });
+</script>
+
+</body>
+</html>
