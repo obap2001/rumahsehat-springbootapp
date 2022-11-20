@@ -10,7 +10,7 @@ import tk.apap.rumahsehat.model.UserModel;
 
 @Repository
 public interface AppointmentDb extends JpaRepository<AppointmentModel, Long> {
-    AppointmentModel findByPatientName(String patientName);
+    //AppointmentModel findByPatientName(String patientName);
 
     List<AppointmentModel> findAll();
     //void delete(UserModel user);

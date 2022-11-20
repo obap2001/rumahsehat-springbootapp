@@ -10,7 +10,7 @@ import tk.apap.rumahsehat.repository.AppointmentDb;
 public interface AppointmentService {
     AppointmentModel addAppointment(AppointmentModel appointment);
 
-    AppointmentModel getAppointmentByPatientName(String patientName);
+    //AppointmentModel getAppointmentByPatientName(String patientName);
 
     List<AppointmentModel> getListAppointment();
 

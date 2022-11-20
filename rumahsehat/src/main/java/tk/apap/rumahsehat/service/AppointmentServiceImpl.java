@@ -22,11 +22,6 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public AppointmentModel getAppointmentByPatientName(String patientName) {
-        return appointmentDb.findByPatientName(patientName);
-    }
-
-    @Override
     public List<AppointmentModel> getListAppointment() {
         return appointmentDb.findAll();
     }
