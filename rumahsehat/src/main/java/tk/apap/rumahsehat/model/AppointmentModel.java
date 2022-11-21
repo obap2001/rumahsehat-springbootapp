@@ -38,7 +38,7 @@ public class AppointmentModel implements Serializable {
     private String kode;
 
     @NotNull
-    @Column(name = "is_done", nullable = false)
+    @Column(name = "is_done", nullable = false,  columnDefinition = "boolean default false")
     private Boolean isDone;
 
     @NotNull

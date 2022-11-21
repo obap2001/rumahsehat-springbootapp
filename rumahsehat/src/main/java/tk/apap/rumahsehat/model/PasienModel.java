@@ -8,8 +8,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-import org.springframework.beans.factory.annotation.Value;
-
 import java.util.List;
 
 @Setter
@@ -20,8 +18,7 @@ import java.util.List;
 @Table(name = "pasien")
 public class PasienModel extends UserModel {
     @NotNull
-    @Column(name="saldo", nullable=false)
-    @Value("0") 
+    @Column(name="saldo", nullable=false, columnDefinition = "int default 0")
     private int saldo;
 
     @NotNull
