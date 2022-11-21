@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -41,7 +40,6 @@ public class  ObatModel implements Serializable {
 
   @NotNull
   @Column(name = "stok", nullable = false, columnDefinition = "int default 100")
-//  @Value("${some.key:100}")
   private int stok;
 
   @OneToMany(mappedBy = "obat", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
