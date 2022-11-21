@@ -9,5 +9,4 @@ public class Setting {
   final public static String SERVER_LOGOUT = SERVER_BASE_URL + "/logout?url=";
   final public static String SERVER_VALIDATE_TICKET
     = SERVER_BASE_URL + "/serviceValidate?ticket=%s&service=%s";
-  final public static String obatUrl = "https://dbee3a3c-a0d1-49ac-81f2-4c4fdec33004.mock.pstmn.io";
 }
