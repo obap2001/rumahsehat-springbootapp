@@ -29,7 +29,7 @@ public class  ResepModel implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "is_done", nullable = false)
+    @Column(name = "is_done", nullable = false,  columnDefinition = "boolean default false")
     private Boolean isDone;
 
     @NotNull
