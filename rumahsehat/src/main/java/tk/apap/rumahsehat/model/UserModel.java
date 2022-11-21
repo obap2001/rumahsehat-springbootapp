@@ -17,9 +17,7 @@ import java.io.Serializable;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "user")
-@Inheritance(strategy = InheritanceType.JOINED)
+@MappedSuperclass
 public class UserModel implements Serializable {
     @Id
     @GeneratedValue(generator = "system-uuid")
