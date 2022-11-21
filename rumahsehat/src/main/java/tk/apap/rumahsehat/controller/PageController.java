@@ -21,12 +21,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.ModelAndView;
 
-import tk.apap.rumahsehat.Setting.Setting;
-// import tk.apap.rumahsehat.model.AdminModel;
+import tk.apap.rumahsehat.setting.Setting;
+import tk.apap.rumahsehat.model.AdminModel;
 import tk.apap.rumahsehat.model.UserModel;
 import tk.apap.rumahsehat.security.xml.Attributes;
 import tk.apap.rumahsehat.security.xml.ServiceResponse;
-// import tk.apap.rumahsehat.service.AdminService;
+import tk.apap.rumahsehat.service.AdminService;
 import tk.apap.rumahsehat.service.UserService;
 
 @Controller
@@ -34,8 +34,8 @@ public class PageController {
     @Autowired
     private UserService userService;
 
-    // @Autowired
-    // private AdminService adminService;
+    @Autowired
+    private AdminService adminService;
     
     @Autowired
     ServerProperties serverProperties;
@@ -74,32 +74,19 @@ public class PageController {
   
       Attributes attributes = serviceResponse.getAuthenticationSuccess().getAttributes();
       String username = serviceResponse.getAuthenticationSuccess().getUser();
-      
-      UserModel user = userService.getUserByUsername(username);
 
-      if (user == null) {
-      user = new UserModel();
-      user.setEmail(username + "@ui.ac.id");
-      user.setNama(attributes.getNama());
-      user.setPassword("rumahsehat");
-      user.setUsername(username);
-      user.setIsSso(true);
-      user.setRole("admin");
-      userService.addUser(user);
-      }
-
-      // AdminModel admin = adminService.getUserByUsername(username);
+      AdminModel admin = adminService.getUserByUsername(username);
   
-      // if (admin == null) {
-      //   admin = new AdminModel();
-      //   admin.setEmail(username + "@ui.ac.id");
-      //   admin.setNama(attributes.getNama());
-      //   admin.setPassword("rumahsehat");
-      //   admin.setUsername(username);
-      //   admin.setIsSso(true);
-      //   admin.setRole("admin");
-      //   adminService.addAdmin(admin);
-      // }
+      if (admin == null) {
+        admin = new AdminModel();
+        admin.setEmail(username + "@ui.ac.id");
+        admin.setNama(attributes.getNama());
+        admin.setPassword("rumahsehat");
+        admin.setUsername(username);
+        admin.setIsSso(true);
+        admin.setRole("admin");
+        adminService.addAdmin(admin);
+      }
   
       Authentication authentication = new UsernamePasswordAuthenticationToken(username, "rumahsehat");
       
