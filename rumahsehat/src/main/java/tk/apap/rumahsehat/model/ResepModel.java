@@ -42,9 +42,6 @@ public class  ResepModel implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private ApotekerModel apoteker;
 
-    @OneToMany(mappedBy="resep", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    List<JumlahModel> listJumlah;
-
     // TODO Relasi dengan Appointment
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "kode_appointment", referencedColumnName = "kode")
@@ -52,5 +49,9 @@ public class  ResepModel implements Serializable {
 
     // TODO Relasi dengan Obat
     @OneToMany(mappedBy = "resep", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<ObatModel> listObat;
+    List<ObatModel> listObat;
+
+    // TODO Relasi dengan Jumlah
+    @OneToMany(mappedBy="resep", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    List<JumlahModel> listJumlah;
 }
