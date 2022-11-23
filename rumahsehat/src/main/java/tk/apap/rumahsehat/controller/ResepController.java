@@ -19,9 +19,9 @@ public class ResepController {
     @Autowired
     private ResepService resepService;
 
-//    @Qualifier("obatServiceImpl")
-//    @Autowired
-//    private ObatService obatService;
+    @Qualifier("obatServiceImpl")
+    @Autowired
+    private ObatService obatService;
 
     @Qualifier("apotekerServiceImpl")
     @Autowired
@@ -39,14 +39,76 @@ public class ResepController {
     @Autowired
     private UserService userService;
 
-//    @GetMapping("/resep/add")
-//    public String addResepFormPage(Model model) {
-//        ResepModel resep = new ResepModel();
-//        List<ObatModel> listObat = obatService.getListObat();
-//        List<ObatModel> listObatNew = new ArrayList<>();
-//
-//
-//    }
+    @GetMapping("/resep/add")
+    public String addResepFormPage(Model model) {
+        ResepModel resep = new ResepModel();
+        List<ObatModel> listObat = obatService.getListObat();
+        List<ObatModel> listObatNew = new ArrayList<>();
+        List<JumlahModel> listJumlah = new ArrayList<>();
+
+        resep.setListObat(listObatNew);
+        resep.getListObat().add(new ObatModel());
+        resep.setListJumlah(listJumlah);
+        resep.getListJumlah().add(new JumlahModel());
+        resep.setIsDone(false);
+
+        model.addAttribute("resep", resep);
+        model.addAttribute("listObatExisting", listObat);
+
+        return "resep/form-add-resep";
+    }
+
+    @PostMapping(value = "/resep/add", params = {"addRowObat"})
+    private String addRowObatMultiple(@ModelAttribute ResepModel resep, Model model) {
+        if (resep.getListObat() == null || resep.getListObat().size() == 0) {
+            resep.setListObat(new ArrayList<>());
+        }
+
+        resep.getListObat().add(new ObatModel());
+        List<ObatModel> listObat = obatService.getListObat();
+
+        model.addAttribute("resep", resep);
+        model.addAttribute("listObatExisting", listObat);
+
+        return "resep/form-add-resep";
+    }
+
+    @PostMapping(value = "/resep/add", params = {"deleteRowObat"})
+    private String deleteRowObatMultiple(@ModelAttribute ResepModel resep, @RequestParam("deleteRowObat") Integer row, Model model) {
+        final Integer rowId = Integer.valueOf(row);
+        resep.getListObat().remove(rowId.intValue());
+
+        List<ObatModel> listObat = obatService.getListObat();
+
+        model.addAttribute("resep", resep);
+        model.addAttribute("listObatExisting", listObat);
+
+        return "resep/form-add-resep";
+    }
+
+    @PostMapping(value = "/resep/add", params = {"save"})
+    public String addResepSubmit(@ModelAttribute ResepModel resep, Model model) {
+        if (resep.getListObat() == null) {
+            resep.setListObat(new ArrayList<>());
+        }
+
+//        List<ObatModel> listObat = resep.getListObat();
+
+        resepService.addResep(resep);
+
+        model.addAttribute("idResep", resep.getId());
+
+        return "resep/add-resep";
+    }
+
+    @PostMapping("/resep/add")
+    public String addResepSubmitPage(@ModelAttribute ResepModel resep, Model model) {
+        resepService.addResep(resep);
+
+        model.addAttribute("idResep", resep.getId());
+
+        return "resep/add-resep";
+    }
 
     @GetMapping("/resep/viewall")
     public String viewAllResep(Model model) {
