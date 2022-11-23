@@ -40,7 +40,6 @@ public class AppointmentController {
         return "add-appointment";
     }
 
-
     @GetMapping(value = "/appointment/viewall")
     public String listAppointment(Model model, HttpServletRequest servreq){
         String role = userService.getUserByUsername(servreq.getRemoteUser()).getRole();
