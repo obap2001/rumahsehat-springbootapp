@@ -37,7 +37,6 @@ public class AppointmentModel implements Serializable {
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String kode;
 
-    @NotNull
     @Column(name = "is_done", nullable = false,  columnDefinition = "boolean default false")
     private Boolean isDone;
 
