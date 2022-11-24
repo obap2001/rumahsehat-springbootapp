@@ -2,6 +2,7 @@ package tk.apap.rumahsehat.service;
 
 import java.util.List;
 
+import tk.apap.rumahsehat.model.AppointmentModel;
 import tk.apap.rumahsehat.model.PasienModel;
 
 
@@ -10,5 +11,7 @@ public interface PasienService {
   public String encrypt(String password);
   PasienModel getPasienByUsername(String username);
   List<PasienModel> getListPasien();
-  // void deletePasien(PasienModel apoteker);
+
+  List<AppointmentModel> getListAppointment();
+    // void deletePasien(PasienModel apoteker);
 }

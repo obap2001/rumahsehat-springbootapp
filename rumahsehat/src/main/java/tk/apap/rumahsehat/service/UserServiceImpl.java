@@ -33,6 +33,7 @@ public class UserServiceImpl implements UserService {
     return userDb.findByUsername(username);
   }
 
+
   @Override
   public List<UserModel> getListUser() {
     return userDb.findAll();

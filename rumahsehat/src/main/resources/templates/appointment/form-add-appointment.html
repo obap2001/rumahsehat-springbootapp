@@ -18,11 +18,11 @@
                     <label>Waktu Appointment</label>
                     <input required class="form-control" type="datetime-local" th:object="${appointment}" th:field="*{waktuAwal}"/>
 
-                    <tr th:object="${dokter}">
+                    <tr>
                         <td>
                             <select name="nama" class="form-control" th:each="dokter, iterationStatus : ${listDokter}">
                                 <div>
-                                    <option th:if=="${pengajarEx.isPengajarUniversitas}" th:value="1"></option>
+                                    <option th:text="${dokter.nama} - ${dokter.tarif}"></option>
                                 </div>
                             </select>
                         </td>

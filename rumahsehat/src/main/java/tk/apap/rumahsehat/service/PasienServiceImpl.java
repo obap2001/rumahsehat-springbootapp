@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import tk.apap.rumahsehat.model.AppointmentModel;
 import tk.apap.rumahsehat.model.PasienModel;
 // import tk.apap.rumahsehat.model.UserModel;
 import tk.apap.rumahsehat.repository.PasienDb;
@@ -38,6 +39,11 @@ public class PasienServiceImpl implements PasienService {
   @Override
   public List<PasienModel> getListPasien() {
     return pasienDb.findAll();
+  }
+
+  @Override
+  public List<AppointmentModel> getListAppointment() {
+    return pasienDb.getListAppointment();
   }
 
   // @Override
