@@ -4,6 +4,7 @@ import java.util.List;
 
 import tk.apap.rumahsehat.model.AdminModel;
 import tk.apap.rumahsehat.model.AppointmentModel;
+import tk.apap.rumahsehat.model.DokterModel;
 import tk.apap.rumahsehat.repository.AppointmentDb;
 
 
@@ -14,5 +15,6 @@ public interface AppointmentService {
 
     List<AppointmentModel> getListAppointment();
 
-    //AppointmentModel getAppointmentById(String id);
+    List<AppointmentModel> getListAppointmentByDokter(DokterModel dokter);
+
 }

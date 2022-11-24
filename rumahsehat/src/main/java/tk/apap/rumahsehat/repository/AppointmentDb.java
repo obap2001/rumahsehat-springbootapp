@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import tk.apap.rumahsehat.model.AppointmentModel;
+import tk.apap.rumahsehat.model.DokterModel;
 import tk.apap.rumahsehat.model.UserModel;
 
 @Repository
@@ -17,4 +18,5 @@ public interface AppointmentDb extends JpaRepository<AppointmentModel, Long> {
 
     //Optional<AppointmentModel> findAppointmentById(String id);
     //void delete(UserModel user);
+    List<AppointmentModel> getListAppointmentModelByDokter(DokterModel dokter);
 }
