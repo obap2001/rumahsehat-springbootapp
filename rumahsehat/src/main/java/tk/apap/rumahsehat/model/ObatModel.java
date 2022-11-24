@@ -47,9 +47,9 @@ public class  ObatModel implements Serializable {
   @OneToMany(mappedBy = "obat", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   List<JumlahModel> listJumlah;
 
-  @ManyToOne(fetch = FetchType.EAGER, optional = false)
-  @JoinColumn(name = "id_resep",referencedColumnName = "id_resep")
-  @OnDelete(action = OnDeleteAction.CASCADE)
-  private ResepModel resep;
+//  @ManyToOne(fetch = FetchType.EAGER, optional = false)
+//  @JoinColumn(name = "id_resep",referencedColumnName = "id_resep")
+//  @OnDelete(action = OnDeleteAction.CASCADE)
+//  private ResepModel resep;
 
 }
