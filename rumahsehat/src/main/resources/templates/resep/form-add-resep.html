@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>RumahSehat</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="container">
+  <div class="card m-4 p-4">
+    <div class="card-body">
+      <!--            < class="justify-content-center">-->
+      <h2>Tambah Resep</h2>
+      <br>
+      <form th:action="@{/resep/add}" th:object="${resep}" method="POST">
+        <table class="table">
+          <thread>
+            <th>List Obat</th>
+            <th>
+              <button class="btn btn-primary" type="submit" name="addRowObat">Tambah Obat</button>
+            </th>
+          </thread>
+          <tbody>
+          <tr th:each="obat, iterationStatus : *{listJumlah}" >
+            <td>
+              <select name="id" th:field="*{listJumlah[__${iterationStatus.index}__].obat.id}"
+                      class="form-control">
+                <div th:each="obatExisting, iterationStatus2 : ${listObat}">
+                  <option th:value="${obatExisting.id}" th:text="${obatExisting.nama}"></option>
+                </div>
+              </select>
+            </td>
+            <td>
+              <input class="form-control" type="text" name="listJumlah" th:field="*{listJumlah[__${iterationStatus.index}__].obat.id}"/>
+            </td>
+
+            <td>
+              <button th:value="${iterationStatus.index}" class="btn btn-danger" type="submit"
+                      name="deleteRowObat">Hapus</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+        <button class="btn btn-primary" type="submit" name="save">Submit</button>
+        <a class="btn btn-primary" href="/">Home</a>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+
+</body>
+</html>
