@@ -23,7 +23,7 @@
                         <td>
                             <select name="nama" class="form-control" th:each="dokter, iterationStatus : ${listDokter}">
                                 <div>
-                                    <option th:text="${dokter.nama}"></option>
+                                    <option th:text="${dokter.nama} + '-' + ${dokter.tarif}" th:object="${appointment}" th:value="${appointment.uuid_dokter}"></option>
                                 </div>
                             </select>
                         </td>
@@ -31,13 +31,14 @@
                     <br>
 
                     <br>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary" name="save">Submit</button>
                     <a class="btn btn-link" href="/">Home</a>
                 </form>
             </div>
         </div>
     </div>
-</div><div>
+</div>
+
 </body>
 
 </html>

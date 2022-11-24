@@ -24,14 +24,14 @@ public class DokterRestController {
 
     //retrieve all
     @GetMapping("/data-dokter")
-    public ResponseEntity getDataObat() {
-        log.info("api mengambil data semua pasien");
+    public ResponseEntity getDataDokter() {
+        log.info("api mengambil data semua dokter");
         ResponseEntity responseEntity = null;
         try {
             List<DokterModel> dtoList = dokterRestService.retrieveListDokter();
             responseEntity = ResponseEntity.ok(dtoList);
         } catch (Exception e) {
-            log.error("Error mengambil data pasien!");
+            log.error("Error mengambil data dokter!");
             responseEntity = ResponseEntity.badRequest().body(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return responseEntity;

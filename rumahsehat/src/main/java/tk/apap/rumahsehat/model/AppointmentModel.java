@@ -53,7 +53,7 @@ public class AppointmentModel implements Serializable {
   
     // Relasi dengan Dokter
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "uuid_dokter", referencedColumnName = "uuid", nullable = false)
+    @JoinColumn(name = "uuid_dokter", referencedColumnName = "uuid")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private DokterModel dokter;
 

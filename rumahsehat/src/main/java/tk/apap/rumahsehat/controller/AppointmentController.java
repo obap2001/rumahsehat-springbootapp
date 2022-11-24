@@ -68,16 +68,19 @@ public class AppointmentController {
     public String addAppointmentFormPage(Model model, HttpServletRequest servreq) {
         AppointmentModel appointment = new AppointmentModel();
         List<DokterModel> listDokter = dokterService.getListDokter();
+        List<DokterModel> listDokterNew = new ArrayList<>();
 
         model.addAttribute("appointment", appointment);
         model.addAttribute("listDokter", listDokter);
+        model.addAttribute("listDokterNew", listDokterNew);
 
         return "appointment/form-add-appointment";
     }
 
     @PostMapping(value = "/appointment/add", params = {"save"})
-    public String addAppointmentSubmit(@ModelAttribute AppointmentModel appointment, @ModelAttribute DokterModel dokter, Model model, HttpServletRequest servreq) {
+    public String addAppointmentSubmit(@ModelAttribute AppointmentModel appointment, Model model, HttpServletRequest servreq) {
         //DokterModel dokter = new DokterModel();
+        List<AppointmentModel> listAppointment = new ArrayList<>();
         String role = userService.getUserByUsername(servreq.getRemoteUser()).getRole();
         UserModel userModel = userService.getUserByUsername(servreq.getRemoteUser());
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -87,7 +90,8 @@ public class AppointmentController {
         PasienModel pasien = pasienService.getPasienByUsername(username);
         appointment.setIsDone(false);
         appointment.setPasien(pasien);
-        appointment.setDokter(dokter);
+
+        listAppointment.add(appointment);
         appointmentService.addAppointment(appointment);
 
         model.addAttribute("dokter", appointment.getDokter());
