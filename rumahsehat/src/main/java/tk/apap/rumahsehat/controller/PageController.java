@@ -1,6 +1,8 @@
 package tk.apap.rumahsehat.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -53,7 +55,6 @@ public class PageController {
 
     @RequestMapping("/login")
     private String login(Model model) {
-    //   model.addAttribute("port", serverProperties.getPort());
       return "login";
     }
   
@@ -75,17 +76,30 @@ public class PageController {
       Attributes attributes = serviceResponse.getAuthenticationSuccess().getAttributes();
       String username = serviceResponse.getAuthenticationSuccess().getUser();
 
-      AdminModel admin = adminService.getUserByUsername(username);
-  
-      if (admin == null) {
-        admin = new AdminModel();
-        admin.setEmail(username + "@ui.ac.id");
-        admin.setNama(attributes.getNama());
-        admin.setPassword("rumahsehat");
-        admin.setUsername(username);
-        admin.setIsSso(true);
-        admin.setRole("admin");
-        adminService.addAdmin(admin);
+      if (isAdmin(username)) {
+        AdminModel admin = adminService.getUserByUsername(username);
+        if (admin == null) {
+          admin = new AdminModel();
+          admin.setEmail(username + "@ui.ac.id");
+          admin.setNama(attributes.getNama());
+          admin.setPassword("rumahsehat");
+          admin.setUsername(username);
+          admin.setIsSso(true);
+          admin.setRole("admin");
+          adminService.addAdmin(admin);
+        }
+      } else {
+        UserModel user = userService.getUserByUsername(username);
+        if (user == null) {
+          user = new UserModel();
+          user.setEmail(username + "@ui.ac.id");
+          user.setNama(attributes.getNama());
+          user.setPassword("rumahsehat");
+          user.setUsername(username);
+          user.setIsSso(true);
+          user.setRole("pasien");
+          userService.addUser(user);
+        }
       }
   
       Authentication authentication = new UsernamePasswordAuthenticationToken(username, "rumahsehat");
@@ -123,5 +137,19 @@ public class PageController {
               return new ModelAndView("redirect:/logout");
           }
           return new ModelAndView("redirect:" + Setting.SERVER_LOGOUT + Setting.CLIENT_LOGOUT);
+      }
+    
+      private boolean isAdmin(String username) {
+        boolean result = false;
+        List<String> whitelist = new ArrayList<>();
+        // whitelist.add("amelia.maharani02");
+        whitelist.add("oba.pakpahan");
+        for (String adminUsername : whitelist) {
+          if(username.equals(adminUsername)) {
+            result = true;
+            break;
+          }
+        }
+        return result;
       }
 }
