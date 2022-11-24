@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import tk.apap.rumahsehat.model.AppointmentModel;
+import tk.apap.rumahsehat.model.DokterModel;
 import tk.apap.rumahsehat.repository.AppointmentDb;
 
 
@@ -26,5 +27,8 @@ public class AppointmentServiceImpl implements AppointmentService {
         return appointmentDb.findAll();
     }
 
-
+    @Override
+    public List<AppointmentModel> getListAppointmentByDokter(DokterModel dokter) {
+        return appointmentDb.getListAppointmentModelByDokter(dokter);
+    }
 }

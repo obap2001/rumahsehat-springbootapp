@@ -1,5 +1,8 @@
 package tk.apap.rumahsehat.controller;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import tk.apap.rumahsehat.model.*;
 import tk.apap.rumahsehat.service.*;
 
@@ -15,6 +18,10 @@ import java.util.List;
 
 @Controller
 public class ResepController {
+
+    @Qualifier("appointmentServiceImpl")
+    @Autowired
+    private AppointmentService appointmentService;
 
     @Qualifier("resepServiceImpl")
     @Autowired
@@ -75,53 +82,38 @@ public class ResepController {
     @PostMapping(value = "/resep/add", params = {"deleteRowObat"})
     private String deleteRowObatMultiple(@ModelAttribute ResepModel resep, @RequestParam("deleteRowObat") Integer row, Model model) {
         final Integer rowId = Integer.valueOf(row);
-        resepService.getListObat().remove(rowId.intValue());
+        resep.getListJumlah().remove(rowId.intValue());
 
-        List<ObatModel> listObat = obatService.getListObat();
+        List<JumlahModel> listJumlah = resep.getListJumlah();
 
         model.addAttribute("resep", resep);
-        model.addAttribute("listObat", listObat);
+        model.addAttribute("listJumlah", listJumlah);
 
         return "resep/form-add-resep";
     }
 
     @PostMapping(value = "/resep/add", params = {"save"})
     public String addResepSubmit(@ModelAttribute ResepModel resep, Model model) {
-        if (resepService.getListObat() == null) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) auth.getPrincipal();
+        String username = user.getUsername();
+        DokterModel dokter = dokterService.getDokterByUsername(username);
+
+        if (resep.getListJumlah() == null) {
             resep.setListJumlah(new ArrayList<>());
         }
 
-//        List<ObatModel> listObat = resepService.getListObat();
-        LocalDateTime sekarang = LocalDateTime.now();
-//        ApotekerModel apoteker = new ApotekerModel();
-
         if (resep.getApoteker() == null) {
-            resep.setApoteker(new ApotekerModel());
+            resep.setApoteker(apotekerService.getListApoteker().get(0));
         }
 
-        if (resep.getAppointment() == null) {
-            AppointmentModel appointment = new AppointmentModel();
-//            appointment.setResep(resep);
-            appointment.setIsDone(false);
-            appointment.setWaktuAwal(sekarang);
-            appointment.setDokter(new DokterModel());
-            appointment.setPasien(new PasienModel());
-            appointment.setTagihan(new TagihanModel());
-            resep.setAppointment(appointment);
-        }
-        resep.setIsDone(false);
-        resep.setCreatedAt(sekarang);
-//        resep.setApoteker(apoteker);
+        List<AppointmentModel> listAppointment = appointmentService.getListAppointmentByDokter(dokter);
+        AppointmentModel appointment = listAppointment.get(listAppointment.size() - 1);
+        resep.setAppointment(appointment);
+        resep.setIsDone(appointment.getIsDone());
+        resep.setCreatedAt(appointment.getWaktuAwal());
+
         resepService.addResep(resep);
-
-//        for (int i = 0; i < apotekerService.getListApoteker().size(); i++) {
-//            if (apotekerService.getListApoteker().get(i) == apoteker) {
-//                apotekerService.getListApoteker().get(i).getListResep().add(resep);
-//            }
-//            else {
-//                apoteker.getListResep().add(resep);
-//            }
-//        }
 
         model.addAttribute("idResep", resep.getId());
 

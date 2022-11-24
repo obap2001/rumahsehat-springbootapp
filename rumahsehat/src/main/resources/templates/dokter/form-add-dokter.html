@@ -24,7 +24,7 @@
                         <input type="text" class="form-control" name="email">
                         
                         <label>Password</label>
-                        <input required type="password" name="password" class="form-control" pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$" title="Password harus mengandung minimal 8 karakter & angka, huruf besar, huruf kecil, dan simbol."/>
+                        <input required type="password" name="password" class="form-control" pattern="^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,}$" title="Password harus mengandung minimal 8 karakter & angka, huruf besar, huruf kecil, dan simbol."/>
 
                         <label>Tarif Dokter</label>
                         <input type="text" class="form-control" name="tarif">
