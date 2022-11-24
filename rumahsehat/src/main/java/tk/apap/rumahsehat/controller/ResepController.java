@@ -91,7 +91,7 @@ public class ResepController {
             resep.setListJumlah(new ArrayList<>());
         }
 
-//        List<ObatModel> listObat = resepService.getListObat();    
+//        List<ObatModel> listObat = resepService.getListObat();
         LocalDateTime sekarang = LocalDateTime.now();
 //        ApotekerModel apoteker = new ApotekerModel();
 
@@ -99,6 +99,16 @@ public class ResepController {
             resep.setApoteker(new ApotekerModel());
         }
 
+        if (resep.getAppointment() == null) {
+            AppointmentModel appointment = new AppointmentModel();
+//            appointment.setResep(resep);
+            appointment.setIsDone(false);
+            appointment.setWaktuAwal(sekarang);
+            appointment.setDokter(new DokterModel());
+            appointment.setPasien(new PasienModel());
+            appointment.setTagihan(new TagihanModel());
+            resep.setAppointment(appointment);
+        }
         resep.setIsDone(false);
         resep.setCreatedAt(sekarang);
 //        resep.setApoteker(apoteker);
