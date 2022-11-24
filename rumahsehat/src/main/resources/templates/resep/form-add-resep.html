@@ -22,17 +22,17 @@
             </th>
           </thread>
           <tbody>
-          <tr th:each="obat, iterationStatus : *{listObat}" >
+          <tr th:each="obat, iterationStatus : *{listJumlah}" >
             <td>
-              <select name="nama" th:field="*{listObat[__${iterationStatus.index}__].nama}"
+              <select name="id" th:field="*{listJumlah[__${iterationStatus.index}__].obat.id}"
                       class="form-control">
-                <div th:each="obatExisting, iterationStatus2 : ${listObatExisting}">
+                <div th:each="obatExisting, iterationStatus2 : ${listObat}">
                   <option th:value="${obatExisting.id}" th:text="${obatExisting.nama}"></option>
                 </div>
               </select>
             </td>
             <td>
-              <input class="form-control" type="text" name="listJumlah" th:field="*{listObat[__${iterationStatus.index}__].listJumlah}"/>
+              <input class="form-control" type="text" name="listJumlah" th:field="*{listJumlah[__${iterationStatus.index}__].obat.id}"/>
             </td>
 
             <td>

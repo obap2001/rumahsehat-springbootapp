@@ -37,6 +37,7 @@ public class  ResepModel implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime createdAt;
 
+    // TODO Relasi dengan Apoteker
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "confirmer_uuid", referencedColumnName = "uuid", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -47,9 +48,9 @@ public class  ResepModel implements Serializable {
     @JoinColumn(name = "kode_appointment", referencedColumnName = "kode")
     private AppointmentModel appointment;
 
-    // TODO Relasi dengan Obat
-    @OneToMany(mappedBy = "resep", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    List<ObatModel> listObat;
+//    // TODO Relasi dengan Obat
+//    @OneToMany(mappedBy = "resep", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    List<ObatModel> listObat;
 
     // TODO Relasi dengan Jumlah
     @OneToMany(mappedBy="resep", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
