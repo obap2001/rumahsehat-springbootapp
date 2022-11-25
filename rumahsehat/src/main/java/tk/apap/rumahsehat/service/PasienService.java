@@ -10,5 +10,7 @@ public interface PasienService {
   public String encrypt(String password);
   PasienModel getPasienByUsername(String username);
   List<PasienModel> getListPasien();
-  // void deletePasien(PasienModel apoteker);
+
+    //PasienModel findByUsername(String );
+    // void deletePasien(PasienModel apoteker);
 }
