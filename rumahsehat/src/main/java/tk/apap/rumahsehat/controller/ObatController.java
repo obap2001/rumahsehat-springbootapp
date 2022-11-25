@@ -31,9 +31,14 @@ public class ObatController {
 
     @GetMapping(value = "/viewall")
     public String viewAllObat(Model model, HttpServletRequest servreq){
-        String role = userService.getUserByUsername(servreq.getRemoteUser()).getRole();
+//        String role = userService.getUserByUsername(servreq.getRemoteUser()).getRole();
 //        if (role.equals("apoteker") || role.equals("admin")) {
-        model.addAttribute("role", role);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) auth.getPrincipal();
+        String username = user.getUsername();
+        UserModel userModel = userService.getUserByUsername(username);
+        model.addAttribute("isApoteker", userModel.getRole().equals("apoteker"));
+        model.addAttribute("role", userModel.getRole());
         model.addAttribute("listObat", obatService.getListObat());
         return "obat/viewall-obat";
 //        }else
