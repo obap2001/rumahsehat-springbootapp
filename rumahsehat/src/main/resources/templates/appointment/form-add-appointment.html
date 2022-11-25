@@ -20,13 +20,15 @@
                     <br>
                     <tr>
                         <label>Dokter</label>
-                        <td>
-                            <select name="nama" class="form-control" th:each="dokter, iterationStatus : ${listDokter}">
-                                <div>
-                                    <option th:text="${dokter.nama} + '-' + ${dokter.tarif}" th:object="${appointment}" th:value="${appointment.uuid_dokter}"></option>
+                        <td th:object="${appointment}">
+                            <select name="dokter" th:field="*{dokter}"
+                                    class="form-control">
+                                <div th:each="dokter1, iterationStatus : ${listDokter}">
+                                    <option th:text="${dokter1.nama} + '-' + ${dokter1.tarif}" th:value="${dokter1}"></option>
                                 </div>
                             </select>
                         </td>
+
                     </tr>
                     <br>
 
