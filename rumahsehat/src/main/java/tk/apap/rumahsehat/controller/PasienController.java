@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 // import tk.apap.rumahsehat.model.PasienModel;
 // import tk.apap.rumahsehat.model.UserModel;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import tk.apap.rumahsehat.model.PasienModel;
 import tk.apap.rumahsehat.service.PasienService;
 import tk.apap.rumahsehat.service.UserService;
 
@@ -35,23 +38,23 @@ public class PasienController {
     return "pasien/viewall-pasien";
   }
 
-  // @GetMapping("/pasien/add")
-  // public String addPasienForm(Model model){
-  //   model.addAttribute("pasien", new PasienModel());
-  //   return "pasien/form-add-pasien";
-  // }
+  @GetMapping("/pasien/add")
+   public String addPasienForm(Model model){
+     model.addAttribute("pasien", new PasienModel());
+     return "pasien/form-add-pasien";
+  }
 
-  // @PostMapping(value = "/pasien/add")
-  // public String addPasienSubmit(
-  //   @ModelAttribute PasienModel pasien,
-  //   Model model
-  // ){
-  //   pasien.setRole("pasien");
-  //   pasien.setIsSso(false);
-  //   pasienService.addPasien(pasien);
-  //   model.addAttribute("nama", pasien.getNama());
-  //   return "pasien/success-add-pasien";
-  // }
+  @PostMapping(value = "/pasien/add")
+   public String addPasienSubmit(
+     @ModelAttribute PasienModel pasien,
+     Model model
+  ){
+     pasien.setRole("pasien");
+     pasien.setIsSso(false);
+     pasienService.addPasien(pasien);
+     model.addAttribute("nama", pasien.getNama());
+     return "pasien/success-add-pasien";
+  }
 }
 
 

@@ -13,13 +13,17 @@
       <div class="d-flex justify-content-center">
         <h2 th:text="'Hello '+${#httpServletRequest.remoteUser}+'!'">Login as</h2>
       </div>
-      <h2>Selamat datang di Rumah Sehat!</h2><br>
+      <h2>Selamat datang di Rumah Sehat!</h2>
       <div class="d-flex justify-content-center">
         <a th:if="${user.getRole() == 'admin'}" th:href="@{/user/viewall}" class="mx-2 btn btn-primary">Manajemen User</a>
       </div>
       <p></p>
       <div class="d-flex justify-content-center">
         <a th:if="${user.getRole() == 'admin' || user.getRole() == 'apoteker'}" th:href="@{/obat/viewall}" class="mx-2 btn btn-primary">Data Obat</a>
+      </div>
+      <p></p>
+      <div class="d-flex justify-content-center">
+        <a th:if="${user.getRole() == 'admin' || user.getRole() == 'apoteker'}" th:href="@{/resep/viewall}" class="mx-2 btn btn-primary">List Resep</a>
       </div>
       <p></p>
       <div class="d-flex justify-content-center">

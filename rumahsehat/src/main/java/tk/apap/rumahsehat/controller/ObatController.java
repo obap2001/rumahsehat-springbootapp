@@ -32,26 +32,19 @@ public class ObatController {
     @GetMapping(value = "/viewall")
     public String viewAllObat(Model model, HttpServletRequest servreq){
         String role = userService.getUserByUsername(servreq.getRemoteUser()).getRole();
-//        if (role.equals("Apoteker") || role.equals("Admin")) {
-            model.addAttribute("role", role);
-            model.addAttribute("listObat", obatService.getListObat());
-            return "obat/viewall-obat";
+//        if (role.equals("apoteker") || role.equals("admin")) {
+        model.addAttribute("role", role);
+        model.addAttribute("listObat", obatService.getListObat());
+        return "obat/viewall-obat";
 //        }else
 //            return "redirect:/";
     }
 
     @GetMapping("/{id}/ubah-stok")
     public String updateObatFormPage(@PathVariable( value = "id") String id, Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) auth.getPrincipal();
-        String username = user.getUsername();
-        UserModel userModel = userService.getUserByUsername(username);
-        if (userModel.getRole().equals("apoteker")){
-            ObatModel obat = obatService.getObatById(id);
-            model.addAttribute("obat", obat);
-            return "obat/form-update-stok-obat";
-        }
-        return "redirect:/";
+        ObatModel obat = obatService.getObatById(id);
+        model.addAttribute("obat", obat);
+        return "obat/form-update-stok-obat";
     }
 
     @PostMapping("/ubah-stok")
