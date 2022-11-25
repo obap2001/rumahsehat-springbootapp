@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Buat Appointment</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="container">
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="justify-content-center">
+                <h2>Buat Appointment</h2>
+                <br>
+                <form th:action="@{/appointment/add}" method="POST">
+
+                    <label>Waktu Appointment</label>
+                    <input required class="form-control" type="datetime-local" th:object="${appointment}" th:field="*{waktuAwal}"/>
+
+                    <tr th:object="${dokter}">
+                        <td>
+                            <select name="nama" class="form-control" th:each="dokter, iterationStatus : ${listDokter}">
+                                <div>
+                                    <option th:if=="${pengajarEx.isPengajarUniversitas}" th:value="1"></option>
+                                </div>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <br>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <a class="btn btn-link" href="/">Home</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div><div>
+</body>
+
+</html>
