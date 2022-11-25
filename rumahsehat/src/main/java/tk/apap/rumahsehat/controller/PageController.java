@@ -142,8 +142,12 @@ public class PageController {
       private boolean isAdmin(String username) {
         boolean result = false;
         List<String> whitelist = new ArrayList<>();
+        whitelist.add("dyta.dewipuspita01");
+        whitelist.add("safira.rizki");
+        whitelist.add("pavita.maheswari");
         whitelist.add("amelia.maharani02");
         whitelist.add("oba.pakpahan");
+        whitelist.add("abdul.ghani02");
         for (String adminUsername : whitelist) {
           if(username.equals(adminUsername)) {
             result = true;
