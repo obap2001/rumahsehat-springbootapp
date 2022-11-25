@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>RumahSehat</title>
+  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+</head>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="container">
+  <div class="card m-4 p-4">
+    <div class="card-body">
+      <!--            < class="justify-content-center">-->
+      <h2>Tambah Resep</h2>
+      <br>
+      <form th:action="@{/resep/add}" th:object="${resep}" method="POST">
+        <table class="table">
+          <thread>
+            <th>List Obat</th>
+            <th>
+              <button class="btn btn-primary" type="submit" name="addRowObat">Tambah Obat</button>
+            </th>
+          </thread>
+          <tbody>
+          <tr th:each="obat, iterationStatus : *{listJumlah}" >
+            <td>
+<!--                <input type="text" id="obat.nama" onkeyup="Func()">-->
+                <select name="id" th:field="*{listJumlah[__${iterationStatus.index}__].obat.id}"
+                      class="form-control">
+                    <div th:each="obatExisting, iterationStatus2 : ${listObat}">
+    <!--                  <datalist id="obatExisting.id">-->
+                        <option th:value="${obatExisting.id}" th:text="${obatExisting.nama}"></option>
+    <!--                  </datalist>-->
+                    </div>
+                </select>
+            </td>
+            <td>
+              <input class="form-control" type="text" name="listJumlah" th:field="*{listJumlah[__${iterationStatus.index}__].obat.id}"/>
+            </td>
+
+            <td>
+              <button th:value="${iterationStatus.index}" class="btn btn-danger" type="submit"
+                      name="deleteRowObat">Hapus</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+        <button class="btn btn-primary" type="submit" name="save">Submit</button>
+        <a class="btn btn-primary" href="/">Home</a>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+    function Func() {
+        var input, filter, a;
+
+        // take user input
+        input = document.getElementById("userInput");
+
+        // convert the input to upper case letter for easy comparison
+        filter = input.value.toUpperCase();
+
+        div = document.getElementById("Dropdown");
+
+        // get all the options as a list
+        a = div.getElementsByTagName("option");
+
+        // iterate through the entire list and output relevant results if found
+        for (var i = 0; i < a.length; i++) {
+            txtValue = a[i].textContent || a[i].innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                a[i].style.display = "";
+            } else {
+                a[i].style.display = "none";
+            }
+        }
+    }
+</script>
+
+</body>
+</html>

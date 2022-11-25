@@ -9,7 +9,7 @@
 <body>
 <nav th:replace="fragments/fragment :: navbar"></nav>
 <div class="container">
-    <h1 style="text-align: center">Data Obat</h1>
+    <h1 style="text-align: center">List Appointment</h1>
     <div class="alert alert-primary" role="alert" th:text="${success}" th:if="${success}"></div>
     <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
 
@@ -25,11 +25,11 @@
         </thead>
         <tbody>
         <tr>
-            <td class="row-data">Data 1</td>
-            <td >Data 2</td>
-            <td >Data 3</td>
-            <td >Data 4</td>
-            <td >Data 5</td>
+            <td>Data 1</td>
+            <td>Data 2</td>
+            <td>Data 3</td>
+            <td>Data 4</td>
+            <td>Data 5</td>
         </tr>
         </tbody>
     </table>
@@ -39,9 +39,9 @@
 
 <script th:inline="javascript">
     $(document).ready(function () {
-        var table = $('#table_result').DataTable({
+        $('#table_result').DataTable({
             "ajax": {
-                "url": "/api/data-obat",
+                "url": "/api/list-appointment",
                 "dataSrc": ''
             },
             "searching": true,
@@ -52,19 +52,13 @@
                 {"data": "harga"},
                 {"data": "stok"},
                 {"data": null,
-                    "render": function() {
-                        return '<a id="update-button" class="btn btn-warning btn-sm">Ubah Stok</a>';
+                    "render": function(id) {
+                        return '<a class="btn btn-warning btn-sm" href=' + '/obat/'+id+'/ubah-stok' + '>' +
+                            '<i className="fa-sharp fa-solid fa-pen"></i>'+'Ubah Stok' + '</a>';
                     }
                 },
             ]
         });
-        $('#table_result').click('#update-button', function (){
-            var row = $(this).parents('tr')[0];
-            var idobat = table.row(row).data().id;
-            window.open("/obat/"+idobat+"/ubah-stok", "_self");
-            console.log(table.row(row).data().id);
-         });
-
     });
 </script>
 

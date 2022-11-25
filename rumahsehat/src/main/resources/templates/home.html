@@ -17,8 +17,21 @@
       <div class="d-flex justify-content-center">
         <a th:if="${user.getRole() == 'admin'}" th:href="@{/user/viewall}" class="mx-2 btn btn-primary">Manajemen User</a>
       </div>
+      <p></p>
       <div class="d-flex justify-content-center">
         <a th:if="${user.getRole() == 'admin' || user.getRole() == 'apoteker'}" th:href="@{/obat/viewall}" class="mx-2 btn btn-primary">Data Obat</a>
+      </div>
+      <p></p>
+      <div class="d-flex justify-content-center">
+        <a th:if="${user.getRole() == 'admin' || user.getRole() == 'apoteker'}" th:href="@{/resep/viewall}" class="mx-2 btn btn-primary">List Resep</a>
+      </div>
+      <p></p>
+      <div class="d-flex justify-content-center">
+        <a th:if="${user.getRole() == 'admin' || user.getRole() == 'dokter'}" th:href="@{/appointment/viewall}" class="mx-2 btn btn-primary">List Appointment</a>
+      </div>
+      <p></p>
+      <div class="d-flex justify-content-center">
+        <a th:if="${user.getRole() == 'admin' || user.getRole() == 'pasien'}" th:href="@{/appointment/add}" class="mx-2 btn btn-primary">Buat Appointment</a>
       </div>
     </div>
   </div>
