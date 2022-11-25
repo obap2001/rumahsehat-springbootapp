@@ -20,24 +20,34 @@
                     <br>
                     <tr>
                         <label>Dokter</label>
+<<<<<<< HEAD
                         <td>
                             <select name="nama" class="form-control" th:each="dokter, iterationStatus : ${listDokter}">
                                 <div>
                                     <option th:text="${dokter.nama}"></option>
+=======
+                        <td th:object="${appointment}">
+                            <select name="dokter" th:field="*{dokter}"
+                                    class="form-control">
+                                <div th:each="dokter1, iterationStatus : ${listDokter}">
+                                    <option th:text="${dokter1.nama} + '-' + ${dokter1.tarif}" th:value="${dokter1}"></option>
+>>>>>>> 8f9b7e24aa61d31d083719ace71cd107ad84907b
                                 </div>
                             </select>
                         </td>
+
                     </tr>
                     <br>
 
                     <br>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary" name="save">Submit</button>
                     <a class="btn btn-link" href="/">Home</a>
                 </form>
             </div>
         </div>
     </div>
-</div><div>
+</div>
+
 </body>
 
 </html>

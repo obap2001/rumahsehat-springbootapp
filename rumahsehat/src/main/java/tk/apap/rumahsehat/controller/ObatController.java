@@ -47,9 +47,16 @@ public class ObatController {
 
     @GetMapping("/{id}/ubah-stok")
     public String updateObatFormPage(@PathVariable( value = "id") String id, Model model) {
-        ObatModel obat = obatService.getObatById(id);
-        model.addAttribute("obat", obat);
-        return "obat/form-update-stok-obat";
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) auth.getPrincipal();
+        String username = user.getUsername();
+        UserModel userModel = userService.getUserByUsername(username);
+        if (userModel.getRole().equals("apoteker")){
+            ObatModel obat = obatService.getObatById(id);
+            model.addAttribute("obat", obat);
+            return "obat/form-update-stok-obat";
+        }
+        return "redirect:/";
     }
 
     @PostMapping("/ubah-stok")
