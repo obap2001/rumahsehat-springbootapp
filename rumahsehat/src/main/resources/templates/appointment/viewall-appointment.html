@@ -16,10 +16,10 @@
     <table id="table_result" class="display" style="width:100%">
         <thead>
         <tr>
-            <th>Id</th>
-            <th>Nama</th>
-            <th>Harga</th>
-            <th>Stok</th>
+            <th>Nama Dokter</th>
+            <th>Nama Pasien</th>
+            <th>Waktu</th>
+            <th>Tarif</th>
             <th></th>
         </tr>
         </thead>
@@ -47,14 +47,13 @@
             "searching": true,
             "ordering": true,
             "columns": [
-                {"data": "id"},
-                {"data": "nama"},
-                {"data": "harga"},
-                {"data": "stok"},
+                {"data": "dokter.nama"},
+                {"data": "pasien.nama"},
+                {"data": "waktuAwal"},
+                {"data": "tarif"},
                 {"data": null,
-                    "render": function(id) {
-                        return '<a class="btn btn-warning btn-sm" href=' + '/obat/'+id+'/ubah-stok' + '>' +
-                            '<i className="fa-sharp fa-solid fa-pen"></i>'+'Ubah Stok' + '</a>';
+                    "render": function() {
+                        return '<a id="update-button" class="btn btn-warning btn-sm">Detail Appointment</a>';
                     }
                 },
             ]

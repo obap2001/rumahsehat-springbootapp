@@ -37,7 +37,6 @@ public class AppointmentModel implements Serializable {
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String kode;
 
-    @NotNull
     @Column(name = "is_done", nullable = false,  columnDefinition = "boolean default false")
     private Boolean isDone;
 
@@ -53,8 +52,8 @@ public class AppointmentModel implements Serializable {
     private PasienModel pasien;
   
     // Relasi dengan Dokter
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "uuid_dokter", referencedColumnName = "uuid", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "uuid_dokter", referencedColumnName = "uuid")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private DokterModel dokter;
 

@@ -14,28 +14,31 @@
                 <h2>Buat Appointment</h2>
                 <br>
                 <form th:action="@{/appointment/add}" method="POST">
-
                     <label>Waktu Appointment</label>
                     <input required class="form-control" type="datetime-local" th:object="${appointment}" th:field="*{waktuAwal}"/>
+                    <br>
+                    <tr>
+                        <label>Dokter</label>
+                        <td th:object="${appointment}">
+                            <select name="dokter" th:field="*{dokter}"
+                                    class="form-control">
+                                <div th:each="dokter1, iterationStatus : ${listDokter}">
+                                    <option th:text="${dokter1.nama} + '-' + ${dokter1.tarif}" th:value="${dokter1}"></option>
 
-                    <tr th:object="${dokter}">
-                        <td>
-                            <select name="nama" class="form-control" th:each="dokter, iterationStatus : ${listDokter}">
-                                <div>
-                                    <option th:if=="${pengajarEx.isPengajarUniversitas}" th:value="1"></option>
                                 </div>
                             </select>
                         </td>
                     </tr>
-
                     <br>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <br>
+                    <button type="submit" class="btn btn-primary" name="save">Submit</button>
                     <a class="btn btn-link" href="/">Home</a>
                 </form>
             </div>
         </div>
     </div>
-</div><div>
+</div>
+
 </body>
 
 </html>
