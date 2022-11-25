@@ -18,18 +18,18 @@ public class WebSecurityConfig {
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
-      .authorizeRequests()
-      .antMatchers("/css/**").permitAll()
-      .antMatchers("/js/**").permitAll()
-      .antMatchers("/login-sso", "/validate-ticket").permitAll()
-      .antMatchers("/obat/{id}/ubah-stok").hasAuthority("apoteker")
-      .anyRequest().authenticated()
-      .and()
-      .formLogin()
-      .loginPage("/login").permitAll()
-      .and()
-      .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-      .logoutSuccessUrl("/login").permitAll();
+            .authorizeRequests()
+            .antMatchers("/css/**").permitAll()
+            .antMatchers("/js/**").permitAll()
+            .antMatchers("/login-sso", "/validate-ticket").permitAll()
+            .antMatchers("/obat/{id}/ubah-stok").hasAuthority("apoteker")
+            .anyRequest().authenticated()
+            .and()
+            .formLogin()
+            .loginPage("/login").permitAll()
+            .and()
+            .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+            .logoutSuccessUrl("/login").permitAll();
     return http.build();
   }
 
