@@ -43,7 +43,7 @@
 
 | NPM        | Nama Lengkap                     | Fitur yang akan diselesaikan |
 | ---------- | -------------------------------- | ---------------------------- |
-| 1806191521 | Safira Rizki Anartya             | 19                           |
+| 1806191521 | Safira Rizki Anartya             | 21                           |
 | 2006533925 | Dyta Dewipuspita                 | 8                            |
 | 2006596970 | Abdul Ghani Suryo Adhipramono    | 11                           |
 | 1906299074 | Oba Pakpahan                     | 18                           |
