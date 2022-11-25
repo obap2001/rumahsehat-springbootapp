@@ -48,6 +48,10 @@ public class ResepController {
     @Autowired
     private UserService userService;
 
+    @Qualifier("pasienServiceImpl")
+    @Autowired
+    private PasienService pasienService;
+
 
     @GetMapping("/resep/add")
     public String addResepFormPage(Model model) {
@@ -98,21 +102,35 @@ public class ResepController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) auth.getPrincipal();
         String username = user.getUsername();
-        DokterModel dokter = dokterService.getDokterByUsername(username);
+//        DokterModel dokter = dokterService.getDokterByUsername(username);
+        PasienModel pasien = pasienService.getPasienByUsername(username);
+
+        List<AppointmentModel> listAppointment = pasien.getListAppointment();
+        AppointmentModel appointment = listAppointment.get(listAppointment.size() - 1);
+        resep.setAppointment(appointment);
+        resep.setIsDone(appointment.getIsDone());
+        resep.setCreatedAt(appointment.getWaktuAwal());
 
         if (resep.getListJumlah() == null) {
             resep.setListJumlah(new ArrayList<>());
         }
 
-        if (resep.getApoteker() == null) {
-            resep.setApoteker(apotekerService.getListApoteker().get(0));
-        }
+//        if (resep.getApoteker() == null) {
+//            resep.setApoteker(apotekerService.getListApoteker().get(0));
+//        }
 
-        List<AppointmentModel> listAppointment = appointmentService.getListAppointmentByDokter(dokter);
-        AppointmentModel appointment = listAppointment.get(listAppointment.size() - 1);
-        resep.setAppointment(appointment);
-        resep.setIsDone(appointment.getIsDone());
-        resep.setCreatedAt(appointment.getWaktuAwal());
+//        List<AppointmentModel> listAppointment = appointmentService.getListAppointmentByDokter(dokter);
+//        AppointmentModel appointment = listAppointment.get(listAppointment.size() - 1);
+//        resep.setAppointment(appointment);
+//        resep.setIsDone(appointment.getIsDone());
+//        resep.setCreatedAt(appointment.getWaktuAwal());
+
+        long idTemp = resepService.getListResep().size();
+        resep.setId(idTemp);
+        resep.setIsDone(false);
+        resep.setCreatedAt(LocalDateTime.now());
+        resep.setApoteker(null);
+        resep.setAppointment(null);
 
         resepService.addResep(resep);
 
