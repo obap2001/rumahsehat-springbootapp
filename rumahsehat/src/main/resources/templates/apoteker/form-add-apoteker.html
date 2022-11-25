@@ -13,16 +13,16 @@
                     <h2>Tambah Apoteker Baru</h2>
                     <br>
                     <form th:action="@{/apoteker/add}" th:object="${apoteker}" method="POST">
-                    
+
                         <label>Username</label>
                         <input type="text" class="form-control" name="username">
 
                         <label>Nama</label>
                         <input type="text" class="form-control" name="nama">
-                        
+
                         <label>E-mail</label>
                         <input type="text" class="form-control" name="email">
-                        
+
                         <label>Password</label>
                         <input required type="password" name="password" class="form-control" pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$" title="Password harus mengandung minimal 8 karakter & angka, huruf besar, huruf kecil, dan simbol."/>
 

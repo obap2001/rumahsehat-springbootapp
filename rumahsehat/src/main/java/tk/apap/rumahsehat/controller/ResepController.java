@@ -1,5 +1,8 @@
 package tk.apap.rumahsehat.controller;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import tk.apap.rumahsehat.model.*;
 import tk.apap.rumahsehat.service.*;
 
@@ -9,19 +12,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Controller
 public class ResepController {
+
+    @Qualifier("appointmentServiceImpl")
+    @Autowired
+    private AppointmentService appointmentService;
 
     @Qualifier("resepServiceImpl")
     @Autowired
     private ResepService resepService;
 
-//    @Qualifier("obatServiceImpl")
-//    @Autowired
-//    private ObatService obatService;
+    @Qualifier("obatServiceImpl")
+    @Autowired
+    private ObatService obatService;
 
     @Qualifier("apotekerServiceImpl")
     @Autowired
@@ -39,14 +48,87 @@ public class ResepController {
     @Autowired
     private UserService userService;
 
-//    @GetMapping("/resep/add")
-//    public String addResepFormPage(Model model) {
-//        ResepModel resep = new ResepModel();
-//        List<ObatModel> listObat = obatService.getListObat();
-//        List<ObatModel> listObatNew = new ArrayList<>();
-//
-//
-//    }
+
+    @GetMapping("/resep/add")
+    public String addResepFormPage(Model model) {
+        ResepModel resep = new ResepModel();
+        List<ObatModel> listObat = resepService.getListObat();
+        List<JumlahModel> listJumlah = new ArrayList<>();
+
+        resep.setListJumlah(listJumlah);
+        resep.getListJumlah().add(new JumlahModel());
+//        apoteker.getListResep().add(resep);
+
+        model.addAttribute("resep", resep);
+        model.addAttribute("listObat", listObat);
+
+        return "resep/form-add-resep";
+    }
+
+    @PostMapping(value = "/resep/add", params = {"addRowObat"})
+    private String addRowObatMultiple(@ModelAttribute ResepModel resep, Model model) {
+        if (resepService.getListObat() == null || resepService.getListObat().size() == 0) {
+            resep.setListJumlah(new ArrayList<>());
+        }
+
+        resep.getListJumlah().add(new JumlahModel());
+        List<ObatModel> listObat = obatService.getListObat();
+
+        model.addAttribute("resep", resep);
+        model.addAttribute("listObat", listObat);
+
+        return "resep/form-add-resep";
+    }
+
+    @PostMapping(value = "/resep/add", params = {"deleteRowObat"})
+    private String deleteRowObatMultiple(@ModelAttribute ResepModel resep, @RequestParam("deleteRowObat") Integer row, Model model) {
+        final Integer rowId = Integer.valueOf(row);
+        resep.getListJumlah().remove(rowId.intValue());
+
+        List<JumlahModel> listJumlah = resep.getListJumlah();
+
+        model.addAttribute("resep", resep);
+        model.addAttribute("listJumlah", listJumlah);
+
+        return "resep/form-add-resep";
+    }
+
+    @PostMapping(value = "/resep/add", params = {"save"})
+    public String addResepSubmit(@ModelAttribute ResepModel resep, Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) auth.getPrincipal();
+        String username = user.getUsername();
+        DokterModel dokter = dokterService.getDokterByUsername(username);
+
+        if (resep.getListJumlah() == null) {
+            resep.setListJumlah(new ArrayList<>());
+        }
+
+        if (resep.getApoteker() == null) {
+            resep.setApoteker(apotekerService.getListApoteker().get(0));
+        }
+
+        List<AppointmentModel> listAppointment = appointmentService.getListAppointmentByDokter(dokter);
+        AppointmentModel appointment = listAppointment.get(listAppointment.size() - 1);
+        resep.setAppointment(appointment);
+        resep.setIsDone(appointment.getIsDone());
+        resep.setCreatedAt(appointment.getWaktuAwal());
+
+        resepService.addResep(resep);
+
+        model.addAttribute("idResep", resep.getId());
+
+        return "resep/add-resep";
+    }
+
+    @PostMapping("/resep/add")
+    public String addResepSubmitPage(@ModelAttribute ResepModel resep, Model model) {
+        resepService.addResep(resep);
+
+        model.addAttribute("idResep", resep.getId());
+
+        return "resep/add-resep";
+    }
 
     @GetMapping("/resep/viewall")
     public String viewAllResep(Model model) {

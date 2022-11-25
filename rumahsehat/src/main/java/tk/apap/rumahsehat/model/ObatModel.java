@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -44,5 +46,10 @@ public class  ObatModel implements Serializable {
 
   @OneToMany(mappedBy = "obat", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   List<JumlahModel> listJumlah;
+
+//  @ManyToOne(fetch = FetchType.EAGER, optional = false)
+//  @JoinColumn(name = "id_resep",referencedColumnName = "id_resep")
+//  @OnDelete(action = OnDeleteAction.CASCADE)
+//  private ResepModel resep;
 
 }
