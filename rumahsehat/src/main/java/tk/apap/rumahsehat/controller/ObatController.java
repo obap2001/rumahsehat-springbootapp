@@ -33,9 +33,9 @@ public class ObatController {
     public String viewAllObat(Model model, HttpServletRequest servreq){
         String role = userService.getUserByUsername(servreq.getRemoteUser()).getRole();
 //        if (role.equals("apoteker") || role.equals("admin")) {
-            model.addAttribute("role", role);
-            model.addAttribute("listObat", obatService.getListObat());
-            return "obat/viewall-obat";
+        model.addAttribute("role", role);
+        model.addAttribute("listObat", obatService.getListObat());
+        return "obat/viewall-obat";
 //        }else
 //            return "redirect:/";
     }

@@ -52,8 +52,8 @@ public class AppointmentModel implements Serializable {
     private PasienModel pasien;
   
     // Relasi dengan Dokter
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "uuid_dokter", referencedColumnName = "uuid", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "uuid_dokter", referencedColumnName = "uuid")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private DokterModel dokter;
 

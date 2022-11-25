@@ -3,6 +3,7 @@ package tk.apap.rumahsehat.controller;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.validation.BindingResult;
 import tk.apap.rumahsehat.model.*;
 import tk.apap.rumahsehat.service.*;
 
@@ -33,6 +34,7 @@ import org.springframework.boot.autoconfigure.web.ServerProperties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.security.Principal;
 
 
@@ -68,16 +70,21 @@ public class AppointmentController {
     public String addAppointmentFormPage(Model model, HttpServletRequest servreq) {
         AppointmentModel appointment = new AppointmentModel();
         List<DokterModel> listDokter = dokterService.getListDokter();
+        List<DokterModel> listDokterNew = new ArrayList<>();
+        List<UserModel> listUser = userService.getListUser();
 
         model.addAttribute("appointment", appointment);
         model.addAttribute("listDokter", listDokter);
+        model.addAttribute("listUser", listUser);
+        model.addAttribute("Dokter", appointment.getDokter());
 
         return "appointment/form-add-appointment";
     }
 
     @PostMapping(value = "/appointment/add", params = {"save"})
-    public String addAppointmentSubmit(@ModelAttribute AppointmentModel appointment, @ModelAttribute DokterModel dokter, Model model, HttpServletRequest servreq) {
+    public String addAppointmentSubmit(@ModelAttribute AppointmentModel appointment, Model model, HttpServletRequest servreq) {
         //DokterModel dokter = new DokterModel();
+        List<AppointmentModel> listAppointment = new ArrayList<>();
         String role = userService.getUserByUsername(servreq.getRemoteUser()).getRole();
         UserModel userModel = userService.getUserByUsername(servreq.getRemoteUser());
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -87,10 +94,10 @@ public class AppointmentController {
         PasienModel pasien = pasienService.getPasienByUsername(username);
         appointment.setIsDone(false);
         appointment.setPasien(pasien);
-        appointment.setDokter(dokter);
+
+        listAppointment.add(appointment);
         appointmentService.addAppointment(appointment);
 
-        model.addAttribute("dokter", appointment.getDokter());
 
         return "appointment/add-appointment";
     }

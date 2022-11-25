@@ -23,7 +23,7 @@ public class PasienRestController {
 
     //retrieve all
     @GetMapping("/data-pasien")
-    public ResponseEntity getDataObat() {
+    public ResponseEntity getDataPasien() {
         log.info("api mengambil data semua pasien");
         ResponseEntity responseEntity = null;
         try {
