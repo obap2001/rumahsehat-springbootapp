@@ -14,6 +14,9 @@
                 <h2>Buat Appointment</h2>
                 <br>
                 <form th:action="@{/appointment/add}" method="POST">
+                    <label>Nama Pasien</label>
+                    <input required class="form-control" name="pasien" type="hidden" th:object="${appointment}" th:field="*{pasien}" th:value="${User.getUuid()}"/>
+                    <br>
                     <label>Waktu Appointment</label>
                     <input required class="form-control" type="datetime-local" th:object="${appointment}" th:field="*{waktuAwal}"/>
                     <br>
@@ -23,7 +26,7 @@
                             <select name="dokter" th:field="*{dokter}"
                                     class="form-control">
                                 <div th:each="dokter1, iterationStatus : ${listDokter}">
-                                    <option th:text="${dokter1.nama} + '-' + ${dokter1.tarif}" th:value="${dokter1}"></option>
+                                    <option th:text="${dokter1.nama} + '-' + ${dokter1.tarif}" th:value="${dokter1.getUuid()}"></option>
 
                                 </div>
                             </select>

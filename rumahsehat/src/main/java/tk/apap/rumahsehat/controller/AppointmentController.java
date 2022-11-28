@@ -68,14 +68,21 @@ public class AppointmentController {
 
     @GetMapping("/appointment/add")
     public String addAppointmentFormPage(Model model, HttpServletRequest servreq) {
+        String role = userService.getUserByUsername(servreq.getRemoteUser()).getRole();
+        UserModel userModel = userService.getUserByUsername(servreq.getRemoteUser());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) auth.getPrincipal();
+        String username = user.getUsername();
+
         AppointmentModel appointment = new AppointmentModel();
         List<DokterModel> listDokter = dokterService.getListDokter();
         List<DokterModel> listDokterNew = new ArrayList<>();
         List<UserModel> listUser = userService.getListUser();
 
+        //appointment.setPasien(userModel);
         model.addAttribute("appointment", appointment);
         model.addAttribute("listDokter", listDokter);
-        model.addAttribute("listUser", listUser);
+        model.addAttribute("User", userModel);
         model.addAttribute("Dokter", appointment.getDokter());
 
         return "appointment/form-add-appointment";
@@ -84,7 +91,6 @@ public class AppointmentController {
     @PostMapping(value = "/appointment/add", params = {"save"})
     public String addAppointmentSubmit(@ModelAttribute AppointmentModel appointment, Model model, HttpServletRequest servreq) {
         //DokterModel dokter = new DokterModel();
-        List<AppointmentModel> listAppointment = new ArrayList<>();
         String role = userService.getUserByUsername(servreq.getRemoteUser()).getRole();
         UserModel userModel = userService.getUserByUsername(servreq.getRemoteUser());
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -95,7 +101,11 @@ public class AppointmentController {
         appointment.setIsDone(false);
         appointment.setPasien(pasien);
 
+        List<AppointmentModel> listAppointment = appointmentService.getListAppointment();
         listAppointment.add(appointment);
+
+        List<AppointmentModel> listAppointmentDokter = dokterService.getListAppointment();
+
         appointmentService.addAppointment(appointment);
 
 
