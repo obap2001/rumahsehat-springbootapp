@@ -19,13 +19,13 @@ public class PasienRestServiceImpl implements PasienRestService{
     public List<PasienModel> retrieveListPasien(){
         return pasienDb.findAll();
     }
-    @Override
-    public PasienModel updateSaldo(Long id, int nominal){
-        Optional<PasienModel> pasien = pasienDb.findById(id);
-        if (pasien.isPresent()){
-            PasienModel pasienUpdt = pasien.get();
-            pasienUpdt.setSaldo(pasienUpdt.getSaldo()+nominal);
-            return pasienUpdt;
-        }else return null;
-    }
+//    @Override
+//    public PasienModel updateSaldo(Long id, int nominal){
+//        //Optional<PasienModel> pasien = pasienDb.findById(id);
+//        if (pasien.isPresent()){
+//            PasienModel pasienUpdt = pasien.get();
+//            pasienUpdt.setSaldo(pasienUpdt.getSaldo()+nominal);
+//            return pasienUpdt;
+//        }else return null;
+//    }
 }

@@ -36,6 +36,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.Optional;
 
 
 @Controller
@@ -68,14 +69,21 @@ public class AppointmentController {
 
     @GetMapping("/appointment/add")
     public String addAppointmentFormPage(Model model, HttpServletRequest servreq) {
+        String role = userService.getUserByUsername(servreq.getRemoteUser()).getRole();
+        UserModel userModel = userService.getUserByUsername(servreq.getRemoteUser());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) auth.getPrincipal();
+        String username = user.getUsername();
+
         AppointmentModel appointment = new AppointmentModel();
         List<DokterModel> listDokter = dokterService.getListDokter();
         List<DokterModel> listDokterNew = new ArrayList<>();
         List<UserModel> listUser = userService.getListUser();
 
+        //appointment.setPasien(userModel);
         model.addAttribute("appointment", appointment);
         model.addAttribute("listDokter", listDokter);
-        model.addAttribute("listUser", listUser);
+        model.addAttribute("User", userModel);
         model.addAttribute("Dokter", appointment.getDokter());
 
         return "appointment/form-add-appointment";
@@ -84,7 +92,6 @@ public class AppointmentController {
     @PostMapping(value = "/appointment/add", params = {"save"})
     public String addAppointmentSubmit(@ModelAttribute AppointmentModel appointment, Model model, HttpServletRequest servreq) {
         //DokterModel dokter = new DokterModel();
-        List<AppointmentModel> listAppointment = new ArrayList<>();
         String role = userService.getUserByUsername(servreq.getRemoteUser()).getRole();
         UserModel userModel = userService.getUserByUsername(servreq.getRemoteUser());
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -95,7 +102,11 @@ public class AppointmentController {
         appointment.setIsDone(false);
         appointment.setPasien(pasien);
 
+        List<AppointmentModel> listAppointment = appointmentService.getListAppointment();
         listAppointment.add(appointment);
+
+        //List<AppointmentModel> listAppointmentDokter = dokterService.getListAppointment();
+
         appointmentService.addAppointment(appointment);
 
 
@@ -110,12 +121,38 @@ public class AppointmentController {
     }
 
     @GetMapping("/appointment/viewall")
-    public String viewAllAppointment(Model model) {
+    public String viewAllAppointment(Model model,HttpServletRequest servreq) {
+        String role = userService.getUserByUsername(servreq.getRemoteUser()).getRole();
+        UserModel userModel = userService.getUserByUsername(servreq.getRemoteUser());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) auth.getPrincipal();
+        String username = user.getUsername();
+
+        List<DokterModel> listDokter = dokterService.getListDokter();
+
+        if(role.equals("dokter")){
+            DokterModel dokter = dokterService.getDokterByUsername(servreq.getRemoteUser());
+            List<AppointmentModel> listAppointmentDokter = dokter.getListAppointment();
+            model.addAttribute("listAppointmentDokter", listAppointmentDokter);
+        } else if (role.equals("pasien")){
+            PasienModel pasien = pasienService.getPasienByUsername(servreq.getRemoteUser());
+            List<AppointmentModel> listAppointmentPasien = pasien.getListAppointment();
+            model.addAttribute("listAppointmentPasien", listAppointmentPasien);
+        }
+
+        model.addAttribute("role", role);
         model.addAttribute("listAppointment", appointmentService.getListAppointment());
+        model.addAttribute("listDokter", listDokter);
 
         return "appointment/viewall-appointment";
     }
 
+    @GetMapping("/appointment/details/{kode}")
+    public String viewDetailAppointment(@PathVariable String kode, Model model) {
+        AppointmentModel appointment = appointmentService.getAppointmentById(kode);
+        model.addAttribute("appointment", appointment);
+        return "appointment/appointment-details";
+    }
 
 
 }

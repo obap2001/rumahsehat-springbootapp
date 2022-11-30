@@ -1,11 +1,10 @@
 package tk.apap.rumahsehat.service;
 
 import java.util.List;
+import java.util.Optional;
 
-import tk.apap.rumahsehat.model.AdminModel;
 import tk.apap.rumahsehat.model.AppointmentModel;
 import tk.apap.rumahsehat.model.DokterModel;
-import tk.apap.rumahsehat.repository.AppointmentDb;
 
 
 public interface AppointmentService {
@@ -17,4 +16,5 @@ public interface AppointmentService {
 
     List<AppointmentModel> getListAppointmentByDokter(DokterModel dokter);
 
+    AppointmentModel getAppointmentById(String kode);
 }
