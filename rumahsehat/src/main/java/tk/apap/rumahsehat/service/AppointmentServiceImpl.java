@@ -33,4 +33,9 @@ public class AppointmentServiceImpl implements AppointmentService {
     public List<AppointmentModel> getListAppointmentByDokter(DokterModel dokter) {
         return appointmentDb.getListAppointmentModelByDokter(dokter);
     }
+
+    @Override
+    public AppointmentModel getAppointmentByKode(String kode) {
+        return appointmentDb.getAppointmentModelByKode(kode);
+    }
 }
