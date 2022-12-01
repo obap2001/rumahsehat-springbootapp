@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import tk.apap.rumahsehat.model.AppointmentModel;
 import tk.apap.rumahsehat.model.DokterModel;
+import tk.apap.rumahsehat.model.ResepModel;
 import tk.apap.rumahsehat.repository.AppointmentDb;
 
 
