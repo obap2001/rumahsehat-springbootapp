@@ -8,33 +8,35 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import tk.apap.rumahsehat.model.DokterModel;
-import tk.apap.rumahsehat.model.PasienModel;
-import tk.apap.rumahsehat.service.DokterRestService;
+import tk.apap.rumahsehat.model.AppointmentModel;
+import tk.apap.rumahsehat.service.AppointmentRestService;
 
 import java.util.List;
 
 @Slf4j
-@RestController
 @CrossOrigin(origins = "*")
+@RestController
 @RequestMapping("/api")
-public class DokterRestController {
+public class AppointmentRestController {
     @Autowired
-    private DokterRestService dokterRestService;
+    private AppointmentRestService appointmentRestService;
 
     //retrieve all
-    @GetMapping("/data-dokter")
-    public ResponseEntity getDataDokter() {
-        log.info("api mengambil data semua dokter");
+    @GetMapping("/list-appointment")
+    public ResponseEntity getDataAppointment() {
+        log.info("api mengambil data semua appointment");
         ResponseEntity responseEntity = null;
         try {
-            List<DokterModel> dtoList = dokterRestService.retrieveListDokter();
+            List<AppointmentModel> dtoList = appointmentRestService.retrieveListAppointment();
             responseEntity = ResponseEntity.ok(dtoList);
         } catch (Exception e) {
-            log.error("Error mengambil data dokter!");
+            log.error("Error mengambil data appointment!");
             responseEntity = ResponseEntity.badRequest().body(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return responseEntity;
     }
+    @GetMapping("/listappointment")
+    private List<AppointmentModel> retrieveListAppointment(){
+        return appointmentRestService.retrieveListAppointment();
+    }
 }
-

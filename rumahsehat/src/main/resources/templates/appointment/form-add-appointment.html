@@ -13,23 +13,37 @@
             <div class="justify-content-center">
                 <h2>Buat Appointment</h2>
                 <br>
+<<<<<<< HEAD
                 <form th:action="@{/appointment/add}" th:object="${appointment}" method="POST">
 
+=======
+                <form th:action="@{/appointment/add}" method="POST">
+                    <input required class="form-control" name="pasien" type="hidden" th:object="${appointment}" th:field="*{pasien}" th:value="${User.getUuid()}"/>
+                    <br>
+>>>>>>> 98426af9a6921879ba4d691cddb8915e342331bb
                     <label>Waktu Appointment</label>
                     <input required class="form-control" type="datetime-local" th:field="*{waktuAwal}"/>
                     <br>
                     <tr>
                         <label>Dokter</label>
+<<<<<<< HEAD
                         <td>
                             <select name="nama" class="form-control" th:each="dokter, iterationStatus : ${listDokter}">
                                 <div>
                                     <option th:value="${dokter.uuid}" th:text="${dokter.nama}"></option>
+=======
+                        <td th:object="${appointment}">
+                            <select name="dokter" th:field="*{dokter}"
+                                    class="form-control">
+                                <div th:each="dokter1, iterationStatus : ${listDokter}">
+                                    <option th:text="${dokter1.nama} + '-' + ${dokter1.tarif}" th:value="${dokter1.getUuid()}"></option>
+
+>>>>>>> 98426af9a6921879ba4d691cddb8915e342331bb
                                 </div>
                             </select>
                         </td>
                     </tr>
                     <br>
-
                     <br>
                     <button type="submit" class="btn btn-primary" name="save">Submit</button>
                     <a class="btn btn-link" href="/">Home</a>
@@ -37,7 +51,8 @@
             </div>
         </div>
     </div>
-</div><div>
+</div>
+
 </body>
 
 </html>
