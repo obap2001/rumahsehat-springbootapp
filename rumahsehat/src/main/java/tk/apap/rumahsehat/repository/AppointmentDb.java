@@ -21,6 +21,7 @@ public interface AppointmentDb extends JpaRepository<AppointmentModel, Long> {
     //Optional<AppointmentModel> findAppointmentById(String id);
     //void delete(UserModel user);
     List<AppointmentModel> getListAppointmentModelByDokter(DokterModel dokter);
+    AppointmentModel getAppointmentModelByKode(String kode);
 
     @Query("SELECT a FROM AppointmentModel a WHERE a.kode = :kode")
     AppointmentModel getAppointmentById(@Param("kode") String kode);

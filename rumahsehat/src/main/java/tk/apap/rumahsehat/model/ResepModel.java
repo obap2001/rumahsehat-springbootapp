@@ -39,7 +39,7 @@ public class  ResepModel implements Serializable {
 
     // TODO Relasi dengan Apoteker
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "confirmer_uuid", referencedColumnName = "uuid", nullable = false)
+    @JoinColumn(name = "confirmer_uuid", referencedColumnName = "uuid")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private ApotekerModel apoteker;
 

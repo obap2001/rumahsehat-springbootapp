@@ -43,4 +43,16 @@ public class DokterServiceImpl implements DokterService {
   //   dokterDb.delete(dokter);
   // }
 
+  @Override
+  public DokterModel getDokterByUuid(String uuid) {
+    List<DokterModel> listDokter = getListDokter();
+    for (int i = 0; i < listDokter.size(); i++) {
+      if (listDokter.get(i).getUuid().equals(uuid)) {
+        DokterModel dokterTarget = listDokter.get(i);
+        return dokterTarget;
+      }
+    }
+    return null;
+  }
+
 }
