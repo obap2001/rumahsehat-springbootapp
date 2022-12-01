@@ -16,5 +16,7 @@ public interface AppointmentService {
 
     List<AppointmentModel> getListAppointmentByDokter(DokterModel dokter);
 
+    AppointmentModel getAppointmentByKode(String kode);
+
     AppointmentModel getAppointmentById(String kode);
 }

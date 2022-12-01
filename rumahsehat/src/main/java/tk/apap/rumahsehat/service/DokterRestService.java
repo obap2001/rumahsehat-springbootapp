@@ -9,4 +9,5 @@ import java.util.List;
 
 public interface DokterRestService {
     List<DokterModel> retrieveListDokter();
+
 }
