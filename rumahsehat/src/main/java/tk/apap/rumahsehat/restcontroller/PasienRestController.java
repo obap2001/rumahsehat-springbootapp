@@ -41,7 +41,7 @@ public class PasienRestController {
 
     //top up saldo
     @PutMapping(value = "/{idPasien}/update-saldo")
-    private PasienModel topUpSaldoPasien(@PathVariable("idPasien") Long idPasien, @RequestParam Integer newSaldo){
+    private PasienModel topUpSaldoPasien(@PathVariable("idPasien") String idPasien, @RequestParam Integer newSaldo){
         try{
             return pasienRestService.updateSaldo(idPasien, newSaldo);
         }catch (NoSuchElementException e){
@@ -52,7 +52,7 @@ public class PasienRestController {
     }
 
     @GetMapping(value = "/pasien/{idPasien}")
-    private PasienModel retrievePengajar(@PathVariable("idPasien") Long idPasien) {
+    private PasienModel retrievePengajar(@PathVariable("idPasien") String idPasien) {
         try {
             return pasienRestService.retrievePasien(idPasien);
         } catch (NoSuchElementException e) {

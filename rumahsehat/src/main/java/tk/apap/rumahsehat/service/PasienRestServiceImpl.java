@@ -20,7 +20,7 @@ public class PasienRestServiceImpl implements PasienRestService{
         return pasienDb.findAll();
     }
     @Override
-    public PasienModel updateSaldo(Long id, int nominal){
+    public PasienModel updateSaldo(String id, int nominal){
         Optional<PasienModel> pasien = pasienDb.findById(id);
         if (pasien.isPresent()){
             PasienModel pasienUpdt = pasien.get();
@@ -29,7 +29,7 @@ public class PasienRestServiceImpl implements PasienRestService{
         }else return null;
     }
     @Override
-    public PasienModel retrievePasien(Long id){
+    public PasienModel retrievePasien(String id){
         Optional<PasienModel> pasien = pasienDb.findById(id);
         if (pasien.isPresent()){
             return pasien.get();
