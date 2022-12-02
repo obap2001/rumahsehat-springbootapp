@@ -19,7 +19,6 @@ public class PasienRestServiceImpl implements PasienRestService{
     public List<PasienModel> retrieveListPasien(){
         return pasienDb.findAll();
     }
-<<<<<<< HEAD
     @Override
     public PasienModel updateSaldo(Long id, int nominal){
         Optional<PasienModel> pasien = pasienDb.findById(id);
@@ -36,15 +35,4 @@ public class PasienRestServiceImpl implements PasienRestService{
             return pasien.get();
         }return null;
     }
-=======
-//    @Override
-//    public PasienModel updateSaldo(Long id, int nominal){
-//        //Optional<PasienModel> pasien = pasienDb.findById(id);
-//        if (pasien.isPresent()){
-//            PasienModel pasienUpdt = pasien.get();
-//            pasienUpdt.setSaldo(pasienUpdt.getSaldo()+nominal);
-//            return pasienUpdt;
-//        }else return null;
-//    }
->>>>>>> 06c856af4a41a2834ae61853c27e9e4f30afc33a
 }
