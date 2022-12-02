@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface PasienRestService {
     List<PasienModel> retrieveListPasien();
-    //PasienModel updateSaldo(Long id, int nominal);
+    PasienModel updateSaldo(String id, int nominal);
+    PasienModel retrievePasien(String idPasien);
 }

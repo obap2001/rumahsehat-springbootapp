@@ -22,8 +22,8 @@ services:
     restart: always
     env_file:
       - app.env
-    volumes:
-      - mysql-db-volume:/var/lib/mysql
+#    volumes:
+#      - mysql-db-volume:/var/lib/mysql
     networks:
       - backend-network
 
