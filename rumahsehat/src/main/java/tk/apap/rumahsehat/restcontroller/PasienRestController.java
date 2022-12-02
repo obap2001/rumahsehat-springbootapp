@@ -26,7 +26,6 @@ public class PasienRestController {
 
     //retrieve all
     @GetMapping("/data-pasien")
-
     public ResponseEntity getDataPasien() {
         log.info("api mengambil data semua pasien");
         ResponseEntity responseEntity = null;
@@ -46,6 +45,17 @@ public class PasienRestController {
         try{
             return pasienRestService.updateSaldo(idPasien, newSaldo);
         }catch (NoSuchElementException e){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Pasien dengan id " + idPasien + " tidak ditemukan."
+            );
+        }
+    }
+
+    @GetMapping(value = "/pasien/{idPasien}")
+    private PasienModel retrievePengajar(@PathVariable("idPasien") Long idPasien) {
+        try {
+            return pasienRestService.retrievePasien(idPasien);
+        } catch (NoSuchElementException e) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "Pasien dengan id " + idPasien + " tidak ditemukan."
             );

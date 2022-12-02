@@ -28,4 +28,11 @@ public class PasienRestServiceImpl implements PasienRestService{
             return pasienUpdt;
         }else return null;
     }
+    @Override
+    public PasienModel retrievePasien(Long id){
+        Optional<PasienModel> pasien = pasienDb.findById(id);
+        if (pasien.isPresent()){
+            return pasien.get();
+        }return null;
+    }
 }
