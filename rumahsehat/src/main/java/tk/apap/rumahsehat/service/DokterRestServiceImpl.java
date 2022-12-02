@@ -20,4 +20,5 @@ public class DokterRestServiceImpl implements DokterRestService{
     public List<DokterModel> retrieveListDokter(){
         return dokterDb.findAll();
     }
+
 }
