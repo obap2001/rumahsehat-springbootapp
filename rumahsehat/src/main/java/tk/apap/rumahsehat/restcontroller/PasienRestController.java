@@ -42,9 +42,11 @@ public class PasienRestController {
     //top up saldo
     @PutMapping(value = "/{idPasien}/update-saldo")
     private PasienModel topUpSaldoPasien(@PathVariable("idPasien") String idPasien, @RequestParam Integer newSaldo){
+        log.info("api mengupdate saldo pasien");
         try{
             return pasienRestService.updateSaldo(idPasien, newSaldo);
         }catch (NoSuchElementException e){
+            log.error("Error mengambil data pasien yamg sesuai");
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "Pasien dengan id " + idPasien + " tidak ditemukan."
             );
@@ -53,9 +55,11 @@ public class PasienRestController {
 
     @GetMapping(value = "/pasien/{idPasien}")
     private PasienModel retrievePengajar(@PathVariable("idPasien") String idPasien) {
+        log.info("api mengambil data pasien berdasarkan id");
         try {
             return pasienRestService.retrievePasien(idPasien);
         } catch (NoSuchElementException e) {
+            log.error("Error mengambil data pasien yang sesuai");
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "Pasien dengan id " + idPasien + " tidak ditemukan."
             );

@@ -1,5 +1,6 @@
 package tk.apap.rumahsehat.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@JsonIgnoreProperties(value={"listAppointment"}, allowSetters = true)
 @Table(name = "pasien")
 public class PasienModel extends UserModel {
     @NotNull
