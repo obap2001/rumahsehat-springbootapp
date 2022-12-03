@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -24,9 +25,11 @@ import java.util.List;
 @Table(name = "resep")
 public class  ResepModel implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_resep", nullable = false)
-    private Long id;
+    private String id;
 
     @NotNull
     @Column(name = "is_done", nullable = false,  columnDefinition = "boolean default false")
