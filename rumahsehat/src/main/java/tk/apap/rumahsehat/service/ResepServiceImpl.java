@@ -44,7 +44,7 @@ public class ResepServiceImpl implements ResepService {
     }
 
     @Override
-    public ResepModel getResepById(Long id) {
+    public ResepModel getResepById(String id) {
         Optional<ResepModel> resep = resepDb.findResepById(id);
         if (resep.isPresent()) {
             return resep.get();

@@ -26,7 +26,7 @@ public class  ResepModel implements Serializable {
 //    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_resep", nullable = false)
-    private Long id;
+    private String id;
 
     @NotNull
     @Column(name = "is_done", nullable = false,  columnDefinition = "boolean default false")
