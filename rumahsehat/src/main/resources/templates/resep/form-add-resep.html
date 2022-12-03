@@ -1,77 +1,63 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>RumahSehat</title>
-  <object th:include="fragments/fragment :: css" th:remove="tag"></object>
-  <object th:include="fragments/fragment :: js" th:remove="tag"></object>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>-->
-<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>-->
-<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />-->
+    <meta charset="UTF-8">
+    <title>RumahSehat</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
 <nav th:replace="fragments/fragment :: navbar"></nav>
 <div class="container">
-  <div class="card m-4 p-4">
-    <div class="card-body">
-      <!--            < class="justify-content-center">-->
-      <h2>Tambah Resep</h2>
-      <br>
-      <form th:action="@{/resep/add}" th:object="${resep}" method="POST">
-        <table class="table">
-          <thread>
-            <th>List Obat</th>
-            <th>
-              <button class="btn btn-primary" type="submit" name="addRowObat">Tambah Obat</button>
-            </th>
-          </thread>
-          <tbody>
-<!--          <tr th:each="jumlah, iterationStatus : *{listJumlah}" >-->
-<!--            <td>-->
-<!--&lt;!&ndash;                <input type="text" id="obat.nama" onkeyup="Func()">&ndash;&gt;-->
-<!--                <select name="id" th:field="*{listJumlah[__${iterationStatus.index}__].obat.id}"-->
-<!--                      class="form-control">-->
-<!--                    <div th:each="obatExisting, iterationStatus2 : ${listObat}">-->
-<!--    &lt;!&ndash;                  <datalist id="obatExisting.id">&ndash;&gt;-->
-<!--                        <option th:value="${obatExisting.id}" th:text="${obatExisting.nama}"></option>-->
-<!--    &lt;!&ndash;                  </datalist>&ndash;&gt;-->
-<!--                    </div>-->
-<!--                </select>-->
-<!--            </td>-->
-        <tr th:each="jumlah, iterationStatus : *{listJumlah}">
-            <td>
-                <select th:field="*{listJumlah[__${iterationStatus.index}__].obat}" class="form-control">
-                    <option th:each="obat, iterationStatus2 : ${listObat}" th:value="${obat.id}" th:text="${obat.nama}"></option>
-                </select>
-            </td>
-            <td>
-                <input class="form-control" type="text" th:field="*{listJumlah[__${iterationStatus.index}__].kuantitas}"/>
-            </td>
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <!--            < class="justify-content-center">-->
+            <h2>Tambah Resep</h2>
+            <br>
+            <form th:action="@{/resep/add}" th:object="${resep}" method="POST">
+                <table class="table">
+                    <thread>
+                        <th>List Obat</th>
+                        <th>
+                            <button class="btn btn-primary" type="submit" name="addRowObat">Tambah Obat</button>
+                        </th>
+                    </thread>
+                    <tbody>
+                    <tr th:each="obat, iterationStatus : *{listJumlah}" >
+                        <td>
+                            <!--                <input type="text" id="obat.nama" onkeyup="Func()">-->
+                            <select name="id" th:field="*{listJumlah[__${iterationStatus.index}__].obat.id}"
+                                    class="form-control">
+                                <div th:each="obatExisting, iterationStatus2 : ${listObat}">
+                                    <!--                  <datalist id="obatExisting.id">-->
+                                    <option th:value="${obatExisting.id}" th:text="${obatExisting.nama}"></option>
+                                    <!--                  </datalist>-->
+                                </div>
+                            </select>
+                        </td>
+                        <td>
+                            <input class="form-control" type="text" name="listJumlah" th:field="*{listJumlah[__${iterationStatus.index}__].obat.id}"/>
+                        </td>
 
-            <td>
-              <button th:value="${iterationStatus.index}" class="btn btn-danger" type="submit"
-                      name="deleteRowObat">Hapus</button>
-            </td>
-          </tr>
-          </tbody>
-        </table>
+                        <td>
+                            <button th:value="${iterationStatus.index}" class="btn btn-danger" type="submit"
+                                    name="deleteRowObat">Hapus</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
 
-        <button class="btn btn-primary" type="submit" name="save">Submit</button>
-        <a class="btn btn-primary" href="/">Home</a>
-      </form>
+                <button class="btn btn-primary" type="submit" name="save">Submit</button>
+                <a class="btn btn-primary" href="/">Home</a>
+            </form>
+        </div>
     </div>
-  </div>
 </div>
 </div>
 
 <script>
-    // $(document).ready(function () {
-    //     $('select').selectize({
-    //         sortField: 'text'
-    //     });
-    // });
     function Func() {
         var input, filter, a;
 
