@@ -52,7 +52,6 @@ public class ResepController {
     @Autowired
     private JumlahService jumlahService;
 
-
 //    @GetMapping("/resep/add")
 //    public String addResepFormPage(Model model) {
 //        ResepModel resep = new ResepModel();
@@ -154,6 +153,8 @@ public class ResepController {
     public String deleteResep(@PathVariable Long id, Model model) {
         ResepModel resep = resepService.getResepById(id);
         if (resep.getIsDone().equals(true)) {
+            model.addAttribute("id", resep.getId());
+
             return "resep/delete-success";
         }
         else {
