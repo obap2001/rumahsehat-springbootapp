@@ -10,7 +10,7 @@ public interface ResepService {
     void addResep(ResepModel resep);
     List<ResepModel> getListResep();
     void deleteResep(ResepModel resep);
-    ResepModel getResepById(Long id);
-//    List<JumlahModel> getListJumlah();
+    ResepModel getResepById(String id);
+    //    List<JumlahModel> getListJumlah();
     List<ObatModel> getListObat();
 }
