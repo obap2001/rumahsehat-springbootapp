@@ -5,9 +5,12 @@
     <title>RumahSehat</title>
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <!--  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+    <!--  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />-->
+    <!--  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
 </head>
 <nav th:replace="fragments/fragment :: navbar"></nav>
 <div class="container">
@@ -58,31 +61,39 @@
 </div>
 
 <script>
-    function Func() {
-        var input, filter, a;
-
-        // take user input
-        input = document.getElementById("userInput");
-
-        // convert the input to upper case letter for easy comparison
-        filter = input.value.toUpperCase();
-
-        div = document.getElementById("Dropdown");
-
-        // get all the options as a list
-        a = div.getElementsByTagName("option");
-
-        // iterate through the entire list and output relevant results if found
-        for (var i = 0; i < a.length; i++) {
-            txtValue = a[i].textContent || a[i].innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                a[i].style.display = "";
-            } else {
-                a[i].style.display = "none";
-            }
-        }
-    }
+    $(document).ready(function () {
+        $('select').selectize({
+            sortField: 'text'
+        });
+    });
 </script>
+
+<!--<script>-->
+<!--    function Func() {-->
+<!--        var input, filter, a;-->
+
+<!--        // take user input-->
+<!--        input = document.getElementById("userInput");-->
+
+<!--        // convert the input to upper case letter for easy comparison-->
+<!--        filter = input.value.toUpperCase();-->
+
+<!--        div = document.getElementById("Dropdown");-->
+
+<!--        // get all the options as a list-->
+<!--        a = div.getElementsByTagName("option");-->
+
+<!--        // iterate through the entire list and output relevant results if found-->
+<!--        for (var i = 0; i < a.length; i++) {-->
+<!--            txtValue = a[i].textContent || a[i].innerText;-->
+<!--            if (txtValue.toUpperCase().indexOf(filter) > -1) {-->
+<!--                a[i].style.display = "";-->
+<!--            } else {-->
+<!--                a[i].style.display = "none";-->
+<!--            }-->
+<!--        }-->
+<!--    }-->
+<!--</script>-->
 
 </body>
 </html>

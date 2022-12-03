@@ -25,7 +25,7 @@
                         <a class="btn btn-primary" th:if="*{appointment.isDone == false}" th:href="@{/appointment/details/} + ${appointment.kode}">Selesaikan Appointment</a>
                     </th>
                 </tr>
-                <a class="btn btn-primary" th:if="*{appointment.isDone == false}" th:href="@{/resep/add/}">Create Resep</a>
+                <a class="btn btn-primary" th:if="*{appointment.isDone == false}" th:href="@{/resep/add/}  + ${appointment.kode}">Create Resep</a>
 
                 <a class="btn btn-primary" href="/">Kembali</a>
             </div>
