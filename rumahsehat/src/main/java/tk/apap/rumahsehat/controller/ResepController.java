@@ -52,97 +52,6 @@ public class ResepController {
     @Autowired
     private JumlahService jumlahService;
 
-//    @GetMapping("/resep/add")
-//    public String addResepFormPage(Model model) {
-//        ResepModel resep = new ResepModel();
-//        List<ObatModel> listObat = resepService.getListObat();
-//        List<JumlahModel> listJumlah = new ArrayList<>();
-//
-//        resep.setListJumlah(listJumlah);
-//        resep.getListJumlah().add(new JumlahModel());
-////        apoteker.getListResep().add(resep);
-//
-//        model.addAttribute("resep", resep);
-//        model.addAttribute("listObat", listObat);
-//
-//        return "resep/form-add-resep";
-//    }
-//
-//    @PostMapping(value = "/resep/add", params = {"addRowObat"})
-//    private String addRowObatMultiple(@ModelAttribute ResepModel resep, Model model) {
-//        if (resepService.getListObat() == null || resepService.getListObat().size() == 0) {
-//            resep.setListJumlah(new ArrayList<>());
-//        }
-//
-//        resep.getListJumlah().add(new JumlahModel());
-//        List<ObatModel> listObat = obatService.getListObat();
-//
-//        model.addAttribute("resep", resep);
-//        model.addAttribute("listObat", listObat);
-//
-//        return "resep/form-add-resep";
-//    }
-//
-//    @PostMapping(value = "/resep/add", params = {"deleteRowObat"})
-//    private String deleteRowObatMultiple(@ModelAttribute ResepModel resep, @RequestParam("deleteRowObat") Integer row, Model model) {
-//        final Integer rowId = Integer.valueOf(row);
-//        resep.getListJumlah().remove(rowId.intValue());
-//
-//        List<JumlahModel> listJumlah = resep.getListJumlah();
-//
-//        model.addAttribute("resep", resep);
-//        model.addAttribute("listJumlah", listJumlah);
-//
-//        return "resep/form-add-resep";
-//    }
-//
-//    @PostMapping(value = "/resep/add", params = {"save"})
-//    public String addResepSubmit(@ModelAttribute ResepModel resep, Model model) {
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        User user = (User) auth.getPrincipal();
-//        String username = user.getUsername();
-//        DokterModel dokter = dokterService.getDokterByUsername(username);
-//
-//        if (resep.getListJumlah() == null) {
-//            resep.setListJumlah(new ArrayList<>());
-//        }
-//
-//        if (resep.getApoteker() == null) {
-//            resep.setApoteker(apotekerService.getListApoteker().get(0));
-//        }
-//
-//        List<AppointmentModel> listAppointment = appointmentService.getListAppointmentByDokter(dokter);
-//        AppointmentModel appointment = listAppointment.get(listAppointment.size() - 1);
-//        resep.setAppointment(appointment);
-//        resep.setIsDone(appointment.getIsDone());
-//        resep.setCreatedAt(appointment.getWaktuAwal());
-//
-//        resepService.addResep(resep);
-//
-//        model.addAttribute("idResep", resep.getId());
-//
-//        return "resep/add-resep";
-//    }
-//
-//    @PostMapping("/resep/add")
-//    public String addResepSubmitPage(@ModelAttribute ResepModel resep, Model model) {
-//        resepService.addResep(resep);
-//
-//        model.addAttribute("idResep", resep.getId());
-//
-//        return "resep/add-resep";
-//    }
-
-    @GetMapping("/resep/viewall")
-    public String viewAllResep(Model model) {
-        model.addAttribute("listResep", resepService.getListResep());
-
-        return "resep/viewall-resep";
-    }
-
-    @GetMapping("/resep/view")
-    public String viewDetailResepPage(@RequestParam(value = "id") String id, Model model) {
-        ResepModel resep = resepService.getResepById(id);
 
 //    @GetMapping("/resep/add")
 //    public String addResepFormPage(Model model) {
@@ -245,6 +154,8 @@ public class ResepController {
     public String deleteResep(@PathVariable Long id, Model model) {
         ResepModel resep = resepService.getResepById(id);
         if (resep.getIsDone().equals(true)) {
+            model.addAttribute("id", resep.getId());
+
             return "resep/delete-success";
         }
         else {
