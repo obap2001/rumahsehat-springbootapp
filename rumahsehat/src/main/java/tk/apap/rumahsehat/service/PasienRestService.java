@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface PasienRestService {
     List<PasienModel> retrieveListPasien();
+    PasienModel updateSaldo(String id, int nominal);
+    PasienModel retrievePasien(String idPasien);
 }

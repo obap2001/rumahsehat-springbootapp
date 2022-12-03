@@ -9,58 +9,103 @@
 <body>
 <nav th:replace="fragments/fragment :: navbar"></nav>
 <div class="container">
-    <h1 style="text-align: center">List Appointment</h1>
-    <div class="alert alert-primary" role="alert" th:text="${success}" th:if="${success}"></div>
-    <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
+    <div class="card m-4 p-4">
+        <div class="card-body">
+            <div class="justify-content-center">
+                <h2>List Appointment</h2>
+                <br>
+                <a th:href="@{/appointment/add}" class="btn btn-primary">Tambah Appointment</a>
+                <a class="btn btn-primary" href="/">Beranda</a>
+                <br><br>
+                <div th:if="*{role == 'admin'}">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th style='text-align:center; vertical-align:middle'>No</th>
+                            <th style='text-align:center; vertical-align:middle'>Nama Dokter</th>
+                            <th style='text-align:center; vertical-align:middle'>Nama Pasien</th>
+                            <th style='text-align:center; vertical-align:middle'>Waktu Awal</th>
+                            <th style='text-align:center; vertical-align:middle'>Status</th>
+                            <th style='text-align:center; vertical-align:middle'>Detail</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="appointment, iterationStatus : ${listAppointment}"
+                            th:style="${iterationStatus.even} ? 'font-weight:bold;'">
+                            <td th:text="${iterationStatus.count}" style='text-align:center; vertical-align:middle'></td>
+                            <td th:text="${appointment.dokter.nama}" style='text-align:center; vertical-align:middle'></td>
+                            <td th:text="${appointment.pasien.nama}" style='text-align:center; vertical-align:middle'></td>
+                            <td th:text="${#temporals.format(appointment.waktuAwal, 'dd MMMM yyyy HH:mm')}" style='text-align:center; vertical-align:middle'></td>
+                            <td th:text="${appointment.isDone}" style='text-align:center; vertical-align:middle'></td>
+                            <td>
+                                <a class="btn btn-primary" th:href="@{/appointment/details/} + ${appointment.kode}">Detail Appointment</a>
+                            </td>
 
-    <table id="table_result" class="display" style="width:100%">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Nama</th>
-            <th>Harga</th>
-            <th>Stok</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Data 1</td>
-            <td>Data 2</td>
-            <td>Data 3</td>
-            <td>Data 4</td>
-            <td>Data 5</td>
-        </tr>
-        </tbody>
-    </table>
-
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div th:if="*{role == 'dokter'}">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th style='text-align:center; vertical-align:middle'>No</th>
+                            <th style='text-align:center; vertical-align:middle'>Nama Dokter</th>
+                            <th style='text-align:center; vertical-align:middle'>Nama Pasien</th>
+                            <th style='text-align:center; vertical-align:middle'>Waktu Awal</th>
+                            <th style='text-align:center; vertical-align:middle'>Status</th>
+                            <th style='text-align:center; vertical-align:middle'>Detail</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="appointmentDokter, iterationStatus : ${listAppointmentDokter}"
+                            th:style="${iterationStatus.even} ? 'font-weight:bold;'">
+                            <td th:text="${iterationStatus.count}" style='text-align:center; vertical-align:middle'></td>
+                            <td th:text="${appointmentDokter.dokter.nama}" style='text-align:center; vertical-align:middle'></td>
+                            <td th:text="${appointmentDokter.pasien.nama}" style='text-align:center; vertical-align:middle'></td>
+                            <td th:text="${#temporals.format(appointmentDokter.waktuAwal, 'dd MMMM yyyy HH:mm')}" style='text-align:center; vertical-align:middle'></td>
+                            <td th:text="${appointmentDokter.isDone}" style='text-align:center; vertical-align:middle'></td>
+                            <td>
+                                <a class="btn btn-primary" th:href="@{/appointment/details/} + ${appointmentDokter.kode}">Detail Appointment</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div th:if="*{role == 'pasien'}">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th style='text-align:center; vertical-align:middle'>No</th>
+                            <th style='text-align:center; vertical-align:middle'>Nama Dokter</th>
+                            <th style='text-align:center; vertical-align:middle'>Nama Pasien</th>
+                            <th style='text-align:center; vertical-align:middle'>Waktu Awal</th>
+                            <th style='text-align:center; vertical-align:middle'>Status</th>
+                            <th style='text-align:center; vertical-align:middle'>Detail</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="appointmentPasien, iterationStatus : ${listAppointmentPasien}"
+                            th:style="${iterationStatus.even} ? 'font-weight:bold;'">
+                            <td th:text="${iterationStatus.count}" style='text-align:center; vertical-align:middle'></td>
+                            <td th:text="${appointmentPasien.dokter.nama}" style='text-align:center; vertical-align:middle'></td>
+                            <td th:text="${appointmentPasien.pasien.nama}" style='text-align:center; vertical-align:middle'></td>
+                            <td th:text="${#temporals.format(appointmentPasien.waktuAwal, 'dd MMMM yyyy HH:mm')}" style='text-align:center; vertical-align:middle'></td>
+                            <td th:text="${appointmentPasien.isDone}" style='text-align:center; vertical-align:middle'></td>
+                            <td>
+                                <a class="btn btn-primary" th:href="@{/appointment/details/} + ${appointmentPasien.kode}">Detail Appointment</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div th:unless="*{listAppointment.size() != 0}">
+                    <h2 th:text="'Belum terdapat appointment yang terdaftar'"></h2>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-
-<script th:inline="javascript">
-    $(document).ready(function () {
-        $('#table_result').DataTable({
-            "ajax": {
-                "url": "/api/list-appointment",
-                "dataSrc": ''
-            },
-            "searching": true,
-            "ordering": true,
-            "columns": [
-                {"data": "id"},
-                {"data": "nama"},
-                {"data": "harga"},
-                {"data": "stok"},
-                {"data": null,
-                    "render": function(id) {
-                        return '<a class="btn btn-warning btn-sm" href=' + '/obat/'+id+'/ubah-stok' + '>' +
-                            '<i className="fa-sharp fa-solid fa-pen"></i>'+'Ubah Stok' + '</a>';
-                    }
-                },
-            ]
-        });
-    });
-</script>
 
 </body>
 </html>

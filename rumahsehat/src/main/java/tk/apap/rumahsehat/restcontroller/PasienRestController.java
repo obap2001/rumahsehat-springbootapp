@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,7 @@ import tk.apap.rumahsehat.model.PasienModel;
 import tk.apap.rumahsehat.service.PasienRestService;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Slf4j
 @RestController
@@ -35,4 +38,32 @@ public class PasienRestController {
         }
         return responseEntity;
     }
+
+    //top up saldo
+    @PutMapping(value = "/{idPasien}/update-saldo")
+    private PasienModel topUpSaldoPasien(@PathVariable("idPasien") String idPasien, @RequestParam Integer newSaldo){
+        log.info("api mengupdate saldo pasien");
+        try{
+            return pasienRestService.updateSaldo(idPasien, newSaldo);
+        }catch (NoSuchElementException e){
+            log.error("Error mengambil data pasien yamg sesuai");
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Pasien dengan id " + idPasien + " tidak ditemukan."
+            );
+        }
+    }
+
+    @GetMapping(value = "/pasien/{idPasien}")
+    private PasienModel retrievePengajar(@PathVariable("idPasien") String idPasien) {
+        log.info("api mengambil data pasien berdasarkan id");
+        try {
+            return pasienRestService.retrievePasien(idPasien);
+        } catch (NoSuchElementException e) {
+            log.error("Error mengambil data pasien yang sesuai");
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Pasien dengan id " + idPasien + " tidak ditemukan."
+            );
+        }
+    }
+
 }

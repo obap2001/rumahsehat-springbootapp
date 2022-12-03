@@ -11,4 +11,5 @@ public interface DokterService {
   DokterModel getDokterByUsername(String username);
   List<DokterModel> getListDokter();
   // void deleteDokter(DokterModel dokter);
+  DokterModel getDokterByUuid(String uuid);
 }

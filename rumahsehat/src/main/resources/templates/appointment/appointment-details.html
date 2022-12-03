@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
-    <title>BelajarBelajar</title>
+    <title>Appointment Detail</title>
     <object th:include="fragments/fragment :: css" th:remove="tag"></object>
     <object th:include="fragments/fragment :: js" th:remove="tag"></object>
 <body>
@@ -12,10 +12,21 @@
             <div class="justify-content-center">
                 <h2>Detail Appointment</h2>
                 <br>
-                <p th:text="'Code Appointment: ' + ${appointment.code}"></p>
-                <p th:text="'Nama Dokter: ' + ${appointment.dokter}"></p>
-                <p th:text="'Nama Pasien: ' + ${appointment.pasien}"></p>
+                <p th:text="'Kode Appointment: ' + ${appointment.kode}"></p>
+                <p th:text="'Nama Dokter: ' + ${appointment.dokter.nama}"></p>
+                <p th:text="'Nama Pasien: ' + ${appointment.pasien.nama}"></p>
                 <p th:text="'Waktu Awal: ' + ${#temporals.format(appointment.waktuAwal, 'dd MMMM yyyy HH:mm')}"></p>
+                <tr>
+                    <th>
+                        <p th:if="*{appointment.isDone == true}" th:text="'Status: Selesai'"></p>
+                        <p th:if="*{appointment.isDone == false}" th:text="'Status: Belum Selesai'"></p>
+                    </th>
+                    <th>
+                        <a class="btn btn-primary" th:if="*{appointment.isDone == false}" th:href="@{/appointment/details/} + ${appointment.kode}">Selesaikan Appointment</a>
+                    </th>
+                </tr>
+                <a class="btn btn-primary" th:if="*{appointment.isDone == false}" th:href="@{/resep/add/}  + ${appointment.kode}">Create Resep</a>
+
                 <a class="btn btn-primary" href="/">Kembali</a>
             </div>
         </div>

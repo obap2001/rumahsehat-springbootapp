@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import tk.apap.rumahsehat.model.DokterModel;
 
 @Repository
-public interface DokterDb extends JpaRepository<DokterModel, Long> {
+public interface DokterDb extends JpaRepository<DokterModel, String> {
   DokterModel findByUsername(String username);
   List<DokterModel> findAll();
   void delete(DokterModel dokter);
