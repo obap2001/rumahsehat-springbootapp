@@ -23,8 +23,8 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "appointment")
 public class AppointmentModel implements Serializable {
-     // TODO buat kode appointment sesuai ketentuan soal
-     // todo change package name for strategy
+    // TODO buat kode appointment sesuai ketentuan soal
+    // todo change package name for strategy
     // @Id
     // @GeneratedValue(generator = "apt-generator")
     // @GenericGenerator(name = "apt-generator", 
@@ -45,12 +45,12 @@ public class AppointmentModel implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime waktuAwal;
 
-     // Relasi dengan Pasien
+    // Relasi dengan Pasien
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "uuid_pasien", referencedColumnName = "uuid", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private PasienModel pasien;
-  
+
     // Relasi dengan Dokter
     @ManyToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "uuid_dokter", referencedColumnName = "uuid")
