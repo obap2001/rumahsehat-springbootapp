@@ -19,22 +19,31 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Entity
 @Table(name = "jumlah")
-public class JumlahModel implements Serializable {
-    @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    private String id;
-
+public class JumlahModel {
 //  @Id
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "id_obat", referencedColumnName = "id_obat")
-    @OnDelete(action = OnDeleteAction.CASCADE)
+//  @ManyToOne(fetch = FetchType.EAGER, optional = false)
+//  @JoinColumn(name = "id_obat", referencedColumnName = "id_obat")
+//  @OnDelete(action = OnDeleteAction.CASCADE)
+//  private ObatModel obat;
+//
+//  @Id
+//  @ManyToOne(fetch = FetchType.EAGER, optional = false)
+//  @JoinColumn(name = "id_resep", referencedColumnName = "id_resep")
+//  @OnDelete(action = OnDeleteAction.CASCADE)
+//  private ResepModel resep;
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EmbeddedId
+    private JumlahIdModel id;
+
+    @MapsId("obat")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "obat", nullable = false)
     private ObatModel obat;
 
-//  @Id
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "id_resep", referencedColumnName = "id_resep")
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @MapsId("resep")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "resep", nullable = false)
     private ResepModel resep;
 
     @NotNull
