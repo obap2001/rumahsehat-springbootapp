@@ -150,7 +150,13 @@ public class AppointmentController {
     @GetMapping("/appointment/details/{kode}")
     public String viewDetailAppointment(@PathVariable String kode, Model model) {
         AppointmentModel appointment = appointmentService.getAppointmentById(kode);
+//        Boolean adaResep = false;
+//        if (!appointment.getResep().equals(null)) {
+//            adaResep = true;
+//        }
         model.addAttribute("appointment", appointment);
+//        model.addAttribute("adaResep", adaResep);
+//        model.addAttribute("idResep", appointment.getResep().getId());
         return "appointment/appointment-details";
     }
 

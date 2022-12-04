@@ -26,7 +26,7 @@
                     </th>
                 </tr>
                 <a class="btn btn-primary" th:if="*{appointment.isDone == false}" th:href="@{/resep/add/}  + ${appointment.kode}">Create Resep</a>
-
+<!--                <a class="btn btn-primary" th:if="*{adaResep == true}" th:href="@{/resep/view/}  + ${idResep}">Detail Resep</a>-->
                 <a class="btn btn-primary" href="/">Kembali</a>
             </div>
         </div>
