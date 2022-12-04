@@ -12,38 +12,37 @@
     <div class="card m-4 p-4">
         <div class="card-body">
             <div class="justify-content-center">
-                <h2>Daftar Resep</h2>
+                <h2>List Resep</h2>
                 <br>
-                <a th:href="@{/resep/add}" class="btn btn-primary">Tambah Resep</a>
                 <a class="btn btn-primary" href="/">Beranda</a>
                 <br><br>
-                <div th:if="*{listResep.size() != 0}">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th style='text-align:center; vertical-align:middle'>No</th>
-                            <th style='text-align:center; vertical-align:middle'>Tanggal Dibuat</th>
-                            <th style='text-align:center; vertical-align:middle'>Apoteker</th>
-                            <th style='text-align:center; vertical-align:middle'>Jumlah</th>
-                            <th style='text-align:center; vertical-align:middle'>Appointment</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="resep, iterationStatus : ${listResep}"
-                            th:style="${iterationStatus.even} ? 'font-weight:bold;'">
-                            <td th:text="${iterationStatus.count}" style='text-align:center; vertical-align:middle'></td>
-                            <td th:text="${resep.createdAt}" style='text-align:center; vertical-align:middle'></td>
-                            <td th:text="${resep.apoteker}" style='text-align:center; vertical-align:middle'></td>
-                            <td th:text="${resep.listJumlah}" style='text-align:center; vertical-align:middle'></td>
-                            <td th:text="${resep.appointment}" style='text-align:center; vertical-align:middle'></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+<!--                <div th:if="*{role == 'admin'}">-->
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th style='text-align:center; vertical-align:middle'>ID</th>
+                        <th style='text-align:center; vertical-align:middle'>Tanggal dan Waktu</th>
+                        <th style='text-align:center; vertical-align:middle'>Status</th>
+                        <th style='text-align:center; vertical-align:middle'>Detail</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="resep, iterationStatus : ${listResep}">
+                        <td th:text="${resep.id}" style='text-align:center; vertical-align:middle'></td>
+                        <td th:text="${#temporals.format(resep.createdAt, 'dd MMMM yyyy, HH:mm')}" style='text-align:center; vertical-align:middle'></td>
+                        <td th:text="${resep.isDone}" style='text-align:center; vertical-align:middle'></td>
+                        <td>
+                            <a class="btn btn-primary" th:href="@{/resep/view/} + ${resep.id}">Detail Resep</a>
+                        </td>
+
+                    </tr>
+                    </tbody>
+                </table>
+
                 <div th:unless="*{listResep.size() != 0}">
-                    <h2 th:text="'Tidak ada resep yang dibuat!'"></h2>
+                    <h2 th:text="'Belum terdapat resep yang dibuat!'"></h2>
                 </div>
-            </div>
+<!--            </div>-->
         </div>
     </div>
 </div>
