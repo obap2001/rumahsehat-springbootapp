@@ -1,5 +1,6 @@
 package tk.apap.rumahsehat.security;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -27,6 +28,4 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole()));
     return new User(user.getUsername(), user.getPassword(), grantedAuthorities);
   }
-  
-  
 }
