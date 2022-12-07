@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import tk.apap.rumahsehat.config.JwtTokenUtil;
-import tk.apap.rumahsehat.model.JwtRequest;
+import tk.apap.rumahsehat.model.JwtRequestLogin;
 import tk.apap.rumahsehat.model.JwtResponse;
 import tk.apap.rumahsehat.model.UserModel;
 import tk.apap.rumahsehat.repository.UserDb;
@@ -54,12 +54,12 @@ public class JwtAuthenticationController {
     }
 
     @PostMapping("/login/pasien")
-    public ResponseEntity<?> loginUser(@RequestParam("username") String username,
-                                       @RequestParam("password") String password) {
+    public ResponseEntity<?> loginUser(@RequestBody JwtRequestLogin request) {
         Map<String, Object> responseMap = new HashMap<>();
+        String username = request.getUsername();
+        String password = request.getPassword();
         try {
-            Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username
-                    , password));
+            Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
             if (auth.isAuthenticated()) {
                 logger.info("Logged In");
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
@@ -89,25 +89,27 @@ public class JwtAuthenticationController {
             return ResponseEntity.status(500).body(responseMap);
         }
     }
-	@PostMapping("/register/pasien")
-    public ResponseEntity<?> saveUser(@RequestParam("nama") String nama,
-                                      @RequestParam("username") String username, 
-									  @RequestParam("email") String email, @RequestParam("password") String password) {
-        Map<String, Object> responseMap = new HashMap<>();
-        UserModel user = new UserModel();
-        user.setNama(nama);
-        user.setUsername(username);
-        user.setEmail(email);
-        user.setPassword(new BCryptPasswordEncoder().encode(password));
-        user.setRole("pasien");
-        user.setIsSso(false);
-        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-        String token = jwtTokenUtil.generateToken(userDetails);
-        userRepository.save(user);
-        responseMap.put("error", false);
-        responseMap.put("username", username);
-        responseMap.put("message", "Account created successfully");
-        responseMap.put("token", token);
-        return ResponseEntity.ok(responseMap);
-    }
+
+    
+	// @PostMapping("/register/pasien")
+    // public ResponseEntity<?> saveUser(@RequestParam("nama") String nama,
+    //                                   @RequestParam("username") String username, 
+	// 								  @RequestParam("email") String email, @RequestParam("password") String password) {
+    //     Map<String, Object> responseMap = new HashMap<>();
+    //     UserModel user = new UserModel();
+    //     user.setNama(nama);
+    //     user.setUsername(username);
+    //     user.setEmail(email);
+    //     user.setPassword(new BCryptPasswordEncoder().encode(password));
+    //     user.setRole("pasien");
+    //     user.setIsSso(false);
+    //     UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+    //     String token = jwtTokenUtil.generateToken(userDetails);
+    //     userRepository.save(user);
+    //     responseMap.put("error", false);
+    //     responseMap.put("username", username);
+    //     responseMap.put("message", "Account created successfully");
+    //     responseMap.put("token", token);
+    //     return ResponseEntity.ok(responseMap);
+    // }
 }

@@ -28,6 +28,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsServiceImpl jwtUserDetailsService;
     private final JwtRequestFilter jwtRequestFilter;
+    @Autowired
+	private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     public WebSecurityConfig(UserDetailsServiceImpl jwtUserDetailsService, JwtRequestFilter jwtRequestFilter) {
         this.jwtUserDetailsService = jwtUserDetailsService;
@@ -47,25 +49,28 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity            .authorizeRequests()
-        .antMatchers("/css/**").permitAll()
-        .antMatchers("/js/**").permitAll()
-        .antMatchers("/login-sso", "/validate-ticket").permitAll()
-        .antMatchers("/obat/{id}/ubah-stok").hasAuthority("apoteker")
-        .antMatchers("/auth/**").hasAnyAuthority("pasien").anyRequest()
-        .authenticated().and().formLogin()
-        .loginPage("/login").permitAll()
-        .and()
-        .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-        .logoutSuccessUrl("/login").permitAll().and().exceptionHandling().authenticationEntryPoint((request, response, authException) -> {
-            Map<String, Object> responseMap = new HashMap<>();
-            ObjectMapper mapper = new ObjectMapper();
-            response.setStatus(401);
-            responseMap.put("error", true);
-            responseMap.put("message", "Unauthorized");
-            response.setHeader("content-type", "application/json");
-            String responseMsg = mapper.writeValueAsString(responseMap);
-            response.getWriter().write(responseMsg);
-        }).and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.csrf().disable()
+				// dont authenticate this particular request
+				.authorizeRequests()
+                .antMatchers("/css/**").permitAll()
+                .antMatchers("/js/**").permitAll()
+                .antMatchers("/login-sso", "/validate-ticket").permitAll()
+                .antMatchers("/obat/{id}/ubah-stok").hasAuthority("apoteker")
+                .antMatchers("/auth/**").permitAll().
+				// all other requests need to be authenticated
+				anyRequest().authenticated().and().
+				// make sure we use stateless session; session won't be used to
+				// store user's state.
+				exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().formLogin()
+                .loginPage("/login").permitAll()
+                .and()
+                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login").permitAll();;
+
+		// Add a filter to validate the tokens with every request
+		httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+
     }
 }
