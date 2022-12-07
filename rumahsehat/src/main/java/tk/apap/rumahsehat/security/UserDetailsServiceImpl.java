@@ -15,18 +15,24 @@ import org.springframework.stereotype.Service;
 import tk.apap.rumahsehat.model.UserModel;
 import tk.apap.rumahsehat.repository.UserDb;
 
+
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-  @Autowired
-  private UserDb userDb;
 
-  @Override
-  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    UserModel user = userDb.findByUsername(username);
-    Set<GrantedAuthority> grantedAuthorities = new HashSet<GrantedAuthority>();
-    grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole()));
-    return new User(user.getUsername(), user.getPassword(), grantedAuthorities);
-  }
-  
-  
+    final UserDb userRepository;
+
+    public UserDetailsServiceImpl(UserDb userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        UserModel user = userRepository.findByUsername(username);
+        List<GrantedAuthority> authorityList = new ArrayList<>();
+        authorityList.add(new SimpleGrantedAuthority(user.getRole()));
+        return new User(user.getUsername(), user.getPassword(), authorityList);
+    }
 }
