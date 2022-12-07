@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface PasienRestService {
     PasienModel registerPasien(PasienModel pasien);
+    public String encrypt(String password);
     List<PasienModel> retrieveListPasien();
     PasienModel updateSaldo(String id, int nominal);
     PasienModel retrievePasien(String idPasien);

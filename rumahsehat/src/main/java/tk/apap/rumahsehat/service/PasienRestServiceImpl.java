@@ -1,6 +1,7 @@
 package tk.apap.rumahsehat.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import tk.apap.rumahsehat.model.PasienModel;
 import tk.apap.rumahsehat.repository.PasienDb;
@@ -17,7 +18,16 @@ public class PasienRestServiceImpl implements PasienRestService{
 
     @Override
     public PasienModel registerPasien(PasienModel pasien) {
+        String pass = encrypt(pasien.getPassword());
+        pasien.setPassword(pass);
         return pasienDb.save(pasien);
+    }
+
+    @Override
+    public String encrypt(String password) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(password);
+        return hashedPassword;
     }
 
     @Override
