@@ -53,6 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/js/**").permitAll()
+								.antMatchers("/api/register").permitAll()
                 .antMatchers("/login-sso", "/validate-ticket").permitAll()
                 .antMatchers("/obat/{id}/ubah-stok").hasAuthority("apoteker")
                 .antMatchers("/auth/**").permitAll().

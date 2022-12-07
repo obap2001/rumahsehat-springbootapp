@@ -16,6 +16,11 @@ public class PasienRestServiceImpl implements PasienRestService{
     PasienDb pasienDb;
 
     @Override
+    public PasienModel registerPasien(PasienModel pasien) {
+        return pasienDb.save(pasien);
+    }
+
+    @Override
     public List<PasienModel> retrieveListPasien(){
         return pasienDb.findAll();
     }
