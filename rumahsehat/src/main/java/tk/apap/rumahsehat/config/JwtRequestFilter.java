@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,46 +17,55 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
-import lombok.extern.log4j.Log4j2;
 
-@Log4j2
+import io.jsonwebtoken.ExpiredJwtException;
+import lombok.extern.log4j.Log4j2;
+import tk.apap.rumahsehat.security.UserDetailsServiceImpl;
+
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
-    private static final String JWT_HEADER = "Authorization";
-    private static final String JWT_PREFIX = "Bearer";
+    private final UserDetailsServiceImpl jwtUserDetailsService;
+    private final JwtTokenUtil jwtTokenUtil;
 
+    public JwtRequestFilter(UserDetailsServiceImpl jwtUserDetailsService, JwtTokenUtil jwtTokenUtil) {
+        this.jwtUserDetailsService = jwtUserDetailsService;
+        this.jwtTokenUtil = jwtTokenUtil;
+    }
 
-	@Autowired
-	private JwtTokenUtil jwtUtil;
-	@Autowired
-    private UserDetailsService userDetailsService;
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+            throws ServletException, IOException {
 
-	@Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException {
-        try {
-            String token = getJwtFromRequest(request);
-            if (token != null && !token.isBlank()) {
-                String username = jwtUtil.getUsername(token);
-                log.info("username : {}", username);
-                UserDetails user = userDetailsService.loadUserByUsername(username);
-                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user,
-                        user.getPassword(), user.getAuthorities());
-                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        final String requestTokenHeader = request.getHeader("Authorization");
+        if (StringUtils.startsWithIgnoreCase(requestTokenHeader,"Bearer ")) {
+            String jwtToken = requestTokenHeader.substring(7);
+            try {
+                String username = jwtTokenUtil.getUsernameFromToken(jwtToken);
+                if (StringUtils.isEmpty(username)
+                        && null == SecurityContextHolder.getContext().getAuthentication()) {
+                    UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(username);
+                    if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
+                        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+                                new UsernamePasswordAuthenticationToken(
+                                        userDetails, null, userDetails.getAuthorities());
+                        usernamePasswordAuthenticationToken
+                                .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                        SecurityContextHolder.getContext()
+                                .setAuthentication(usernamePasswordAuthenticationToken);
+                    }
+                }
+            } catch (IllegalArgumentException e) {
+                logger.error("Unable to fetch JWT Token");
+            } catch (ExpiredJwtException e) {
+                logger.error("JWT Token is expired");
+            } catch (Exception e) {
+                logger.error(e.getMessage());
             }
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
+        } else {
+            logger.warn("JWT Token does not begin with Bearer String");
         }
-        filterChain.doFilter(request, response);
+        chain.doFilter(request, response);
     }
 
-    private String getJwtFromRequest(HttpServletRequest request) {
-        String bearerToken = request.getHeader(JWT_HEADER);
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(JWT_PREFIX)) {
-            return bearerToken.substring(7);
-        }
-        return null;
-    }
 }
