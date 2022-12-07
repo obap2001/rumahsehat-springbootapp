@@ -31,8 +31,8 @@ public class PasienRestController {
     @PostMapping(value="/register")
     private PasienModel registerPasien(@Valid @RequestBody PasienModel pasien, BindingResult bindingResult) {
         if (bindingResult.hasFieldErrors()) {
-        throw new ResponseStatusException(
-            HttpStatus.BAD_REQUEST, "Request body has invalid type or missing field."
+            throw new ResponseStatusException(
+                HttpStatus.BAD_REQUEST, "Request body has invalid type or missing field."
         );
         } else {
         return pasienRestService.registerPasien(pasien);
