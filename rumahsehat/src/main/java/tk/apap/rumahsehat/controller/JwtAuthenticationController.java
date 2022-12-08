@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 // import org.springframework.web.bind.annotation.RequestMethod;
 // import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 
 // import lombok.RequiredArgsConstructor;
 import tk.apap.rumahsehat.config.JwtTokenUtil;
@@ -35,81 +37,43 @@ import tk.apap.rumahsehat.security.UserDetailsServiceImpl;
 
 
 @RestController
-@RequestMapping("/auth")
+@CrossOrigin
 public class JwtAuthenticationController {
 
-    protected final Log logger = LogFactory.getLog(getClass());
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
-    final UserDb userRepository;
-    final AuthenticationManager authenticationManager;
-    final UserDetailsServiceImpl userDetailsService;
-    final JwtTokenUtil jwtTokenUtil;
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
-    public JwtAuthenticationController(UserDb userRepository, AuthenticationManager authenticationManager,
-	UserDetailsServiceImpl userDetailsService, JwtTokenUtil jwtTokenUtil) {
-        this.userRepository = userRepository;
-        this.authenticationManager = authenticationManager;
-        this.userDetailsService = userDetailsService;
-        this.jwtTokenUtil = jwtTokenUtil;
+    @Qualifier("jwtUserDetailsServiceImpl")
+    @Autowired
+    private JwtUserDetailsServiceImpl jwtInMemoryUserDetailsService;
+
+    @RequestMapping(value = "/api/authenticate", method = RequestMethod.POST)
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest)
+            throws Exception {
+
+        authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+
+        final UserDetails userDetails = jwtInMemoryUserDetailsService
+                .loadUserByUsername(authenticationRequest.getUsername());
+
+        final String token = jwtTokenUtil.generateToken(userDetails);
+
+        return ResponseEntity.ok(new JwtResponse(token));
     }
 
-    @PostMapping("/login/pasien")
-    public ResponseEntity<?> loginUser(@RequestBody JwtRequestLogin request) {
-        Map<String, Object> responseMap = new HashMap<>();
-        String username = request.getUsername();
-        String password = request.getPassword();
+    private void authenticate(String username, String password) throws Exception {
+        Objects.requireNonNull(username);
+        Objects.requireNonNull(password);
+
         try {
-            Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-            if (auth.isAuthenticated()) {
-                logger.info("Logged In");
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-                String token = jwtTokenUtil.generateToken(userDetails);
-                responseMap.put("error", false);
-                responseMap.put("message", "Logged In");
-                responseMap.put("token", token);
-                return ResponseEntity.ok(responseMap);
-            } else {
-                responseMap.put("error", true);
-                responseMap.put("message", "Invalid Credentials");
-                return ResponseEntity.status(401).body(responseMap);
-            }
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         } catch (DisabledException e) {
-            e.printStackTrace();
-            responseMap.put("error", true);
-            responseMap.put("message", "User is disabled");
-            return ResponseEntity.status(500).body(responseMap);
+            throw new Exception("USER_DISABLED", e);
         } catch (BadCredentialsException e) {
-            responseMap.put("error", true);
-            responseMap.put("message", "Invalid Credentials");
-            return ResponseEntity.status(401).body(responseMap);
-        } catch (Exception e) {
-            e.printStackTrace();
-            responseMap.put("error", true);
-            responseMap.put("message", "Something went wrong");
-            return ResponseEntity.status(500).body(responseMap);
+            throw new Exception("INVALID_CREDENTIALS", e);
         }
     }
-
-    
-	// @PostMapping("/register/pasien")
-    // public ResponseEntity<?> saveUser(@RequestParam("nama") String nama,
-    //                                   @RequestParam("username") String username, 
-	// 								  @RequestParam("email") String email, @RequestParam("password") String password) {
-    //     Map<String, Object> responseMap = new HashMap<>();
-    //     UserModel user = new UserModel();
-    //     user.setNama(nama);
-    //     user.setUsername(username);
-    //     user.setEmail(email);
-    //     user.setPassword(new BCryptPasswordEncoder().encode(password));
-    //     user.setRole("pasien");
-    //     user.setIsSso(false);
-    //     UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-    //     String token = jwtTokenUtil.generateToken(userDetails);
-    //     userRepository.save(user);
-    //     responseMap.put("error", false);
-    //     responseMap.put("username", username);
-    //     responseMap.put("message", "Account created successfully");
-    //     responseMap.put("token", token);
-    //     return ResponseEntity.ok(responseMap);
-    // }
 }
