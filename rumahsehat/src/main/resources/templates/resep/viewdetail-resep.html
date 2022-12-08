@@ -12,15 +12,31 @@
   <div class="card m-4 p-4">
     <div class="card-body">
       <div class="justify-content-center">
-        <h2>Daftar Resep</h2>
+        <h2>Detail Resep</h2>
         <br>
         <a class="btn btn-primary" href="/">Beranda</a>
         <p th:text="'ID Resep: ' + ${resep.id}"></p>
-        <p th:text="'Tanggal Dibuat: ' + ${resep.createdAt}"></p>
-        <p th:text="'Apoteker: ' + ${resep.apoteker}"></p>
-        <p th:text="'Jumlah: ' + ${resep.listJumlah}"></p>
-        <p th:text="'Appointment: ' + ${resep.appointment}"></p>
+        <p th:text="'Tanggal Dibuat: ' + ${#temporals.format(resep.createdAt, 'dd MMMM yyyy, HH:mm')}"></p>
+        <p th:text="'Apoteker: ' + ${resep.apoteker.nama}"></p>
+        <p th:text="'Jumlah Obat: ' + ${resep.listJumlah.size}"></p>
+        <p th:text="'Appointment: ' + ${#temporals.format(resep.appointment.waktuAwal, 'dd MMMM yyyy, HH:mm')}"></p>
         <br><br>
+        <table class="table">
+          <thead>
+          <tr>
+            <th style='text-align:center; vertical-align:middle'>No</th>
+            <th style='text-align:center; vertical-align:middle'>Nama Obat</th>
+            <th style='text-align:center; vertical-align:middle'>Kuantitas</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="jumlah, iterationStatus : ${resep.listJumlah}">
+            <td th:text="${iterationStatus.count}" style='text-align:center; vertical-align:middle'></td>
+            <td th:text="${jumlah.obat.nama}" style='text-align:center; vertical-align:middle'></td>
+            <td th:text="${jumlah.kuantitas}" style='text-align:center; vertical-align:middle'></td>
+          </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

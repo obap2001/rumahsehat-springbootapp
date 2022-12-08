@@ -14,7 +14,7 @@
             <div class="justify-content-center">
                 <h2>List Appointment</h2>
                 <br>
-                <a th:href="@{/pasien/add}" class="btn btn-primary">Tambah Appointment</a>
+                <a th:href="@{/appointment/add}" class="btn btn-primary">Tambah Appointment</a>
                 <a class="btn btn-primary" href="/">Beranda</a>
                 <br><br>
                 <div th:if="*{role == 'admin'}">
@@ -35,7 +35,7 @@
                             <td th:text="${iterationStatus.count}" style='text-align:center; vertical-align:middle'></td>
                             <td th:text="${appointment.dokter.nama}" style='text-align:center; vertical-align:middle'></td>
                             <td th:text="${appointment.pasien.nama}" style='text-align:center; vertical-align:middle'></td>
-                            <td th:text="${appointment.waktuAwal}" style='text-align:center; vertical-align:middle'></td>
+                            <td th:text="${#temporals.format(appointment.waktuAwal, 'dd MMMM yyyy HH:mm')}" style='text-align:center; vertical-align:middle'></td>
                             <td th:text="${appointment.isDone}" style='text-align:center; vertical-align:middle'></td>
                             <td>
                                 <a class="btn btn-primary" th:href="@{/appointment/details/} + ${appointment.kode}">Detail Appointment</a>
@@ -90,7 +90,7 @@
                             <td th:text="${iterationStatus.count}" style='text-align:center; vertical-align:middle'></td>
                             <td th:text="${appointmentPasien.dokter.nama}" style='text-align:center; vertical-align:middle'></td>
                             <td th:text="${appointmentPasien.pasien.nama}" style='text-align:center; vertical-align:middle'></td>
-                            <td th:text="${appointmentPasien.waktuAwal}" style='text-align:center; vertical-align:middle'></td>
+                            <td th:text="${#temporals.format(appointmentPasien.waktuAwal, 'dd MMMM yyyy HH:mm')}" style='text-align:center; vertical-align:middle'></td>
                             <td th:text="${appointmentPasien.isDone}" style='text-align:center; vertical-align:middle'></td>
                             <td>
                                 <a class="btn btn-primary" th:href="@{/appointment/details/} + ${appointmentPasien.kode}">Detail Appointment</a>

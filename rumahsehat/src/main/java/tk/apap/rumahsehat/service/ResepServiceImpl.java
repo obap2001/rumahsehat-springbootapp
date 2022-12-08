@@ -7,8 +7,11 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+import tk.apap.rumahsehat.model.JumlahIdModel;
+import tk.apap.rumahsehat.model.JumlahModel;
 import tk.apap.rumahsehat.model.ObatModel;
 import tk.apap.rumahsehat.model.ResepModel;
+import tk.apap.rumahsehat.repository.JumlahDb;
 import tk.apap.rumahsehat.repository.ObatDb;
 import tk.apap.rumahsehat.repository.ResepDb;
 
@@ -21,6 +24,9 @@ public class ResepServiceImpl implements ResepService {
 
     @Autowired
     ObatDb obatDb;
+
+    @Autowired
+    JumlahDb jumlahDb;
 
     @Override
     public void addResep(ResepModel resep) {
@@ -56,5 +62,10 @@ public class ResepServiceImpl implements ResepService {
     @Override
     public List<ObatModel> getListObat() {
         return obatDb.findAll();
+    }
+
+    @Override
+    public List<JumlahModel> getListJumlah() {
+        return jumlahDb.findAll();
     }
 }

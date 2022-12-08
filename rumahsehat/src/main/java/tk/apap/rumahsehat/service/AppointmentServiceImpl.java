@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import tk.apap.rumahsehat.model.AppointmentModel;
 import tk.apap.rumahsehat.model.DokterModel;
-import tk.apap.rumahsehat.model.ResepModel;
 import tk.apap.rumahsehat.repository.AppointmentDb;
 
 
@@ -31,11 +30,6 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public List<AppointmentModel> getListAppointmentByDokter(DokterModel dokter) {
         return appointmentDb.getListAppointmentModelByDokter(dokter);
-    }
-
-    @Override
-    public AppointmentModel getAppointmentByKode(String kode) {
-        return appointmentDb.getAppointmentModelByKode(kode);
     }
 
     @Override

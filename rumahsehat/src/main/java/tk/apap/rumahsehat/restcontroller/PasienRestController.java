@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,6 +17,8 @@ import tk.apap.rumahsehat.service.PasienRestService;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import javax.validation.Valid;
+
 @Slf4j
 @RestController
 @CrossOrigin(origins = "*")
@@ -24,7 +27,18 @@ public class PasienRestController {
     @Autowired
     private PasienRestService pasienRestService;
 
-    //retrieve all
+    // Register pasien
+    @PostMapping(value="/register")
+    private PasienModel registerPasien(@Valid @RequestBody PasienModel pasien, BindingResult bindingResult) {
+        if (bindingResult.hasFieldErrors()) {
+            throw new ResponseStatusException(
+                HttpStatus.BAD_REQUEST, "Request body has invalid type or missing field."
+        );
+        } else {
+        return pasienRestService.registerPasien(pasien);
+        }
+    }
+    // Retrieve all
     @GetMapping("/data-pasien")
     public ResponseEntity getDataPasien() {
         log.info("api mengambil data semua pasien");
@@ -39,7 +53,7 @@ public class PasienRestController {
         return responseEntity;
     }
 
-    //top up saldo
+    // Top up saldo
     @PutMapping(value = "/{idPasien}/update-saldo")
     private PasienModel topUpSaldoPasien(@PathVariable("idPasien") String idPasien, @RequestParam Integer newSaldo){
         log.info("api mengupdate saldo pasien");
