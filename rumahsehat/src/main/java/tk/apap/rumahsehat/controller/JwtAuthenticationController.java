@@ -31,22 +31,22 @@ import tk.apap.rumahsehat.model.JwtRequestLogin;
 // import tk.apap.rumahsehat.model.JwtResponse;
 // import tk.apap.rumahsehat.model.UserModel;
 import tk.apap.rumahsehat.repository.UserDb;
-import tk.apap.rumahsehat.security.UserDetailsServiceImpl;
+import tk.apap.rumahsehat.security.JwtUserDetailsServiceImpl;
 
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 public class JwtAuthenticationController {
 
     protected final Log logger = LogFactory.getLog(getClass());
 
     final UserDb userRepository;
     final AuthenticationManager authenticationManager;
-    final UserDetailsServiceImpl userDetailsService;
+    final JwtUserDetailsServiceImpl userDetailsService;
     final JwtTokenUtil jwtTokenUtil;
 
     public JwtAuthenticationController(UserDb userRepository, AuthenticationManager authenticationManager,
-	UserDetailsServiceImpl userDetailsService, JwtTokenUtil jwtTokenUtil) {
+	JwtUserDetailsServiceImpl userDetailsService, JwtTokenUtil jwtTokenUtil) {
         this.userRepository = userRepository;
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;

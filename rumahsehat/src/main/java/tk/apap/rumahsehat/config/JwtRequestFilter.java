@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,18 +21,17 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.log4j.Log4j2;
-import tk.apap.rumahsehat.security.UserDetailsServiceImpl;
+import tk.apap.rumahsehat.security.JwtUserDetailsServiceImpl;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
-    private final UserDetailsServiceImpl jwtUserDetailsService;
-    private final JwtTokenUtil jwtTokenUtil;
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
-    public JwtRequestFilter(UserDetailsServiceImpl jwtUserDetailsService, JwtTokenUtil jwtTokenUtil) {
-        this.jwtUserDetailsService = jwtUserDetailsService;
-        this.jwtTokenUtil = jwtTokenUtil;
-    }
+    @Autowired
+    @Qualifier("jwtUserDetailsServiceImpl")
+    private UserDetailsService jwtUserDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
@@ -42,7 +42,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             String jwtToken = requestTokenHeader.substring(7);
             try {
                 String username = jwtTokenUtil.getUsernameFromToken(jwtToken);
-                if (StringUtils.isEmpty(username)
+                if (!StringUtils.isEmpty(username)
                         && null == SecurityContextHolder.getContext().getAuthentication()) {
                     UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(username);
                     if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
