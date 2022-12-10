@@ -28,6 +28,7 @@ public class PasienRestController {
     private PasienRestService pasienRestService;
 
     // Register pasien
+    @CrossOrigin
     @PostMapping(value="/register")
     private PasienModel registerPasien(@Valid @RequestBody PasienModel pasien, BindingResult bindingResult) {
         if (bindingResult.hasFieldErrors()) {
