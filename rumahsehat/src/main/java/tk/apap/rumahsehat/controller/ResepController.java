@@ -115,8 +115,6 @@ public class ResepController {
                 resep.getListJumlah().add(jumlah);
             }
 
-            //        apoteker.getListResep().add(resep);
-
             model.addAttribute("resep", resep);
             model.addAttribute("listObat", listObat);
             model.addAttribute("kode", kode);
@@ -135,7 +133,6 @@ public class ResepController {
             resep.setListJumlah(new ArrayList<>());
         }
 
-//        resep.getListJumlah().add(new JumlahModel());
         JumlahIdModel jumlahId = new JumlahIdModel();
         JumlahModel jumlah = new JumlahModel();
         jumlah.setId(jumlahId);
@@ -165,11 +162,6 @@ public class ResepController {
 
     @PostMapping(value = "/resep/add/{kode}", params = {"save"})
     public String addResepSubmit(@PathVariable String kode, @ModelAttribute ResepModel resep, Model model) {
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        User user = (User) auth.getPrincipal();
-//        String username = user.getUsername();
-//        DokterModel dokter = dokterService.getDokterByUsername(username);
-
         if (resep.getListJumlah() == null) {
             resep.setListJumlah(new ArrayList<>());
         }
@@ -178,8 +170,6 @@ public class ResepController {
             resep.setApoteker(apotekerService.getListApoteker().get(0));
         }
 
-//        List<AppointmentModel> listAppointment = appointmentService.getListAppointmentByDokter(dokter);
-//        AppointmentModel appointment = listAppointment.get(listAppointment.size() - 1);
         Long id = Long.valueOf(resepService.getListResep().size() + 1);
         AppointmentModel appointment = appointmentService.getAppointmentById(kode);
         resep.setId(id);
