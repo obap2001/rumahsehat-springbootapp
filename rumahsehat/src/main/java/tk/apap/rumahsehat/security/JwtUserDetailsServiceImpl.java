@@ -20,17 +20,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class JwtUserDetailsServiceImpl implements UserDetailsService {
 
     final UserDb userRepository;
 
-    public UserDetailsServiceImpl(UserDb userRepository) {
+    public JwtUserDetailsServiceImpl(UserDb userRepository) {
         this.userRepository = userRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserModel user = userRepository.findByUsername(username);
+        if(!(user.getRole().equals("pasien"))){
+            throw new UsernameNotFoundException(username);
+        }
         List<GrantedAuthority> authorityList = new ArrayList<>();
         authorityList.add(new SimpleGrantedAuthority(user.getRole()));
         return new User(user.getUsername(), user.getPassword(), authorityList);
