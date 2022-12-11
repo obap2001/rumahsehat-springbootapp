@@ -1,5 +1,6 @@
 package tk.apap.rumahsehat.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -38,7 +39,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.util.Optional;
 
-
+@Slf4j
 @Controller
 //@RequestMapping("/appointment")
 public class AppointmentController {
@@ -109,7 +110,7 @@ public class AppointmentController {
 
         appointmentService.addAppointment(appointment);
 
-
+        log.info("Berhasil membuat appointment baru.");
         return "appointment/add-appointment";
     }
 
@@ -157,6 +158,7 @@ public class AppointmentController {
         model.addAttribute("appointment", appointment);
 //        model.addAttribute("adaResep", adaResep);
 //        model.addAttribute("idResep", appointment.getResep().getId());
+        log.info("mengambil data appointment terdaftar.");
         return "appointment/appointment-details";
     }
 

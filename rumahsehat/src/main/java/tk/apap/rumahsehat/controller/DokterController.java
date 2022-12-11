@@ -1,5 +1,6 @@
 package tk.apap.rumahsehat.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 // import org.springframework.security.core.Authentication;
@@ -16,7 +17,7 @@ import tk.apap.rumahsehat.model.DokterModel;
 import tk.apap.rumahsehat.service.DokterService;
 import tk.apap.rumahsehat.service.UserService;
 
-
+@Slf4j
 @Controller
 public class DokterController {
   @Qualifier("dokterServiceImpl")
@@ -32,6 +33,7 @@ public class DokterController {
     Model model
   ){
     model.addAttribute("listDokter", dokterService.getListDokter());
+    log.info("Mengambil data semua dokter.");
     return "dokter/viewall-dokter";
   }
 
@@ -50,6 +52,7 @@ public class DokterController {
     dokter.setIsSso(false);
     dokterService.addDokter(dokter);
     model.addAttribute("nama", dokter.getNama());
+    log.info("Menambah data dokter baru.");
     return "dokter/success-add-dokter";
   }
 }

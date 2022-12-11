@@ -36,7 +36,8 @@ public class PasienRestController {
                 HttpStatus.BAD_REQUEST, "Request body has invalid type or missing field."
         );
         } else {
-        return pasienRestService.registerPasien(pasien);
+            log.info("api register pasien berhasil");
+            return pasienRestService.registerPasien(pasien);
         }
     }
     // Retrieve all

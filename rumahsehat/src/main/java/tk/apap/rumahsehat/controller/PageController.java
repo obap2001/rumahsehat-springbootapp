@@ -1,5 +1,6 @@
 package tk.apap.rumahsehat.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,7 @@ import tk.apap.rumahsehat.security.xml.ServiceResponse;
 import tk.apap.rumahsehat.service.AdminService;
 import tk.apap.rumahsehat.service.UserService;
 
+@Slf4j
 @Controller
 public class PageController {
     @Autowired
