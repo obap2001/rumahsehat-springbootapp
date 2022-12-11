@@ -21,8 +21,6 @@ spring:
     hibernate.ddl-auto: update
 
     show-sql: true
-    jwt.secret: proyekapaprumahsehatapap78springbootflutter
-    jwt.get.token.uri: /authenticate
 
 
   # Templates reloading during development
