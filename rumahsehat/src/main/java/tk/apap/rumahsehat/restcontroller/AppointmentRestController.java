@@ -16,7 +16,7 @@ import java.util.List;
 @Slf4j
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("appointment/api")
 public class AppointmentRestController {
     @Autowired
     private AppointmentRestService appointmentRestService;

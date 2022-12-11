@@ -17,7 +17,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/api")
+@RequestMapping("dokter/api")
 public class DokterRestController {
     @Autowired
     private DokterRestService dokterRestService;

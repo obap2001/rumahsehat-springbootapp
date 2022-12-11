@@ -21,7 +21,7 @@ import javax.validation.Valid;
 
 @Slf4j
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin
 @RequestMapping("/api")
 public class PasienRestController {
     @Autowired
