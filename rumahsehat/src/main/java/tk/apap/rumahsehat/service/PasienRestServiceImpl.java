@@ -3,6 +3,7 @@ package tk.apap.rumahsehat.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import tk.apap.rumahsehat.model.AppointmentModel;
 import tk.apap.rumahsehat.model.PasienModel;
 import tk.apap.rumahsehat.model.TagihanModel;
 import tk.apap.rumahsehat.repository.PasienDb;
@@ -68,5 +69,16 @@ public class PasienRestServiceImpl implements PasienRestService{
     @Override
     public PasienModel updateSaldo(PasienModel pasienModel){
         return pasienDb.save(pasienModel);
+    }
+
+    @Override
+    public List<TagihanModel> retrieveTagihanByPasien(PasienModel pasien) {
+        List<AppointmentModel> listAppointmentPasien = pasien.getListAppointment();
+        List<TagihanModel> tagihanModelList = new ArrayList<>();
+        for (AppointmentModel appointment : listAppointmentPasien){
+            TagihanModel tagihan = appointment.getTagihan();
+            tagihanModelList.add(tagihan);
+        }
+        return tagihanModelList;
     }
 }
