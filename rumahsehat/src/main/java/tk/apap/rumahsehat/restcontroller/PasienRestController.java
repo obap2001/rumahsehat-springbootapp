@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import tk.apap.rumahsehat.model.PasienModel;
+import tk.apap.rumahsehat.model.TagihanModel;
 import tk.apap.rumahsehat.service.PasienRestService;
 
 import java.util.List;
@@ -81,4 +82,10 @@ public class PasienRestController {
         }
     }
 
+    //Retrieve List All Tagihan
+    @GetMapping(value = "/tagihan/{idPasien}/viewall")
+    private List<TagihanModel> retrieveListTagihanPasien(@PathVariable("idPasien") String idPasien){
+        PasienModel pasien = pasienRestService.retrievePasien(idPasien);
+        return pasienRestService.retrieveTagihanByPasien(pasien);
+    }
 }
