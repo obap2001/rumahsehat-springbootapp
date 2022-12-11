@@ -1,5 +1,6 @@
 package tk.apap.rumahsehat.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "tagihan")
+@JsonIgnoreProperties(value={"appointment"}, allowSetters = true)
 public class  TagihanModel implements Serializable {
     // TODO buat kode appointment sesuai ketentuan soal
     // todo change package name for strategy
@@ -58,4 +60,3 @@ public class  TagihanModel implements Serializable {
     @JoinColumn(name = "kode_appointment", referencedColumnName = "kode")
     private AppointmentModel appointment;
 }
-

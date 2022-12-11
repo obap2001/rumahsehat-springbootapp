@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import tk.apap.rumahsehat.model.TagihanModel;
+import tk.apap.rumahsehat.service.PasienRestService;
 import tk.apap.rumahsehat.service.TagihanRestService;
 
 import java.util.List;
@@ -20,11 +21,6 @@ public class TagihanRestController {
     @Autowired
     private TagihanRestService tagihanRestService;
 
-    //Retrieve List All Tagihan
-    @GetMapping(value = "/tagihan/viewall")
-    private List<TagihanModel> retrieveListTagihan(){
-        return tagihanRestService.retrieveListTagihan();
-    }
 
     //Retrieve Tagihan
     @GetMapping(value = "/tagihan/{kode}")
