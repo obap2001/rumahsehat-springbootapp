@@ -81,4 +81,7 @@ public class PasienRestServiceImpl implements PasienRestService{
         }
         return tagihanModelList;
     }
+    public PasienModel retrievePasien(String id){
+        return pasienDb.findByUuid(id);
+    }
 }

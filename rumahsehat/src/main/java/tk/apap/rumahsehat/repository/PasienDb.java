@@ -13,6 +13,7 @@ import tk.apap.rumahsehat.model.PasienModel;
 @Repository
 public interface PasienDb extends JpaRepository<PasienModel, String> {
   PasienModel findByUsername(String username);
+  PasienModel findByUuid(String uuid);
   List<PasienModel> findAll();
   void delete(PasienModel appasienoteker);
 
