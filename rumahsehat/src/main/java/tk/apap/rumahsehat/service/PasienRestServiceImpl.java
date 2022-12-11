@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import tk.apap.rumahsehat.model.PasienModel;
+import tk.apap.rumahsehat.model.TagihanModel;
 import tk.apap.rumahsehat.repository.PasienDb;
+import tk.apap.rumahsehat.repository.TagihanDb;
+
 
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
@@ -16,6 +18,8 @@ public class PasienRestServiceImpl implements PasienRestService{
     @Autowired
     PasienDb pasienDb;
 
+    @Autowired
+    TagihanDb tagihanDb;
     @Override
     public PasienModel registerPasien(PasienModel pasien) {
         String pass = encrypt(pasien.getPassword());
@@ -34,20 +38,35 @@ public class PasienRestServiceImpl implements PasienRestService{
     public List<PasienModel> retrieveListPasien(){
         return pasienDb.findAll();
     }
+
     @Override
-    public PasienModel updateSaldo(String id, int nominal){
-        Optional<PasienModel> pasien = pasienDb.findById(id);
-        if (pasien.isPresent()){
-            PasienModel pasienUpdt = pasien.get();
-            pasienUpdt.setSaldo(pasienUpdt.getSaldo()+nominal);
-            return pasienUpdt;
-        }else return null;
+    public PasienModel retrievePasienByUsername(String username){
+        PasienModel pasien = pasienDb.findByUsername(username);
+        return pasien;
     }
+
     @Override
-    public PasienModel retrievePasien(String id){
-        Optional<PasienModel> pasien = pasienDb.findById(id);
-        if (pasien.isPresent()){
-            return pasien.get();
-        }return null;
+    public Map<String, Object> retrievePasienByTagihan(String kode) {
+        Optional<TagihanModel> tagihanOptional = tagihanDb.findById(kode);
+        TagihanModel tagihan = null;
+        if (tagihanOptional.isPresent()){
+            tagihan = tagihanOptional.get();
+        } else {
+            throw new NoSuchElementException();
+        }
+        PasienModel pasien = tagihan.getAppointment().getPasien();
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", pasien.getUuid());
+        map.put("username", pasien.getUsername());
+        map.put("email", pasien.getEmail());
+        map.put("nama", pasien.getNama());
+        map.put("saldo", pasien.getSaldo());
+        map.put("umur", pasien.getUmur());
+        return map;
+    }
+
+    @Override
+    public PasienModel updateSaldo(PasienModel pasienModel){
+        return pasienDb.save(pasienModel);
     }
 }

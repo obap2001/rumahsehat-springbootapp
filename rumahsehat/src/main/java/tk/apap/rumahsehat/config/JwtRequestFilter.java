@@ -37,34 +37,39 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
 
-        final String requestTokenHeader = request.getHeader("Authorization");
-        if (StringUtils.startsWithIgnoreCase(requestTokenHeader,"Bearer ")) {
-            String jwtToken = requestTokenHeader.substring(7);
-            try {
-                String username = jwtTokenUtil.getUsernameFromToken(jwtToken);
-                if (!StringUtils.isEmpty(username)
-                        && null == SecurityContextHolder.getContext().getAuthentication()) {
-                    UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(username);
-                    if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
-                        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                                new UsernamePasswordAuthenticationToken(
-                                        userDetails, null, userDetails.getAuthorities());
-                        usernamePasswordAuthenticationToken
-                                .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                        SecurityContextHolder.getContext()
-                                .setAuthentication(usernamePasswordAuthenticationToken);
+        if (request.getServletPath().contains("/api/pasien/")
+                && !request.getServletPath().equals("/api/auth")
+                && !request.getServletPath().equals("/api/pasien/register")) {
+            final String requestTokenHeader = request.getHeader("Authorization");
+            if (StringUtils.startsWithIgnoreCase(requestTokenHeader,"Bearer ")) {
+                String jwtToken = requestTokenHeader.substring(7);
+                try {
+                    String username = jwtTokenUtil.getUsernameFromToken(jwtToken);
+                    if (!StringUtils.isEmpty(username)
+                            && null == SecurityContextHolder.getContext().getAuthentication()) {
+                        UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(username);
+                        if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
+                            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+                                    new UsernamePasswordAuthenticationToken(
+                                            userDetails, null, userDetails.getAuthorities());
+                            usernamePasswordAuthenticationToken
+                                    .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                            SecurityContextHolder.getContext()
+                                    .setAuthentication(usernamePasswordAuthenticationToken);
+                        }
                     }
+                } catch (IllegalArgumentException e) {
+                    logger.error("Unable to fetch JWT Token");
+                } catch (ExpiredJwtException e) {
+                    logger.error("JWT Token is expired");
+                } catch (Exception e) {
+                    logger.error(e.getMessage());
                 }
-            } catch (IllegalArgumentException e) {
-                logger.error("Unable to fetch JWT Token");
-            } catch (ExpiredJwtException e) {
-                logger.error("JWT Token is expired");
-            } catch (Exception e) {
-                logger.error(e.getMessage());
+            } else {
+                logger.warn("JWT Token does not begin with Bearer String");
             }
-        } else {
-            logger.warn("JWT Token does not begin with Bearer String");
         }
+
         chain.doFilter(request, response);
     }
 

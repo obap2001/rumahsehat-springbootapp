@@ -67,14 +67,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
             httpSecurity.csrf().disable().antMatcher("/api/**");
 
-            httpSecurity.authorizeRequests().antMatchers("/css/**").permitAll()
-                    .antMatchers("/js/**").permitAll()
-                                    .antMatchers("/api/register").permitAll()
-                    .antMatchers("/login-sso", "/validate-ticket").permitAll()
-                    .antMatchers("/obat/{id}/ubah-stok").hasAuthority("apoteker")
-                    .antMatchers("/api/auth/**").permitAll().
-                    anyRequest().authenticated().and().
-                    exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
+            httpSecurity.authorizeRequests()
+                    .antMatchers("/api/register").permitAll()
+                    .antMatchers("/api/auth/**").permitAll()
+                    .antMatchers("/api/**").hasAuthority("pasien")
+                    .anyRequest()
+                    .authenticated()
+                    .and()
+                    .exceptionHandling()
+                    .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                    .and().sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
             httpSecurity.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -98,7 +100,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/js/**").permitAll()
                     .antMatchers("/login-sso", "/validate-ticket").permitAll()
                     .antMatchers("/obat/{id}/ubah-stok").hasAuthority("apoteker")
-                    .antMatchers("/api/auth/**").permitAll()
                 .anyRequest().authenticated()
                     .and()
                     .formLogin()
