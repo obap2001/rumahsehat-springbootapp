@@ -6,4 +6,8 @@ import java.util.List;
 
 public interface AppointmentRestService {
     List<AppointmentModel> retrieveListAppointment();
+
+    AppointmentModel createAppointment(AppointmentModel course);
+
+    AppointmentModel getAppointmentByCode(String code);
 }

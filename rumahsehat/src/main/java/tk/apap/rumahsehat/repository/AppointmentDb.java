@@ -13,7 +13,7 @@ import tk.apap.rumahsehat.model.DokterModel;
 import tk.apap.rumahsehat.model.UserModel;
 
 @Repository
-public interface AppointmentDb extends JpaRepository<AppointmentModel, Long> {
+public interface AppointmentDb extends JpaRepository<AppointmentModel, String> {
     //AppointmentModel findByPatientName(String patientName);
 
     List<AppointmentModel> findAll();
@@ -24,6 +24,9 @@ public interface AppointmentDb extends JpaRepository<AppointmentModel, Long> {
 
     @Query("SELECT a FROM AppointmentModel a WHERE a.kode = :kode")
     AppointmentModel getAppointmentById(@Param("kode") String kode);
+
+    @Query("SELECT a FROM AppointmentModel a WHERE a.kode = :kode")
+    Optional<AppointmentModel> getAppointmentByCode(@Param("kode") String kode);
 
     //AppointmentModel getAppointmentById(String id);
 }
