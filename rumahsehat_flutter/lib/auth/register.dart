@@ -275,20 +275,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     MaterialPageRoute(builder: (context) => LoginPage()));
               },
               child: Text("Register"),
-              // buttonColor: primaryBlue,
-              // textColor: Colors.white,
             ),
-            // CustomPrimaryButton(
-            //   onPressed: () {
-            //     if (_formKey.currentState!.validate()) {
-            //       save();
-            //     }
-            //   },
-            //   buttonColor: primaryBlue,
-            //   textValue: 'Register',
-            //   textColor: Colors.white,
-            //   // TODO button
-            // ),
             SizedBox(
               height: 32,
             ),
