@@ -47,5 +47,29 @@ public class TagihanServiceImpl implements TagihanService{
         return result;
     }
 
+    @Override
+    public HashMap<Integer, Integer> mapBulanToJumlahTagihanByTahun(int tahun) {
+        HashMap<Integer, Integer> result = new HashMap<>();
+        for (TagihanModel tagihan : getListTagihan()) {
+            if (tagihan.getTanggalTerbuat().getYear() == tahun) {
+                int bulan = tagihan.getTanggalTerbuat().getMonthValue();
 
+                if (result.containsKey(bulan)) {
+                    result.put(bulan, result.get(bulan));
+                }
+                else {
+                    result.put(bulan, 1);
+                }
+            }
+        }
+
+        int jumlahBulan = LocalDate.now().lengthOfYear();
+        for (int i = 1; i < jumlahBulan; i++) {
+            if (!result.containsKey(i)) {
+                result.put(i, 0);
+            }
+        }
+
+        return result;
+    }
 }
