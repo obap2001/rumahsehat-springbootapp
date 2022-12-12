@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:rumah_sehat_flutter/screens/lihatProfile.dart';
-import 'package:rumah_sehat_flutter/screens/rumahSakitDrawer.dart';
+import 'package:rumah_sehat_flutter/screens/lihat_profile.dart';
+import 'package:rumah_sehat_flutter/screens/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 

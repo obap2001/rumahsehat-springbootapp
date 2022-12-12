@@ -5,6 +5,8 @@ import java.time.Month;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 // import org.springframework.security.core.Authentication;
@@ -29,6 +31,11 @@ public class TagihanController {
   @Qualifier("tagihanServiceImpl")
   @Autowired
   private TagihanService tagihanService;
+
+  @Qualifier("userServiceImpl")
+  @Autowired
+  private UserService userService;
+
 
   @RequestMapping(value = "/chart", method = RequestMethod.GET)
   public String homeChart(Model model) {
