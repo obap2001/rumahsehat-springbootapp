@@ -72,4 +72,10 @@ public class TagihanServiceImpl implements TagihanService{
 
         return result;
     }
+
+    @Override
+    public void addTagihan(TagihanModel tagihan) {
+        // TODO Auto-generated method stub
+        
+    }
 }

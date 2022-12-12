@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rumah_sehat_flutter/model/PasienModel.dart';
-import 'package:rumah_sehat_flutter/screens//topUpSaldo.dart';
+import 'package:rumah_sehat_flutter/screens/top_up_saldo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';

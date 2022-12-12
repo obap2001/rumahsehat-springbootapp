@@ -1,17 +1,10 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rumah_sehat_flutter/auth/login.dart';
-import 'package:rumah_sehat_flutter/auth/register.dart';
 import 'package:rumah_sehat_flutter/theme.dart';
-import 'package:rumah_sehat_flutter/widgets/primary_button.dart';
-import 'package:rumah_sehat_flutter/auth/user.dart';
 import 'package:http/http.dart' as http;
-import '../screens/rumahSakitDrawer.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import '../web/responses/login_response.dart';
 
 const SERVER_IP = 'http://localhost:8080';
 

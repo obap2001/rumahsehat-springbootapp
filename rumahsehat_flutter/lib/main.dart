@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rumah_sehat_flutter/auth/login.dart';
-import 'screens/rumahSakitDrawer.dart';
+import 'screens/home.dart';
 import 'dart:convert' show json, base64, ascii;
 
 void main() {
