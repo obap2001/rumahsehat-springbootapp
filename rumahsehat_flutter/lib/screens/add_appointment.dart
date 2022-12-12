@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:rumah_sehat_flutter/screens/lihatProfile.dart';
-import 'package:rumah_sehat_flutter/screens/list-appointment.dart';
-import 'package:rumah_sehat_flutter/screens/rumahSakitDrawer.dart';
+import 'package:rumah_sehat_flutter/screens/lihat_profile.dart';
+import 'package:rumah_sehat_flutter/screens/list_appointment.dart';
+import 'package:rumah_sehat_flutter/screens/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -25,7 +25,7 @@ class createAppointmentState extends State<createAppointment> {
   Future<DokterModel?> fetchDokter() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     var token = sharedPreferences.getString("token");
-    String url = "http://localhost:8080/api/dokter/list-dokter";
+    String url = "http://localhost:8080/api/dokter/data-dokter";
     var headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',
@@ -240,7 +240,7 @@ class createAppointmentState extends State<createAppointment> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     var token = sharedPreferences.getString("token");
     String url =
-        "http://localhost:8080/api/appointment/add";
+        "http://localhost:8080/api/appointment/create";
     Map data = {
       'uuid_dokter': uuid_dokter,
       'waktuAwal': waktuAwal

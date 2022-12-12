@@ -63,7 +63,7 @@ public class AppointmentRestController {
     }
 
     @PostMapping(value = "/create")
-    private PasienModel createAppointment(@RequestHeader("Authorization") String token, @RequestBody PasienModel pasien, @RequestBody AppointmentModel appointment) {
+    private PasienModel createAppointment2(@RequestHeader("Authorization") String token, @RequestBody PasienModel pasien, @RequestBody AppointmentModel appointment) {
         Map<String, String> decodedToken = decode(token);
         String username = decodedToken.get("sub");
         PasienModel pasienlama = pasienRestService.retrievePasienByUsername(username);
@@ -71,9 +71,11 @@ public class AppointmentRestController {
 
         List<AppointmentModel> listAppointmentPasien = pasien.getListAppointment();
         listAppointmentPasien.add(appointment);
+        appointment.setPasien(pasienlama);
+        appointment.setIsDone(false);
 
         pasien = pasienlama;
-        pasienRestService.updateSaldo(pasien);
+        //pasienRestService.updateSaldo(pasien);
         return pasien;
     }
 
