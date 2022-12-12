@@ -93,7 +93,13 @@ public class PasienRestController {
         Map<String, String> decodedToken = decode(token);
         String username = decodedToken.get("sub");
         PasienModel pasien = pasienRestService.retrievePasienByUsername(username);
-        return pasienRestService.retrieveTagihanByPasien(pasien);
+        Map<String,Object> map= pasienRestService.retrieveTagihanByPasien(pasien);
+        if(!map.isEmpty()){
+            return map;
+        }else{
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,  pasien.getUsername() + "Tidak memiliki tagihan.");
+        }
     }
 
     //Retrieve Detail Tagihan Pasien
