@@ -11,6 +11,8 @@ import tk.apap.rumahsehat.repository.ObatDb;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -21,5 +23,21 @@ public class AppointmentRestServiceImpl implements AppointmentRestService{
     @Override
     public List<AppointmentModel> retrieveListAppointment(){
         return appointmentDb.findAll();
+    }
+
+    @Override
+    public AppointmentModel createAppointment(AppointmentModel appointment){
+        return appointmentDb.save(appointment);
+    }
+
+    @Override
+    public AppointmentModel getAppointmentByCode(String code){
+        Optional<AppointmentModel> appointment = appointmentDb.getAppointmentByCode(code);
+        if(appointment.isPresent()){
+            return appointment.get();
+        } else {
+            throw new NoSuchElementException();
+        }
+
     }
 }
