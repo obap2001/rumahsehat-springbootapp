@@ -20,17 +20,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "jumlah")
 public class JumlahModel {
-//  @Id
-//  @ManyToOne(fetch = FetchType.EAGER, optional = false)
-//  @JoinColumn(name = "id_obat", referencedColumnName = "id_obat")
-//  @OnDelete(action = OnDeleteAction.CASCADE)
-//  private ObatModel obat;
-//
-//  @Id
-//  @ManyToOne(fetch = FetchType.EAGER, optional = false)
-//  @JoinColumn(name = "id_resep", referencedColumnName = "id_resep")
-//  @OnDelete(action = OnDeleteAction.CASCADE)
-//  private ResepModel resep;
+
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EmbeddedId

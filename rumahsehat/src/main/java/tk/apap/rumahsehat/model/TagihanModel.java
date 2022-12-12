@@ -23,14 +23,7 @@ import java.time.LocalDateTime;
 @Table(name = "tagihan")
 @JsonIgnoreProperties(value={"appointment"}, allowSetters = true)
 public class  TagihanModel implements Serializable {
-    // TODO buat kode appointment sesuai ketentuan soal
-    // todo change package name for strategy
-    // @Id
-    // @GeneratedValue(generator = "bill-generator")
-    // @GenericGenerator(name = "bill-generator", 
-    //   parameters = @Parameter(name = "prefix", value = "BILL"), 
-    //   strategy = "tk.apap.rumahsehat.modelgenerator.IdGenerator")
-    // private String kode;
+
 
     @Id
     @GeneratedValue(generator = "system-uuid")

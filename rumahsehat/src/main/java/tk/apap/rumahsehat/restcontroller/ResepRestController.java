@@ -32,13 +32,7 @@ public class ResepRestController {
         return decodedToken;
     }
 
-//    @CrossOrigin(value = "*", maxAge = 3600)
-//    @GetMapping(value = "/resep/{kode}")
-//    private ResepModel retrieveResepByKodeAppointment(@RequestHeader("Authorization") String token) {
-//        System.out.println(token);
-//        Map<String, String> decodedToken = decode(token);
-//        String kode =
-//    }
+
 
     @CrossOrigin(value = "*", maxAge = 3600)
     @GetMapping(value = "/resep/view/{kode}")

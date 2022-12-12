@@ -31,8 +31,6 @@ public class ObatController {
 
     @GetMapping(value = "/viewall")
     public String viewAllObat(Model model, HttpServletRequest servreq){
-//        String role = userService.getUserByUsername(servreq.getRemoteUser()).getRole();
-//        if (role.equals("apoteker") || role.equals("admin")) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) auth.getPrincipal();
         String username = user.getUsername();
@@ -41,8 +39,6 @@ public class ObatController {
         model.addAttribute("role", userModel.getRole());
         model.addAttribute("listObat", obatService.getListObat());
         return "obat/viewall-obat";
-//        }else
-//            return "redirect:/";
     }
 
     @GetMapping("/{id}/ubah-stok")

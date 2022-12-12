@@ -20,7 +20,7 @@ class addAppointment extends StatefulWidget {
 Future<AppointmentModel> addAppointments(
     String kode, String isDone, BuildContext context) async {
   AppointmentModel appointmentModel = newObject();
-  var Url = "http://localhost:8080/appointment/add";
+  var Url = "http://apap-78.cs.ui.ac.id/appointment/add";
   var response = await http.post(Uri.parse(Url),
       headers: <String, String>{"Content-Type": "application/json"},
       body: jsonEncode(<String, String>{

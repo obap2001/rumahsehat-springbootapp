@@ -5,7 +5,7 @@ import 'package:rumah_sehat_flutter/auth/login.dart';
 import 'package:rumah_sehat_flutter/theme.dart';
 import 'package:http/http.dart' as http;
 
-const SERVER_IP = 'http://localhost:8080';
+const SERVER_IP = 'http://apap-78.cs.ui.ac.id';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);

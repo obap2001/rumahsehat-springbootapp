@@ -69,7 +69,7 @@ class topUpSaldoState extends State<topUpSaldo>{
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     var token = sharedPreferences.getString("token");
     String url =
-        "http://localhost:8080/api/pasien/topup-saldo";
+        "http://apap-78.cs.ui.ac.id/api/pasien/topup-saldo";
     Map data = {
       'saldo': saldo
     };

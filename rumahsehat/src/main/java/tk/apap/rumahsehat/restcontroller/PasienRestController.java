@@ -42,6 +42,7 @@ public class PasienRestController {
     @PostMapping(value="/register")
     private PasienModel registerPasien(@Valid @RequestBody PasienModel pasien, BindingResult bindingResult) {
         if (bindingResult.hasFieldErrors()) {
+            log.error("api register pasien gagal, invalid credetials");
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "Request body has invalid type or missing field."
             );
@@ -84,6 +85,7 @@ public class PasienRestController {
         pasienlama.setSaldo(pasienlama.getSaldo()+pasien.getSaldo());
         pasien = pasienlama;
         pasienRestService.updateSaldo(pasien);
+        log.info("api update saldo pasien berhasil");
         return pasien;
     }
 
@@ -95,8 +97,10 @@ public class PasienRestController {
         PasienModel pasien = pasienRestService.retrievePasienByUsername(username);
         Map<String,Object> map= pasienRestService.retrieveTagihanByPasien(pasien);
         if(!map.isEmpty()){
+            log.info("api mengambil data tagihan pasien berhasil");
             return map;
         }else{
+            log.info("api mengambil data tagihan pasien gagal, tagihan tidak ditemukan");
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND,  pasien.getUsername() + "Tidak memiliki tagihan.");
         }
@@ -106,8 +110,10 @@ public class PasienRestController {
     @GetMapping(value = "/tagihan/detail/{kode}")
     private TagihanModel retrieveTagihan(@RequestHeader("Authorization") String token, @PathVariable("kode") String kode){
         try{
+            log.info("api mengambil detail tagihan pasien berhasil");
             return tagihanRestService.getTagihanByKode(kode);
         } catch (NoSuchElementException e){
+            log.info("api mengambil detail tagihan pasien gagal, tagihan tidak ditemukan");
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND,  "Tagihan dengan kode " + kode + " tidak ditemukan"
             );
@@ -127,6 +133,7 @@ public class PasienRestController {
                 pasien = pasienlama;
                 pasienRestService.updateSaldo(pasien);
                 tagihan.setIsPaid(true);
+                log.info("api membayar tagihan pasien berhasil");
                 return ResponseEntity.ok("Success");
             }throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Saldo tidak mencukupi untuk membayar tagihan");
         } catch (NoSuchElementException e){

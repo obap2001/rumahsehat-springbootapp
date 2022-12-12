@@ -45,12 +45,7 @@ public class TagihanController {
 
   @RequestMapping(value = "/chart/default", method = RequestMethod.GET)
   public String getDefaultChart(Model model) {
-      //String response = restTemplate.getForObject("https://api.open-meteo.com/v1/forecast?latitude=-6.1862&longitude=106.8063&daily=temperature_2m_max&timezone=Asia/Bangkok&past_days=1", String.class);
-      //log.info(response);
 
-      // WeatherDTO response = restTemplate.getForObject("https://api.open-meteo.com/v1/forecast?latitude=-6.1862&longitude=106.8063&daily=temperature_2m_max&timezone=Asia/Bangkok&past_days=1",
-      //         WeatherDTO.class);
-      // log.info(response.toString());
 
       Month bulanIni = LocalDate.now().getMonth();
       int tahunIni = LocalDate.now().getYear();

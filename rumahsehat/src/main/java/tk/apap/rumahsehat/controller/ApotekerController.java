@@ -3,9 +3,7 @@ package tk.apap.rumahsehat.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-// import org.springframework.security.core.Authentication;
-// import org.springframework.security.core.context.SecurityContextHolder;
-// import org.springframework.security.core.userdetails.User;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import tk.apap.rumahsehat.model.ApotekerModel;
-// import tk.apap.rumahsehat.model.UserModel;
 import tk.apap.rumahsehat.service.ApotekerService;
 import tk.apap.rumahsehat.service.UserService;
 

@@ -18,7 +18,7 @@ class _ProfilPasienPage extends State<ProfilPasienPage> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     var token = sharedPreferences.getString("token");
     String url =
-        "http://localhost:8080/api/pasien/data-pasien";
+        "http://apap-78.cs.ui.ac.id/api/pasien/data-pasien";
     print(token);
     final response = await http.get(Uri.parse(url), headers: {
       'Content-Type': 'application/json',

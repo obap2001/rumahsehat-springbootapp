@@ -240,7 +240,7 @@ class createAppointmentState extends State<createAppointment> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     var token = sharedPreferences.getString("token");
     String url =
-        "http://localhost:8080/api/appointment/create";
+        "http://apap-78.cs.ui.ac.id/api/appointment/create";
     Map data = {
       'uuid_dokter': uuid_dokter,
       'waktuAwal': waktuAwal

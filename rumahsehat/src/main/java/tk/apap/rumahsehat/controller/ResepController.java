@@ -128,45 +128,7 @@ public class ResepController {
         return "error/403";
     }
 
-//    @PostMapping(value="/resep/view/{id}", params= {"confirmResep"})
-//    public String confirmResep(@PathVariable Long id, Model model, HttpServletRequest servreq) {
-////        String role = userService.getUserByUsername(servreq.getRemoteUser()).getRole();
-//
-////        if (role.equals("apoteker")) {
-//        ResepModel resep = resepService.getResepById(id);
-//        AppointmentModel appointment = appointmentService.getAppointmentById(resep.getAppointment().getKode());
-//        resep.setIsDone(true);
-//        appointment.setIsDone(true);
-//        resepService.deleteResep(resepService.getResepById(id));
-//        resepService.addResep(resep);
-//
-//        for (int i = 0; i < resep.getListJumlah().size(); i++) {
-//            resep.getListJumlah().get(i).getObat().setStok(resep.getListJumlah().get(i).getObat().getStok() - resep.getListJumlah().get(i).getKuantitas());
-//            obatService.updateObat(resep.getListJumlah().get(i).getObat());
-//        }
-//
-//        TagihanModel tagihan = new TagihanModel();
-//        int jumlahTagihan = 0;
-//        for (int i = 0; i < resep.getListJumlah().size(); i++) {
-//            jumlahTagihan += resep.getListJumlah().get(i).getObat().getHarga() + resep.getAppointment().getDokter().getTarif();
-//        }
-//
-//        DateTimeFormatter formatTanggal = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-//        LocalDateTime tanggalTerbuat = LocalDateTime.parse(LocalDateTime.now().format(formatTanggal), formatTanggal);
-//        tagihan.setAppointment(resep.getAppointment());
-//        tagihan.setIsPaid(false);
-//        tagihan.setJumlahTagihan(jumlahTagihan);
-//        tagihan.setTanggalTerbuat(tanggalTerbuat);
-//        tagihanService.addTagihan(tagihan);
-//
-//        model.addAttribute("resep", resep);
-//        model.addAttribute("id", resep.getId());
-//        //        model.addAttribute("listJumlah", resepTarget.getListJumlah());
-//        return "resep/viewdetail-resep";
-////        }
-//
-////        return "error/404";
-//    }
+
 
     @GetMapping("/resep/delete/{id}")
     public String deleteResep(@PathVariable Long id, Model model) {
@@ -283,14 +245,5 @@ public class ResepController {
 
         return "resep/add-resep";
     }
-
-//    @PostMapping("/resep/add/{kode}")
-//    public String addResepSubmitPage(@ModelAttribute ResepModel resep, Model model) {
-//        resepService.addResep(resep);
-//
-//        model.addAttribute("idResep", resep.getId());
-//
-//        return "resep/add-resep";
-//    }
 
 }

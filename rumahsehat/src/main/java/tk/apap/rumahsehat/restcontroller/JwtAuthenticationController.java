@@ -93,25 +93,5 @@ public class JwtAuthenticationController {
     }
 
     
-	// @PostMapping("/register/pasien")
-    // public ResponseEntity<?> saveUser(@RequestParam("nama") String nama,
-    //                                   @RequestParam("username") String username, 
-	// 								  @RequestParam("email") String email, @RequestParam("password") String password) {
-    //     Map<String, Object> responseMap = new HashMap<>();
-    //     UserModel user = new UserModel();
-    //     user.setNama(nama);
-    //     user.setUsername(username);
-    //     user.setEmail(email);
-    //     user.setPassword(new BCryptPasswordEncoder().encode(password));
-    //     user.setRole("pasien");
-    //     user.setIsSso(false);
-    //     UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-    //     String token = jwtTokenUtil.generateToken(userDetails);
-    //     userRepository.save(user);
-    //     responseMap.put("error", false);
-    //     responseMap.put("username", username);
-    //     responseMap.put("message", "Account created successfully");
-    //     responseMap.put("token", token);
-    //     return ResponseEntity.ok(responseMap);
-    // }
+
 }

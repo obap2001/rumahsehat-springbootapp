@@ -12,7 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../screens/list-tagihan.dart';
 import '../web/responses/login_response.dart';
 
-const SERVER_IP = 'http://localhost:8080';
+const SERVER_IP = 'http://apap-78.cs.ui.ac.id';
 final storage = FlutterSecureStorage();
 
 class LoginPage extends StatefulWidget {

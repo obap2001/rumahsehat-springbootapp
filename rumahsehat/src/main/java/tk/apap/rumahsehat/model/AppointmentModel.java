@@ -23,14 +23,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "appointment")
 public class AppointmentModel implements Serializable {
-    // TODO buat kode appointment sesuai ketentuan soal
-    // todo change package name for strategy
-    // @Id
-    // @GeneratedValue(generator = "apt-generator")
-    // @GenericGenerator(name = "apt-generator", 
-    //   parameters = @Parameter(name = "prefix", value = "APT"), 
-    //   strategy = "tk.apap.rumahsehat.model.generator.IdGenerator")
-    // private String kode;
+
 
     @Id
     @GeneratedValue(generator = "system-uuid")

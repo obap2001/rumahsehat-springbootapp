@@ -20,7 +20,7 @@ class _ListAppointmentPage extends State<ListAppointments> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     var token = sharedPreferences.getString("token");
     String url =
-        "http://localhost:8080/api/appointment/list-appointment";
+        "http://apap-78.cs.ui.ac.id/api/appointment/list-appointment";
     var headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',

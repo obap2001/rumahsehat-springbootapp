@@ -59,6 +59,7 @@ public class AppointmentRestController {
                     HttpStatus.BAD_REQUEST, "Request body has invalid type or missing field"
             );
         } else {
+            log.info("api menyimpan data baru appointment");
             return appointmentRestService.createAppointment(course);
         }
     }
@@ -77,6 +78,8 @@ public class AppointmentRestController {
 
         pasien = pasienlama;
         //pasienRestService.updateSaldo(pasien);
+        log.info("api menyimpan data baru appointment");
+
         return pasien;
     }
 
@@ -92,6 +95,7 @@ public class AppointmentRestController {
     @GetMapping(value = "/{kode}")
     private AppointmentModel retrieveAppointment(@PathVariable("kode") String code){
         try{
+            log.info("api mengambil data appointment");
             return appointmentRestService.getAppointmentByCode(code);
         } catch(NoSuchElementException e) {
             throw new ResponseStatusException(
