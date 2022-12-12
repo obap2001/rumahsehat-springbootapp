@@ -9,6 +9,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
+import '../screens/list-tagihan.dart';
 import '../web/responses/login_response.dart';
 
 const SERVER_IP = 'http://localhost:8080';
@@ -191,7 +192,7 @@ class _LoginPageState extends State<LoginPage> {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                RumahSehatHome()));
+                                ListTagihan()));
                   } else {
                     displayDialog(context, "An Error Occurred",
                         "No account was found matching that username and password");
