@@ -153,7 +153,7 @@ class _ListAppointmentPage extends State<ListAppointments> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => topUpSaldo(),)
+                                  builder: (context) => ListAppointments(),)
                             );
                           },
                           child: Text(

@@ -62,25 +62,6 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  // final _formKey = GlobalKey<FormState>();
-  // User user = User("", "");
-  // String url = "http:/localhost:8080/api/auth/login/pasien";
-
-  // Future save() async {
-  //   var res = await http.post(Uri.parse(url),
-  //       headers: {'Content-Type': 'application/json'},
-  //       body: json
-  //           .encode({'username': user.username, 'password': user.password}));
-  //   print(res.body);
-  //   if (res.body != null) {
-  //     Navigator.push(
-  //         context,
-  //         MaterialPageRoute(
-  //           builder: (context) => rumahSakitDrawer(),
-  //         ));
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,12 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   SizedBox(
                     height: 20,
-                  ),
-                  // Image.asset(
-                  //   'assets/images/accent.png',
-                  //   width: 99,
-                  //   height: 4,
-                  // )
+                  )
                 ],
               ),
               SizedBox(
@@ -178,10 +154,6 @@ class _LoginPageState extends State<LoginPage> {
               ElevatedButton(
                 onPressed: () async {
                   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-
-                  // if (_formKey.currentState!.validate()) {
-                  //   save();
-                  // }
                   var username = _usernameController.text;
                   var password = _passwordController.text;
                   var jwt = await attemptLogIn(username, password);
@@ -194,13 +166,11 @@ class _LoginPageState extends State<LoginPage> {
                             builder: (context) =>
                                 RumahSehatHome()));
                   } else {
-                    displayDialog(context, "An Error Occurred",
-                        "No account was found matching that username and password");
+                    displayDialog(context, "Login Gagal",
+                        "Harap masukkan username dan password yang sesuai!");
                   }
                 },
                 child: Text("Login"),
-                // buttonColor: primaryBlue,
-                // textColor: Colors.white,
               ),
               SizedBox(
                 height: 50,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rumah_sehat_flutter/auth/login.dart';
+import 'package:rumah_sehat_flutter/screens/add_appointment.dart';
 import 'package:rumah_sehat_flutter/screens/add_appointment_new.dart';
 import 'package:rumah_sehat_flutter/screens/lihat_profile.dart';
 import 'package:rumah_sehat_flutter/screens/top_up_saldo.dart';
@@ -36,7 +37,7 @@ class _RumahSehatHomeState extends State<RumahSehatHome> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const addAppointment()));
+                      builder: (context) => createAppointment()));
             },
           ),
           ListTile(

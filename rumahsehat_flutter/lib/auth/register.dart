@@ -5,7 +5,6 @@ import 'package:rumah_sehat_flutter/auth/login.dart';
 import 'package:rumah_sehat_flutter/theme.dart';
 import 'package:http/http.dart' as http;
 
-
 const SERVER_IP = 'http://localhost:8080';
 
 class RegisterPage extends StatefulWidget {
@@ -41,7 +40,7 @@ class _RegisterPageState extends State<RegisterPage> {
       "isSso": false,
       "role": "pasien"
     });
-    var res = await http.post(Uri.parse('$SERVER_IP/api/register'),
+    var res = await http.post(Uri.parse('$SERVER_IP/api/pasien/register'),
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin":
@@ -268,27 +267,15 @@ class _RegisterPageState extends State<RegisterPage> {
                   umur,
                   password,
                 );
-                if(res == 200)
-                    displayDialog(context, "Success", "The user was created. Log in now.");
+                if (res == 200)
+                  displayDialog(
+                      context, "Success", "The user was created. Log in now.");
 
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => LoginPage()));
               },
               child: Text("Register"),
-              // buttonColor: primaryBlue,
-              // textColor: Colors.white,
             ),
-            // CustomPrimaryButton(
-            //   onPressed: () {
-            //     if (_formKey.currentState!.validate()) {
-            //       save();
-            //     }
-            //   },
-            //   buttonColor: primaryBlue,
-            //   textValue: 'Register',
-            //   textColor: Colors.white,
-            //   // TODO button
-            // ),
             SizedBox(
               height: 32,
             ),
