@@ -6,4 +6,5 @@ import javax.transaction.Transactional;
 import java.util.List;
 public interface ResepRestService {
     List<ResepModel> retrieveListResep();
+    ResepModel getResepByKodeAppointment(String kode);
 }

@@ -15,12 +15,22 @@
         <a th:href="@{/tagihan/chart/default}" class="mx-2 btn btn-primary">Default Chart: Tagihan Bulan Ini</a>
       </div>
       <p></p>
-      <div class="d-flex justify-content-center">
-        <a th:href="@{/tagihan/chart/default}" class="mx-2 btn btn-primary">Line Chart</a>
+      <div class="row">
+        <div class="col-sm-5">
+          <a th:href="@{/tagihan/chart/line}" class="mx-2 btn btn-primary">Line Chart: Bulanan</a>
+        </div>
+        <div class="col-sm-5">
+          <a th:href="@{/tagihan/chart/line}" class="mx-2 btn btn-primary">Line Chart: Tahunan</a>
+        </div>
       </div>
       <p></p>
-      <div class="d-flex justify-content-center">
-        <a th:href="@{/tagihan/chart/default}" class="mx-2 btn btn-primary">Bar Chart</a>
+      <div class="row">
+        <div class="col-sm-5">
+          <a th:href="@{/tagihan/chart/}" class="mx-2 btn btn-primary">Bar Chart: Kuantitas Tagihan</a>
+        </div>
+        <div class="col-sm-5">
+          <a th:href="@{/tagihan/chart/}" class="mx-2 btn btn-primary">Bar Chart: Total Tagihan</a>
+        </div>
       </div>
     </div>
   </div>

@@ -22,7 +22,7 @@
                         <p th:if="*{appointment.isDone == false}" th:text="'Status: Belum Selesai'"></p>
                     </th>
                     <th>
-                        <a class="btn btn-primary" th:if="*{appointment.isDone == false}" th:href="@{/appointment/details/} + ${appointment.kode}">Selesaikan Appointment</a>
+                        <a class="btn btn-primary" th:if="*{appointment.isDone == false}" th:href="@{/appointment/finish/} + ${appointment.kode}">Selesaikan Appointment</a>
                     </th>
                 </tr>
                 <a class="btn btn-primary" th:if="*{appointment.isDone == false}" th:href="@{/resep/add/}  + ${appointment.kode}">Create Resep</a>

@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import tk.apap.rumahsehat.model.TagihanModel;
 import tk.apap.rumahsehat.repository.TagihanDb;
 
+import javax.naming.InsufficientResourcesException;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.transaction.Transactional;
 
 import java.time.LocalDate;
@@ -21,6 +23,11 @@ public class TagihanServiceImpl implements TagihanService{
     @Override
     public List<TagihanModel> getListTagihan() {
         return tagihanDb.findAll();
+    }
+
+    @Override
+    public void addTagihan(TagihanModel tagihan) {
+        tagihanDb.save(tagihan);
     }
 
     @Override
@@ -47,5 +54,29 @@ public class TagihanServiceImpl implements TagihanService{
         return result;
     }
 
+    @Override
+    public HashMap<Integer, Integer> mapBulanToJumlahTagihanByTahun(int tahun) {
+        HashMap<Integer, Integer> result = new HashMap<>();
+        for (TagihanModel tagihan : getListTagihan()) {
+            if (tagihan.getTanggalTerbuat().getYear() == tahun) {
+                int bulan = tagihan.getTanggalTerbuat().getMonthValue();
 
+                if (result.containsKey(bulan)) {
+                    result.put(bulan, result.get(bulan));
+                }
+                else {
+                    result.put(bulan, 1);
+                }
+            }
+        }
+
+        int jumlahBulan = LocalDate.now().lengthOfYear();
+        for (int i = 1; i < jumlahBulan; i++) {
+            if (!result.containsKey(i)) {
+                result.put(i, 0);
+            }
+        }
+
+        return result;
+    }
 }

@@ -5,6 +5,8 @@ import java.time.Month;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 // import org.springframework.security.core.Authentication;
@@ -17,11 +19,12 @@ import org.springframework.ui.Model;
 
 // import tk.apap.rumahsehat.model.PasienModel;
 // import tk.apap.rumahsehat.model.UserModel;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import tk.apap.rumahsehat.model.*;
 import tk.apap.rumahsehat.service.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/tagihan")
@@ -29,6 +32,11 @@ public class TagihanController {
   @Qualifier("tagihanServiceImpl")
   @Autowired
   private TagihanService tagihanService;
+
+  @Qualifier("userServiceImpl")
+  @Autowired
+  private UserService userService;
+
 
   @RequestMapping(value = "/chart", method = RequestMethod.GET)
   public String homeChart(Model model) {
@@ -53,6 +61,40 @@ public class TagihanController {
       System.out.println(data);
       return "charts/default";
   }
+
+    @RequestMapping(value = "/chart/line/monthly", method = RequestMethod.GET)
+    public String getLineChartMonthly(Model model, HttpServletRequest servreq) {
+        String role = userService.getUserByUsername(servreq.getRemoteUser()).getRole();
+
+        if (role.equals("admin")) {
+            Month bulan = LocalDate.now().getMonth();
+            int tahun = LocalDate.now().getYear();
+            HashMap<Integer, Integer> data = tagihanService.mapTanggaltoJumlahTagihanByBulanIni(bulan);
+
+            model.addAttribute("data", data);
+            model.addAttribute("bulan", bulan);
+            model.addAttribute("tahun", tahun);
+        }
+
+        return "error/404";
+    }
+
+    @RequestMapping(value = "/chart/line/anually", method = RequestMethod.GET)
+    public String getLineChartAnnually(Model model, HttpServletRequest servreq) {
+        String role = userService.getUserByUsername(servreq.getRemoteUser()).getRole();
+
+        if (role.equals("admin")) {
+            Month bulan = LocalDate.now().getMonth();
+            int tahun = LocalDate.now().getYear();
+            HashMap<Integer, Integer> data = tagihanService.mapBulanToJumlahTagihanByTahun(tahun);
+
+            model.addAttribute("data", data);
+            model.addAttribute("bulan", bulan);
+            model.addAttribute("tahun", tahun);
+        }
+
+        return "error/404";
+    }
 }
 
 

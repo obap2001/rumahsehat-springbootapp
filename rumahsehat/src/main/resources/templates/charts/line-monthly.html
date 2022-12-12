@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Beranda</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"
+            integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script></head>
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div class="justify-content-center">
+    <h2 th:text="'TAGIHAN BULAN ' + ${bulan}"></h2><br>
+<!--        <h4>Jumlah tagihan yang terbuat pada bulan ini</h4>-->
+</div>
+<div class="chart-container" style="position: relative; height:20vh; width:80vw">
+    <canvas id="myChart"></canvas>
+</div>
+
+<script th:inline="javascript">
+    const ctx = document.getElementById('myChart');
+    var data = [[${data}]];
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: Object.keys(data),
+            datasets: [{
+                label: "Jumlah Tagihan",
+                data: Object.keys(data).map(function(key) {
+                    return data[key];
+                }),
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>
