@@ -34,7 +34,22 @@ public class PasienRestController {
     @Autowired
     private PasienRestService pasienRestService;
 
-    @GetMapping(value = "/tagihan/{kode}")
+    // Register pasien
+    @CrossOrigin
+    @PostMapping(value="/register")
+    private PasienModel registerPasien(@Valid @RequestBody PasienModel pasien, BindingResult bindingResult) {
+        if (bindingResult.hasFieldErrors()) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Request body has invalid type or missing field."
+            );
+        } else {
+            log.info("api register pasien berhasil");
+            return pasienRestService.registerPasien(pasien);
+        }
+    }
+
+
+        @GetMapping(value = "/tagihan/{kode}")
     private Map retrievePasienByTagihan(@PathVariable("kode") String kode){
         return pasienRestService.retrievePasienByTagihan(kode);
     }
@@ -59,11 +74,11 @@ public class PasienRestController {
         return decodedToken;
     }
 
-    @PostMapping(value = "/topupsaldo")
+    @PostMapping(value = "/topup-saldo")
     private PasienModel topUpSaldo(@RequestHeader("Authorization") String token, @RequestBody PasienModel pasien) {
         Map<String, String> decodedToken = decode(token);
-        String uuid = decodedToken.get("uuid");
-        PasienModel pasienlama = pasienRestService.retrievePasienByUsername(uuid);
+        String username = decodedToken.get("sub");
+        PasienModel pasienlama = pasienRestService.retrievePasienByUsername(username);
         pasienlama.setSaldo(pasienlama.getSaldo()+pasien.getSaldo());
         pasien = pasienlama;
         pasienRestService.updateSaldo(pasien);
