@@ -15,6 +15,6 @@ public interface PasienRestService {
 
     PasienModel updateSaldo(PasienModel pasienModel);
     PasienModel retrievePasienByUsername(String username);
-    List<TagihanModel> retrieveTagihanByPasien(PasienModel pasien);
+    Map<String, Object>  retrieveTagihanByPasien(PasienModel pasien);
     PasienModel retrievePasien(String id);
 }

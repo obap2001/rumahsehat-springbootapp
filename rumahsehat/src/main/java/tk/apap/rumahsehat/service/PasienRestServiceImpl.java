@@ -72,16 +72,28 @@ public class PasienRestServiceImpl implements PasienRestService{
     }
 
     @Override
-    public List<TagihanModel> retrieveTagihanByPasien(PasienModel pasien) {
+    public Map<String, Object> retrieveTagihanByPasien(PasienModel pasien) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        List<Map> list = new ArrayList();
         List<AppointmentModel> listAppointmentPasien = pasien.getListAppointment();
-        List<TagihanModel> tagihanModelList = new ArrayList<>();
+//        List<TagihanModel> tagihanModelList = new ArrayList<>();
         for (AppointmentModel appointment : listAppointmentPasien){
             TagihanModel tagihan = appointment.getTagihan();
-            tagihanModelList.add(tagihan);
+            HashMap<String, Object> mapTagihan = new HashMap<>();
+            mapTagihan.put("kode", tagihan.getKode());
+            mapTagihan.put("tanggal_terbuat", tagihan.getTanggalTerbuat());
+            mapTagihan.put("tanggal_bayar", tagihan.getTanggalTerbuat());
+            mapTagihan.put("is_paid", tagihan.getIsPaid());
+            mapTagihan.put("jumlah_tagihan", tagihan.getJumlahTagihan());
+            mapTagihan.put("kode_appointment", tagihan.getAppointment().getKode());
+            list.add(mapTagihan);
         }
-        return tagihanModelList;
+        map.put("list_tagihan", list);
+        return map;
     }
     public PasienModel retrievePasien(String id){
         return pasienDb.findByUuid(id);
     }
 }
+
+
