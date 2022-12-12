@@ -17,6 +17,7 @@ import tk.apap.rumahsehat.model.PasienModel;
 import tk.apap.rumahsehat.model.TagihanModel;
 import tk.apap.rumahsehat.service.PasienRestService;
 import tk.apap.rumahsehat.service.PasienService;
+import tk.apap.rumahsehat.service.TagihanRestService;
 import tk.apap.rumahsehat.service.UserService;
 
 import java.util.Base64;
@@ -34,7 +35,9 @@ public class PasienRestController {
     @Autowired
     private PasienRestService pasienRestService;
 
-    // Register pasien
+    @Autowired
+    private TagihanRestService tagihanRestService;
+
     @CrossOrigin
     @PostMapping(value="/register")
     private PasienModel registerPasien(@Valid @RequestBody PasienModel pasien, BindingResult bindingResult) {
@@ -48,8 +51,7 @@ public class PasienRestController {
         }
     }
 
-
-        @GetMapping(value = "/tagihan/{kode}")
+    @GetMapping(value = "/tagihan/{kode}")
     private Map retrievePasienByTagihan(@PathVariable("kode") String kode){
         return pasienRestService.retrievePasienByTagihan(kode);
     }
@@ -86,10 +88,44 @@ public class PasienRestController {
     }
 
     //Retrieve List All Tagihan
-    @GetMapping(value = "/tagihan/{idPasien}/viewall")
-    private List<TagihanModel> retrieveListTagihanPasien(@PathVariable("idPasien") String idPasien){
-        PasienModel pasien = pasienRestService.retrievePasien(idPasien);
+    @GetMapping(value = "/tagihan/viewall")
+    private List<TagihanModel> retrieveListTagihanPasien(@RequestHeader("Authorization") String token){
+        Map<String, String> decodedToken = decode(token);
+        String username = decodedToken.get("sub");
+        PasienModel pasien = pasienRestService.retrievePasienByUsername(username);
         return pasienRestService.retrieveTagihanByPasien(pasien);
+    }
+
+    //Retrieve Detail Tagihan Pasien
+    @GetMapping(value = "/tagihan/detail/{kode}")
+    private TagihanModel retrieveTagihan(@PathVariable("kode") String kode){
+        try{
+            return tagihanRestService.getTagihanByKode(kode);
+        } catch (NoSuchElementException e){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,  "Tagihan dengan kode " + kode + " tidak ditemukan"
+            );
+        }
+    }
+
+    //Bayar Tagihan
+    @PostMapping(value = "/tagihan/bayar/{kode}")
+    private ResponseEntity bayarTagihan(@RequestHeader("Authorization") String token, @RequestBody PasienModel pasien, @PathVariable("kode") String kode){
+        Map<String, String> decodedToken = decode(token);
+        String username = decodedToken.get("sub");
+        PasienModel pasienlama = pasienRestService.retrievePasienByUsername(username);
+        TagihanModel tagihan = tagihanRestService.getTagihanByKode(kode);
+        try{
+            if (tagihanRestService.saldoCukupBayarTagihan(tagihan.getJumlahTagihan(), pasien.getSaldo())) {
+                pasienlama.setSaldo(pasien.getSaldo() - tagihan.getJumlahTagihan());
+                pasien = pasienlama;
+                pasienRestService.updateSaldo(pasien);
+                tagihan.setIsPaid(true);
+                return ResponseEntity.ok("Success");
+            }throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Saldo tidak mencukupi untuk membayar tagihan");
+        } catch (NoSuchElementException e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,  "Tagihan dengan kode " + kode + " tidak ditemukan");
+        }
     }
 }
 
