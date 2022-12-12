@@ -3,6 +3,7 @@ import 'package:rumah_sehat_flutter/auth/login.dart';
 import 'package:rumah_sehat_flutter/screens/add_appointment_new.dart';
 import 'package:rumah_sehat_flutter/screens/lihat_profile.dart';
 import 'package:rumah_sehat_flutter/screens/top_up_saldo.dart';
+import 'package:rumah_sehat_flutter/screens/list-tagihan.dart';
 
 class RumahSehatHome extends StatefulWidget {
   @override
@@ -41,6 +42,15 @@ class _RumahSehatHomeState extends State<RumahSehatHome> {
           ListTile(
             title: Text('Detail Appointment'),
             onTap: () {},
+          ),
+          ListTile(
+            title: Text('List-Tagihan'),
+            onTap: () {
+              // Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (context) => const ListTagihan()));
+            },
           ),
           ListTile(
             title: Text('Lihat Profile'),

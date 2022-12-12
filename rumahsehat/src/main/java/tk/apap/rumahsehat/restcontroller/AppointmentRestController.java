@@ -48,6 +48,7 @@ public class AppointmentRestController {
     }
     @GetMapping("/listappointment")
     private List<AppointmentModel> retrieveListAppointment(){
+        log.info("api mengambil data semua appointment");
         return appointmentRestService.retrieveListAppointment();
     }
 

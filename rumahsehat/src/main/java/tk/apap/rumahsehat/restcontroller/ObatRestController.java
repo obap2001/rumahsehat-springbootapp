@@ -23,9 +23,6 @@ public class ObatRestController {
 
     //retrieve all
     @GetMapping("/data-obat")
-//    private List<ObatModel> retrieveListObat(){
-//        return obatRestService.retrieveListObat();
-//    }
     public ResponseEntity getDataObat() {
         log.info("api mengambil data semua obat");
         ResponseEntity responseEntity = null;
@@ -37,9 +34,5 @@ public class ObatRestController {
             responseEntity = ResponseEntity.badRequest().body(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return responseEntity;
-    }
-    @GetMapping("/dataobat")
-    private List<ObatModel> retrieveListObat(){
-        return obatRestService.retrieveListObat();
     }
 }

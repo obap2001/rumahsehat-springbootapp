@@ -192,7 +192,7 @@ class _LoginPageState extends State<LoginPage> {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                ListTagihan()));
+                                RumahSehatHome()));
                   } else {
                     displayDialog(context, "An Error Occurred",
                         "No account was found matching that username and password");
