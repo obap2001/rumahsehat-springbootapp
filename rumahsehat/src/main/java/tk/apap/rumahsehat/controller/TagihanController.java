@@ -54,7 +54,7 @@ public class TagihanController {
       return "charts/default";
   }
 
-      @RequestMapping(value = "/chart/line/monthly", method = RequestMethod.GET)
+    @RequestMapping(value = "/chart/line/monthly", method = RequestMethod.GET)
     public String getLineChartMonthly(Model model, HttpServletRequest servreq) {
         String role = userService.getUserByUsername(servreq.getRemoteUser()).getRole();
 
