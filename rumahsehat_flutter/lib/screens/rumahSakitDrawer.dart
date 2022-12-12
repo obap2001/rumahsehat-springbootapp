@@ -29,14 +29,14 @@ class _RumahSehatHomeState extends State<RumahSehatHome>{
               ),
             ),
             ListTile(
-              title: Text('Add Appointment'),
+              title: Text('Appointment'),
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(
                     builder: (context) => const addAppointment()));
               },
             ),
             ListTile(
-              title: Text('Detail Appointment'),
+              title: Text('Tagihan'),
               onTap: (){},
             ),
             ListTile(

@@ -19,30 +19,13 @@ class _ProfilPasienPage extends State<ProfilPasienPage> {
     var token = sharedPreferences.getString("token");
     String url =
         "http://localhost:8080/api/pasien/data-pasien";
-    var headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-      "Access-Control-Allow-Origin":
-      "*",
-    };
     print(token);
-    // final response = await http.get(Uri.parse(url),
-    //   headers: <String, String>{
-    //     "Content-Type": "application/json",
-    //     "Authorization": "Bearer $token"
-    //   },
-    // );
     final response = await http.get(Uri.parse(url), headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     });
-    print('Token : ${token}');
-    print(response);
-    // final response2 = await http.get(Uri.parse(url2), headers: headers);
     var data = jsonDecode(response.body);
-    // data.addAll(jsonDecode(response2.body));
-
     PasienModel pasien = PasienModel.fromJson(data);
 
     if (response.statusCode == 200) {
