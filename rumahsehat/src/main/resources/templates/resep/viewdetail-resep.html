@@ -15,11 +15,22 @@
         <h2>Detail Resep</h2>
         <br>
         <a class="btn btn-primary" href="/">Beranda</a>
+        <td>
+          <a class="btn btn-primary" th:href="@{/resep/confirm/} + ${resep.id}">Selesai</a>
+        </td>
+<!--        <thread>-->
+<!--          <form method="POST">-->
+<!--          <th>-->
+<!--            <button class="btn btn-primary" type="submit" name="confirmResep">Selesai</button>-->
+<!--          </th>-->
+<!--          </form>-->
+        </thread>
+        <p th:text="'Status: ' + ${resep.isDone}"></p>
         <p th:text="'ID Resep: ' + ${resep.id}"></p>
         <p th:text="'Tanggal Dibuat: ' + ${#temporals.format(resep.createdAt, 'dd MMMM yyyy, HH:mm')}"></p>
         <p th:text="'Apoteker: ' + ${resep.apoteker.nama}"></p>
         <p th:text="'Jumlah Obat: ' + ${resep.listJumlah.size}"></p>
-        <p th:text="'Appointment: ' + ${#temporals.format(resep.appointment.waktuAwal, 'dd MMMM yyyy, HH:mm')}"></p>
+        <p th:text="'Tanggap Appointment: ' + ${#temporals.format(resep.appointment.waktuAwal, 'dd MMMM yyyy, HH:mm')}"></p>
         <br><br>
         <table class="table">
           <thead>

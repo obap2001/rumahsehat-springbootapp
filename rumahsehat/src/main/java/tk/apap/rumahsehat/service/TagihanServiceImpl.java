@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import tk.apap.rumahsehat.model.TagihanModel;
 import tk.apap.rumahsehat.repository.TagihanDb;
 
+import javax.naming.InsufficientResourcesException;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.transaction.Transactional;
 
 import java.time.LocalDate;
@@ -21,6 +23,11 @@ public class TagihanServiceImpl implements TagihanService{
     @Override
     public List<TagihanModel> getListTagihan() {
         return tagihanDb.findAll();
+    }
+
+    @Override
+    public void addTagihan(TagihanModel tagihan) {
+        tagihanDb.save(tagihan);
     }
 
     @Override
@@ -71,11 +78,5 @@ public class TagihanServiceImpl implements TagihanService{
         }
 
         return result;
-    }
-
-    @Override
-    public void addTagihan(TagihanModel tagihan) {
-        // TODO Auto-generated method stub
-        
     }
 }
