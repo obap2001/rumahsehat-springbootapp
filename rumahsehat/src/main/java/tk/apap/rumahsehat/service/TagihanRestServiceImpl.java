@@ -6,6 +6,7 @@ import tk.apap.rumahsehat.model.TagihanModel;
 import tk.apap.rumahsehat.repository.TagihanDb;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -31,9 +32,13 @@ public class TagihanRestServiceImpl implements TagihanRestService{
         }
     }
 
+
     @Override
     public void updateTagihan(TagihanModel tagihan) {
-        tagihanDb.save(tagihan);
+        TagihanModel tagihanUpdate = getTagihanByKode(tagihan.getKode());
+        tagihan.setIsPaid(true);
+        tagihan.setTanggalBayar(LocalDateTime.now());
+        tagihanDb.save(tagihanUpdate);
     }
 
     @Override

@@ -89,7 +89,7 @@ public class PasienRestController {
 
     //Retrieve List All Tagihan
     @GetMapping(value = "/tagihan/viewall")
-    private List<TagihanModel> retrieveListTagihanPasien(@RequestHeader("Authorization") String token){
+    private Map<String,Object> retrieveListTagihanPasien(@RequestHeader("Authorization") String token){
         Map<String, String> decodedToken = decode(token);
         String username = decodedToken.get("sub");
         PasienModel pasien = pasienRestService.retrievePasienByUsername(username);
@@ -98,7 +98,7 @@ public class PasienRestController {
 
     //Retrieve Detail Tagihan Pasien
     @GetMapping(value = "/tagihan/detail/{kode}")
-    private TagihanModel retrieveTagihan(@PathVariable("kode") String kode){
+    private TagihanModel retrieveTagihan(@RequestHeader("Authorization") String token, @PathVariable("kode") String kode){
         try{
             return tagihanRestService.getTagihanByKode(kode);
         } catch (NoSuchElementException e){
