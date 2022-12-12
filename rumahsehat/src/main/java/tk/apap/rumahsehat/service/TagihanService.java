@@ -10,4 +10,6 @@ import tk.apap.rumahsehat.model.TagihanModel;
 public interface TagihanService {
   List<TagihanModel> getListTagihan();
   HashMap<Integer, Integer> mapTanggaltoJumlahTagihanByBulanIni(Month bulan);
+  HashMap<Integer, Integer> mapBulanToJumlahTagihanByTahun(int tahun);
+  void addTagihan(TagihanModel tagihan);
 }
