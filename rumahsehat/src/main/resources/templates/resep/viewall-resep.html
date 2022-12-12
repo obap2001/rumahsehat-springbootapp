@@ -30,7 +30,12 @@
                     <tr th:each="resep, iterationStatus : ${listResep}">
                         <td th:text="${resep.id}" style='text-align:center; vertical-align:middle'></td>
                         <td th:text="${#temporals.format(resep.createdAt, 'dd MMMM yyyy, HH:mm')}" style='text-align:center; vertical-align:middle'></td>
-                        <td th:text="${resep.isDone}" style='text-align:center; vertical-align:middle'></td>
+                        <td th:if="${resep.isDone == true}" style='text-align:center; vertical-align:middle'>
+                            <p>Selesai</p>
+                        </td>
+                        <td th:if="${resep.isDone == false}" style='text-align:center; vertical-align:middle'>
+                            <p>Belum selesai</p>
+                        </td>
                         <td>
                             <a class="btn btn-primary" th:href="@{/resep/view/} + ${resep.id}">Detail Resep</a>
                         </td>
