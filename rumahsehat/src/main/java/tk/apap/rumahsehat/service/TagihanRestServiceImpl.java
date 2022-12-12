@@ -30,4 +30,19 @@ public class TagihanRestServiceImpl implements TagihanRestService{
             throw new NoSuchElementException();
         }
     }
+
+    @Override
+    public void updateTagihan(TagihanModel tagihan) {
+        tagihanDb.save(tagihan);
+    }
+
+    @Override
+    public Boolean saldoCukupBayarTagihan(int saldo, int tagihan) {
+        System.out.println(tagihan + " " + saldo);
+        System.out.println(tagihan < saldo);
+        if (tagihan <= saldo) {
+            return true;
+        }
+        return false;
+    }
 }
