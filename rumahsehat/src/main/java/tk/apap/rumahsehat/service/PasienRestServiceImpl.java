@@ -76,7 +76,6 @@ public class PasienRestServiceImpl implements PasienRestService{
         Map<String, Object> map = new HashMap<String, Object>();
         List<Map> list = new ArrayList();
         List<AppointmentModel> listAppointmentPasien = pasien.getListAppointment();
-//        List<TagihanModel> tagihanModelList = new ArrayList<>();
         for (AppointmentModel appointment : listAppointmentPasien){
             TagihanModel tagihan = appointment.getTagihan();
             HashMap<String, Object> mapTagihan = new HashMap<>();
@@ -90,10 +89,14 @@ public class PasienRestServiceImpl implements PasienRestService{
         }
         map.put("list_tagihan", list);
         return map;
+        //        if (map.isEmpty()){
+//            throw new NoSuchElementException();
+//        } else {
+//            return map;
+//        }
     }
+
     public PasienModel retrievePasien(String id){
         return pasienDb.findByUuid(id);
     }
 }
-
-
