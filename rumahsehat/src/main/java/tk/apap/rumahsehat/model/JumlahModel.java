@@ -4,14 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 
 @Setter
 @Getter
@@ -20,7 +14,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "jumlah")
 public class JumlahModel {
-
+    private static final long serialVersionUID = 1905122041950251207L;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EmbeddedId

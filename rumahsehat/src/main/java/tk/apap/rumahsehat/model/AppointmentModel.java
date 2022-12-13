@@ -54,7 +54,7 @@ public class AppointmentModel implements Serializable {
     @OneToOne(mappedBy = "appointment")
     private TagihanModel tagihan;
 
-    // TODO Relasi dengan Resep
+    // Relasi dengan Resep
     @OneToOne(mappedBy = "appointment")
     private ResepModel resep;
 }

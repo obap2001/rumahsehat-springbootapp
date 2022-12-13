@@ -25,31 +25,28 @@ import java.util.List;
 @JsonIgnoreProperties(value={"listJumlah"}, allowSetters = true)
 @Table(name = "obat")
 public class  ObatModel implements Serializable {
+    private static final long serialVersionUID = 1905122041950251207L;
+
     @Id
     @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy="uuid")
     @Column(name = "id_obat", nullable = false)
     private String id;
 
-  @NotNull
-  @Size(max=50)
-  @Column(name = "nama_obat", nullable = false)
-  private String nama;
+    @NotNull
+    @Size(max=50)
+    @Column(name = "nama_obat", nullable = false)
+    private String nama;
 
-  @NotNull
-  @Column(name = "harga", nullable = false)
-  private int harga;
+    @NotNull
+    @Column(name = "harga", nullable = false)
+    private int harga;
 
-  @NotNull
-  @Column(name = "stok", nullable = false, columnDefinition = "int default 100")
-  private int stok;
+    @NotNull
+    @Column(name = "stok", nullable = false, columnDefinition = "int default 100")
+    private int stok;
 
-  @OneToMany(mappedBy = "obat", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-  List<JumlahModel> listJumlah;
-
-//  @ManyToOne(fetch = FetchType.EAGER, optional = false)
-//  @JoinColumn(name = "id_resep",referencedColumnName = "id_resep")
-//  @OnDelete(action = OnDeleteAction.CASCADE)
-//  private ResepModel resep;
+    @OneToMany(mappedBy = "obat", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    List<JumlahModel> listJumlah;
 
 }

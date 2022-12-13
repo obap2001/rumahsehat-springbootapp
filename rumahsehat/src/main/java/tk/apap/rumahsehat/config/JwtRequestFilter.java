@@ -18,10 +18,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
-
 import io.jsonwebtoken.ExpiredJwtException;
-import lombok.extern.log4j.Log4j2;
-import tk.apap.rumahsehat.security.JwtUserDetailsServiceImpl;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
@@ -42,7 +39,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                 && !request.getServletPath().equals("/api/pasien/register")) {
             final String requestTokenHeader = request.getHeader("Authorization");
             if (StringUtils.startsWithIgnoreCase(requestTokenHeader,"Bearer ")) {
-                String jwtToken = requestTokenHeader.substring(7);
+                var jwtToken = requestTokenHeader.substring(7);
                 try {
                     String username = jwtTokenUtil.getUsernameFromToken(jwtToken);
                     if (!StringUtils.isEmpty(username)

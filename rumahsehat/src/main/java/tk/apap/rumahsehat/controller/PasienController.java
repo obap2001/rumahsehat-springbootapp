@@ -38,7 +38,7 @@ public class PasienController {
 
   @PostMapping(value = "/pasien/add")
    public String addPasienSubmit(
-     @ModelAttribute PasienModel pasien,
+     @ModelAttribute PasienModel pasienModel,
      Model model
   ){
      pasien.setRole("pasien");

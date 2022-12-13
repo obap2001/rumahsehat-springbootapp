@@ -1,19 +1,13 @@
 package tk.apap.rumahsehat.controller;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import tk.apap.rumahsehat.model.*;
 import tk.apap.rumahsehat.service.*;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -96,7 +90,6 @@ public class ResepController {
         ResepModel resep = resepService.getResepById(id);
         AppointmentModel appointment = appointmentService.getAppointmentById(resep.getAppointment().getKode());
         resep.setIsDone(true);
-//        appointment.setIsDone(true);
         resepService.addResep(resep);
 
         for (int i = 0; i < resep.getListJumlah().size(); i++) {
@@ -121,7 +114,6 @@ public class ResepController {
 
         model.addAttribute("resep", resep);
         model.addAttribute("id", resep.getId());
-        //        model.addAttribute("listJumlah", resepTarget.getListJumlah());
         return "resep/confirm-resep";
         }
 
@@ -153,7 +145,7 @@ public class ResepController {
             AppointmentModel appointment = appointmentService.getAppointmentById(kode);
             List<JumlahModel> listJumlah = new ArrayList<>();
 
-            if (!appointment.getIsDone()) {
+            if (Boolean.False.equeals(appointment.getIsDone())) {
                 resep.setListJumlah(listJumlah);
 
                 JumlahIdModel jumlahId = new JumlahIdModel();

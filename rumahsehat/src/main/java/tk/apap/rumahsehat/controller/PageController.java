@@ -45,7 +45,7 @@ public class PageController {
     ServerProperties serverProperties;
     
     @RequestMapping("/")
-    private String home(Model model){
+    public String home(Model model){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) auth.getPrincipal();
         String username = user.getUsername();
@@ -56,7 +56,7 @@ public class PageController {
     }
 
     @RequestMapping("/login")
-    private String login(Model model) {
+    public String login(Model model) {
       return "login";
     }
   
@@ -96,7 +96,8 @@ public class PageController {
           user = new UserModel();
           user.setEmail(username + "@ui.ac.id");
           user.setNama(attributes.getNama());
-          user.setPassword("rumahsehat");
+          const psw = "rumahsehat";
+          user.setPassword(psw);
           user.setUsername(username);
           user.setIsSso(true);
           user.setRole("pasien");
@@ -116,7 +117,7 @@ public class PageController {
     }
 
     @RequestMapping("/user/viewall")
-    private String manajemenUser(Model model) {
+    public String manajemenUser(Model model) {
       Authentication auth = SecurityContextHolder.getContext().getAuthentication();
       User user = (User) auth.getPrincipal();
       String username = user.getUsername();
@@ -135,14 +136,14 @@ public class PageController {
     @GetMapping(value = "/logout-sso")
       public ModelAndView logoutSSO(Principal principal) {
           UserModel user = userService.getUserByUsername(principal.getName());
-          if (user.getIsSso() == false){
+          if (!user.getIsSso()){
               return new ModelAndView("redirect:/logout");
           }
           return new ModelAndView("redirect:" + Setting.SERVER_LOGOUT + Setting.CLIENT_LOGOUT);
       }
     
       private boolean isAdmin(String username) {
-        boolean result = false;
+        boolean var = false;
         List<String> whitelist = new ArrayList<>();
         whitelist.add("dyta.dewipuspita01");
         whitelist.add("safira.rizki");
@@ -152,10 +153,10 @@ public class PageController {
         whitelist.add("abdul.ghani02");
         for (String adminUsername : whitelist) {
           if(username.equals(adminUsername)) {
-            result = true;
+            var = true;
             break;
           }
         }
-        return result;
+        return var;
       }
 }

@@ -2,42 +2,20 @@ package tk.apap.rumahsehat.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.validation.BindingResult;
 import tk.apap.rumahsehat.model.*;
 import tk.apap.rumahsehat.service.*;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.security.core.Authentication;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-import java.security.Principal;
-import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -70,18 +48,12 @@ public class AppointmentController {
 
     @GetMapping("/appointment/add")
     public String addAppointmentFormPage(Model model, HttpServletRequest servreq) {
-        String role = userService.getUserByUsername(servreq.getRemoteUser()).getRole();
         UserModel userModel = userService.getUserByUsername(servreq.getRemoteUser());
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) auth.getPrincipal();
-        String username = user.getUsername();
-
         AppointmentModel appointment = new AppointmentModel();
         List<DokterModel> listDokter = dokterService.getListDokter();
-        List<DokterModel> listDokterNew = new ArrayList<>();
-        List<UserModel> listUser = userService.getListUser();
 
-        //appointment.setPasien(userModel);
         model.addAttribute("appointment", appointment);
         model.addAttribute("listDokter", listDokter);
         model.addAttribute("User", userModel);
@@ -92,8 +64,6 @@ public class AppointmentController {
 
     @PostMapping(value = "/appointment/add", params = {"save"})
     public String addAppointmentSubmit(@ModelAttribute AppointmentModel appointment, Model model, HttpServletRequest servreq) {
-        //DokterModel dokter = new DokterModel();
-        String role = userService.getUserByUsername(servreq.getRemoteUser()).getRole();
         UserModel userModel = userService.getUserByUsername(servreq.getRemoteUser());
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) auth.getPrincipal();
@@ -105,8 +75,6 @@ public class AppointmentController {
 
         List<AppointmentModel> listAppointment = appointmentService.getListAppointment();
         listAppointment.add(appointment);
-
-
         appointmentService.addAppointment(appointment);
 
         log.info("Berhasil membuat appointment baru.");
@@ -123,11 +91,8 @@ public class AppointmentController {
     @GetMapping("/appointment/viewall")
     public String viewAllAppointment(Model model,HttpServletRequest servreq) {
         String role = userService.getUserByUsername(servreq.getRemoteUser()).getRole();
-        UserModel userModel = userService.getUserByUsername(servreq.getRemoteUser());
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) auth.getPrincipal();
-        String username = user.getUsername();
-
         List<DokterModel> listDokter = dokterService.getListDokter();
 
         if(role.equals("dokter")){
@@ -156,7 +121,7 @@ public class AppointmentController {
     }
 
     @GetMapping("/appointment/finish/{kode}")
-    public String FinishAppointment(@PathVariable String kode, Model model) {
+    public String finishAppointment(@PathVariable String kode, Model model) {
         AppointmentModel appointment = appointmentService.getAppointmentById(kode);
         appointment.setIsDone(true);
         model.addAttribute("appointment", appointment);

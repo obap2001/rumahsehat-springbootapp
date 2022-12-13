@@ -3,28 +3,14 @@ package tk.apap.rumahsehat.controller;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.HashMap;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-// import org.springframework.security.core.Authentication;
-// import org.springframework.security.core.context.SecurityContextHolder;
-// import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-// import org.springframework.web.bind.annotation.ModelAttribute;
-// import org.springframework.web.bind.annotation.PostMapping;
-
-// import tk.apap.rumahsehat.model.PasienModel;
-// import tk.apap.rumahsehat.model.UserModel;
 import org.springframework.web.bind.annotation.*;
-
 import tk.apap.rumahsehat.model.*;
 import tk.apap.rumahsehat.service.*;
-
-import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/tagihan")
@@ -38,12 +24,12 @@ public class TagihanController {
   private UserService userService;
 
 
-  @RequestMapping(value = "/chart", method = RequestMethod.GET)
+  @GetMapping("/chart")
   public String homeChart(Model model) {
       return "charts/home-charts";
   }
 
-  @RequestMapping(value = "/chart/default", method = RequestMethod.GET)
+  @GetMapping("/chart/default")
   public String getDefaultChart(Model model) {
 
 
@@ -53,11 +39,10 @@ public class TagihanController {
       model.addAttribute("data", data);
       model.addAttribute("bulanIni", bulanIni);
       model.addAttribute("tahunIni", tahunIni);
-      System.out.println(data);
       return "charts/default";
   }
 
-    @RequestMapping(value = "/chart/line/monthly", method = RequestMethod.GET)
+    @GetMapping("/chart/line/monthly")
     public String getLineChartMonthly(Model model, HttpServletRequest servreq) {
         String role = userService.getUserByUsername(servreq.getRemoteUser()).getRole();
 
@@ -74,7 +59,7 @@ public class TagihanController {
         return "error/404";
     }
 
-    @RequestMapping(value = "/chart/line/anually", method = RequestMethod.GET)
+    @GetMapping("/chart/line/anually")
     public String getLineChartAnnually(Model model, HttpServletRequest servreq) {
         String role = userService.getUserByUsername(servreq.getRemoteUser()).getRole();
 
