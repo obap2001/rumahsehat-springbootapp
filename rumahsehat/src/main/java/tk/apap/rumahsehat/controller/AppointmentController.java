@@ -46,15 +46,15 @@ public class AppointmentController {
     @Autowired
     private UserService userService;
 
+    final String appointmentStr = "appointment";
+
     @GetMapping("/appointment/add")
     public String addAppointmentFormPage(Model model, HttpServletRequest servreq) {
         UserModel userModel = userService.getUserByUsername(servreq.getRemoteUser());
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) auth.getPrincipal();
         AppointmentModel appointment = new AppointmentModel();
         List<DokterModel> listDokter = dokterService.getListDokter();
 
-        model.addAttribute("appointment", appointment);
+        model.addAttribute(appointmentStr, appointment);
         model.addAttribute("listDokter", listDokter);
         model.addAttribute("User", userModel);
         model.addAttribute("Dokter", appointment.getDokter());
@@ -64,7 +64,6 @@ public class AppointmentController {
 
     @PostMapping(value = "/appointment/add", params = {"save"})
     public String addAppointmentSubmit(@ModelAttribute AppointmentModel appointment, Model model, HttpServletRequest servreq) {
-        UserModel userModel = userService.getUserByUsername(servreq.getRemoteUser());
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) auth.getPrincipal();
         String username = user.getUsername();
@@ -91,8 +90,6 @@ public class AppointmentController {
     @GetMapping("/appointment/viewall")
     public String viewAllAppointment(Model model,HttpServletRequest servreq) {
         String role = userService.getUserByUsername(servreq.getRemoteUser()).getRole();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) auth.getPrincipal();
         List<DokterModel> listDokter = dokterService.getListDokter();
 
         if(role.equals("dokter")){
@@ -115,7 +112,7 @@ public class AppointmentController {
     @GetMapping("/appointment/details/{kode}")
     public String viewDetailAppointment(@PathVariable String kode, Model model) {
         AppointmentModel appointment = appointmentService.getAppointmentById(kode);
-        model.addAttribute("appointment", appointment);
+        model.addAttribute(appointmentStr, appointment);
         log.info("mengambil data appointment terdaftar.");
         return "appointment/appointment-details";
     }
@@ -124,7 +121,7 @@ public class AppointmentController {
     public String finishAppointment(@PathVariable String kode, Model model) {
         AppointmentModel appointment = appointmentService.getAppointmentById(kode);
         appointment.setIsDone(true);
-        model.addAttribute("appointment", appointment);
+        model.addAttribute(appointmentStr, appointment);
         log.info("mengambil data appointment terdaftar.");
         return "appointment/appointment-details";
     }

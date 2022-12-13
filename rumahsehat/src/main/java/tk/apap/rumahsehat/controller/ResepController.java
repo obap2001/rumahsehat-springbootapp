@@ -145,7 +145,7 @@ public class ResepController {
             AppointmentModel appointment = appointmentService.getAppointmentById(kode);
             List<JumlahModel> listJumlah = new ArrayList<>();
 
-            if (Boolean.False.equeals(appointment.getIsDone())) {
+            if (!appointment.getIsDone()) {
                 resep.setListJumlah(listJumlah);
 
                 JumlahIdModel jumlahId = new JumlahIdModel();
@@ -166,7 +166,7 @@ public class ResepController {
     }
 
     @PostMapping(value = "/resep/add/{kode}", params = {"addRowObat"})
-    private String addRowObatMultiple(@PathVariable String kode, @ModelAttribute ResepModel resep, Model model) {
+    public String addRowObatMultiple(@PathVariable String kode, @ModelAttribute ResepModel resep, Model model) {
         List<ObatModel> listObat = obatService.getListObat();
 
         if (resepService.getListJumlah() == null || resepService.getListJumlah().size() == 0) {
@@ -187,8 +187,8 @@ public class ResepController {
     }
 
     @PostMapping(value = "/resep/add/{kode}", params = {"deleteRowObat"})
-    private String deleteRowObatMultiple(@PathVariable String kode, @ModelAttribute ResepModel resep, @RequestParam("deleteRowObat") Integer row, Model model) {
-        final Integer rowId = Integer.valueOf(row);
+    public String deleteRowObatMultiple(@PathVariable String kode, @ModelAttribute ResepModel resep, @RequestParam("deleteRowObat") Integer row, Model model) {
+        final Integer rowId = row;
         resep.getListJumlah().remove(rowId.intValue());
 
         List<JumlahModel> listJumlah = resep.getListJumlah();
@@ -210,7 +210,7 @@ public class ResepController {
             resep.setApoteker(apotekerService.getListApoteker().get(0));
         }
 
-        Long id = Long.valueOf(resepService.getListResep().size() + 1);
+        Long id = Long.valueOf(resepService.getListResep().size() + 1L);
         AppointmentModel appointment = appointmentService.getAppointmentById(kode);
         resep.setId(id);
         resep.setAppointment(appointment);

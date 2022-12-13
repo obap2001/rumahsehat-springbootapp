@@ -43,7 +43,9 @@ public class PageController {
     
     @Autowired
     ServerProperties serverProperties;
-    
+
+    final String rumahSehatStr = "rumahsehat";
+
     @RequestMapping("/")
     public String home(Model model){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -67,24 +69,32 @@ public class PageController {
         @RequestParam(value = "ticket", required = false) String ticket,
         HttpServletRequest request
     ) {
-      ServiceResponse serviceResponse = this.webClient.get().uri(
-        String.format(
-          Setting.SERVER_VALIDATE_TICKET,
-          ticket,
-          Setting.CLIENT_LOGIN
-        )
-      ).retrieve().bodyToMono(ServiceResponse.class).block();
-  
-      Attributes attributes = serviceResponse.getAuthenticationSuccess().getAttributes();
-      String username = serviceResponse.getAuthenticationSuccess().getUser();
+        ServiceResponse serviceResponse = null;
+        if (this.webClient != null){
+            serviceResponse = this.webClient.get().uri(
+                    String.format(
+                            Setting.SERVER_VALIDATE_TICKET,
+                            ticket,
+                            Setting.CLIENT_LOGIN
+                    )
+            ).retrieve().bodyToMono(ServiceResponse.class).block();
+        }
+
+        Attributes attributes = null;
+        String username = "";
+        if (serviceResponse != null) {
+            attributes = serviceResponse.getAuthenticationSuccess().getAttributes();
+            username = serviceResponse.getAuthenticationSuccess().getUser();
+        }
 
       if (isAdmin(username)) {
         AdminModel admin = adminService.getUserByUsername(username);
         if (admin == null) {
           admin = new AdminModel();
           admin.setEmail(username + "@ui.ac.id");
-          admin.setNama(attributes.getNama());
-          admin.setPassword("rumahsehat");
+          if (attributes!=null)
+            admin.setNama(attributes.getNama());
+          admin.setPassword(rumahSehatStr);
           admin.setUsername(username);
           admin.setIsSso(true);
           admin.setRole("admin");
@@ -95,9 +105,9 @@ public class PageController {
         if (user == null) {
           user = new UserModel();
           user.setEmail(username + "@ui.ac.id");
-          user.setNama(attributes.getNama());
-          const psw = "rumahsehat";
-          user.setPassword(psw);
+          if (attributes!=null)
+              user.setNama(attributes.getNama());
+          user.setPassword(rumahSehatStr);
           user.setUsername(username);
           user.setIsSso(true);
           user.setRole("pasien");
@@ -105,7 +115,7 @@ public class PageController {
         }
       }
   
-      Authentication authentication = new UsernamePasswordAuthenticationToken(username, "rumahsehat");
+      Authentication authentication = new UsernamePasswordAuthenticationToken(username, rumahSehatStr);
       
       SecurityContext securityContext = SecurityContextHolder.getContext();
       securityContext.setAuthentication(authentication);
@@ -143,7 +153,7 @@ public class PageController {
       }
     
       private boolean isAdmin(String username) {
-        boolean var = false;
+        boolean isAdmin = false;
         List<String> whitelist = new ArrayList<>();
         whitelist.add("dyta.dewipuspita01");
         whitelist.add("safira.rizki");
@@ -153,10 +163,10 @@ public class PageController {
         whitelist.add("abdul.ghani02");
         for (String adminUsername : whitelist) {
           if(username.equals(adminUsername)) {
-            var = true;
+            isAdmin = true;
             break;
           }
         }
-        return var;
+        return isAdmin;
       }
 }

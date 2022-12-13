@@ -70,7 +70,7 @@ public class TagihanServiceImpl implements TagihanService{
 
         int jumlahBulan = LocalDate.now().lengthOfYear();
         for (int i = 1; i < jumlahBulan; i++) {
-            if (result.computeIfAbsent(i)) {
+            if (!result.containsKey(i)) {
                 result.put(i, 0);
             }
         }

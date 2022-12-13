@@ -25,7 +25,7 @@ class createAppointmentState extends State<createAppointment> {
   Future<DokterModel?> fetchDokter() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     var token = sharedPreferences.getString("token");
-    String url = "http://localhost:8080/api/dokter/data-dokter";
+    String url = "http://apap-078.cs.ui.ac.id/api/dokter/data-dokter";
     var headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',

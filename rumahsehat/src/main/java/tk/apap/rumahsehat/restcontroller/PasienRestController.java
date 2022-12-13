@@ -74,11 +74,11 @@ public class PasienRestController {
     }
 
     @PostMapping(value = "/topup-saldo")
-    public PasienModel topUpSaldo(@RequestHeader("Authorization") String token, @RequestBody PasienModel pasienModel) {
+    public PasienModel topUpSaldo(@RequestHeader("Authorization") String token, @RequestBody PasienModel pasien) {
         Map<String, String> decodedToken = decode(token);
         String username = decodedToken.get("sub");
         PasienModel pasienlama = pasienRestService.retrievePasienByUsername(username);
-        pasienlama.setSaldo(pasienlama.getSaldo()+pasienModel.getSaldo());
+        pasienlama.setSaldo(pasienlama.getSaldo()+pasien.getSaldo());
         pasien = pasienlama;
         pasienRestService.updateSaldo(pasien);
         log.info("api update saldo pasien berhasil");
@@ -118,7 +118,7 @@ public class PasienRestController {
 
     //Bayar Tagihan
     @PostMapping(value = "/tagihan/bayar/{kode}")
-    private ResponseEntity bayarTagihan(@RequestHeader("Authorization") String token, @RequestBody PasienModel pasienModel, @PathVariable("kode") String kode){
+    private ResponseEntity bayarTagihan(@RequestHeader("Authorization") String token, @RequestBody PasienModel pasien, @PathVariable("kode") String kode){
         Map<String, String> decodedToken = decode(token);
         String username = decodedToken.get("sub");
         PasienModel pasienlama = pasienRestService.retrievePasienByUsername(username);

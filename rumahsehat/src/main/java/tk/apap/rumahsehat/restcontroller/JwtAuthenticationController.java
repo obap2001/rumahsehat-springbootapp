@@ -43,7 +43,6 @@ public class JwtAuthenticationController {
     @CrossOrigin
     @PostMapping("/login/pasien")
     public ResponseEntity<?> loginUser(@RequestBody JwtRequestLogin request) {
-        const error = "error";
         Map<String, Object> responseMap = new HashMap<>();
         String username = request.getUsername();
         String password = request.getPassword();
@@ -53,27 +52,27 @@ public class JwtAuthenticationController {
                 logger.info("Logged In");
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
                 String token = jwtTokenUtil.generateToken(userDetails);
-                responseMap.put(error, false);
+                responseMap.put("error", false);
                 responseMap.put("message", "Logged In");
                 responseMap.put("token", token);
                 return ResponseEntity.ok(responseMap);
             } else {
-                responseMap.put(error, true);
+                responseMap.put("error", true);
                 responseMap.put("message", "Invalid Credentials");
                 return ResponseEntity.status(401).body(responseMap);
             }
         } catch (DisabledException e) {
             e.printStackTrace();
-            responseMap.put(error, true);
+            responseMap.put("error", true);
             responseMap.put("message", "User is disabled");
             return ResponseEntity.status(500).body(responseMap);
         } catch (BadCredentialsException e) {
-            responseMap.put(error, true);
+            responseMap.put("error", true);
             responseMap.put("message", "Invalid Credentials");
             return ResponseEntity.status(401).body(responseMap);
         } catch (Exception e) {
             e.printStackTrace();
-            responseMap.put(error, true);
+            responseMap.put("error", true);
             responseMap.put("message", "Something went wrong");
             return ResponseEntity.status(500).body(responseMap);
         }

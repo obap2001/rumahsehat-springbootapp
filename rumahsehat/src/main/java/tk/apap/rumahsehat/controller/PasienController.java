@@ -41,10 +41,10 @@ public class PasienController {
      @ModelAttribute PasienModel pasienModel,
      Model model
   ){
-     pasien.setRole("pasien");
-     pasien.setIsSso(false);
-     pasienService.addPasien(pasien);
-     model.addAttribute("nama", pasien.getNama());
+     pasienModel.setRole("pasien");
+     pasienModel.setIsSso(false);
+     pasienService.addPasien(pasienModel);
+     model.addAttribute("nama", pasienModel.getNama());
      return "pasien/success-add-pasien";
   }
 }

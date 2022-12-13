@@ -41,6 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         @Qualifier("jwtUserDetailsServiceImpl")
         private UserDetailsService jwtUserDetailsService;
 
+        @Override
         @Autowired
         public void configure(AuthenticationManagerBuilder auth) throws Exception {
             auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());

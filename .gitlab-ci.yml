@@ -34,7 +34,7 @@ build:
     - sh gradlew clean assemble
   artifacts:
     paths:
-      - rumahsehat/build/libs/rumahsehat-0.0.1-SNAPSHOT.jar
+      - rumahsehat/build/libs/TA_C_ANS_78-0.0.1-SNAPSHOT.jar
 
 #static-code-analysis:
 #  image: $IMAGE_OPENJDK_GRADLE

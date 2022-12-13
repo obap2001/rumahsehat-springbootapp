@@ -7,10 +7,10 @@ import tk.apap.rumahsehat.model.PasienModel;
 
 public interface PasienService {
   PasienModel addPasien(PasienModel pasien);
-  public String encrypt(String password);
-  PasienModel getPasienByUsername(String username);
-  List<PasienModel> getListPasien();
 
-    //PasienModel findByUsername(String );
-    // void deletePasien(PasienModel apoteker);
+  public String encrypt(String password);
+
+  PasienModel getPasienByUsername(String username);
+
+  List<PasienModel> getListPasien();
 }
