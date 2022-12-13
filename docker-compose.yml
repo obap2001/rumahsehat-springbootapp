@@ -3,6 +3,7 @@ services:
   web:
     build:
       context: .
+    image: apap-tk-78_web
     restart: always
     ports:
       - "10078:8080"
