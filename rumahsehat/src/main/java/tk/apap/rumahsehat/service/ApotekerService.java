@@ -10,6 +10,5 @@ public interface ApotekerService {
   public String encrypt(String password);
   ApotekerModel getApotekerByUsername(String username);
   List<ApotekerModel> getListApoteker();
-  // void deleteApoteker(ApotekerModel apoteker);
 
 }

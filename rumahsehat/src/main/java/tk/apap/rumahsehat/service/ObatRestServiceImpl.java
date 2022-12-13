@@ -13,11 +13,6 @@ import java.util.List;
 @Service
 @Transactional
 public class ObatRestServiceImpl implements ObatRestService{
-//    private final WebClient webClient;
-//
-//    public ObatRestServiceImpl(WebClient.Builder webClientBuilder) {
-//        this.webClient = webClientBuilder.baseUrl(Setting.obatUrl).build();
-//    }
     @Autowired
     private ObatDb obatDb;
 

@@ -5,8 +5,6 @@ import org.springframework.stereotype.Service;
 import tk.apap.rumahsehat.model.TagihanModel;
 import tk.apap.rumahsehat.repository.TagihanDb;
 
-import javax.naming.InsufficientResourcesException;
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.transaction.Transactional;
 
 import java.time.LocalDate;
@@ -72,7 +70,7 @@ public class TagihanServiceImpl implements TagihanService{
 
         int jumlahBulan = LocalDate.now().lengthOfYear();
         for (int i = 1; i < jumlahBulan; i++) {
-            if (!result.containsKey(i)) {
+            if (result.computeIfAbsent(i)) {
                 result.put(i, 0);
             }
         }

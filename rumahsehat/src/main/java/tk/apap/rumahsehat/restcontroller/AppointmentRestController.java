@@ -47,13 +47,13 @@ public class AppointmentRestController {
         return responseEntity;
     }
     @GetMapping("/listappointment")
-    private List<AppointmentModel> retrieveListAppointment(){
+    public List<AppointmentModel> retrieveListAppointment(){
         log.info("api mengambil data semua appointment");
         return appointmentRestService.retrieveListAppointment();
     }
 
     @PostMapping(value = "/add")
-    private AppointmentModel createAppointment(@Valid @RequestBody AppointmentModel course, BindingResult bindingResult) {
+    public AppointmentModel createAppointmentModel(@Valid @RequestBody AppointmentModel course, BindingResult bindingResult) {
         if(bindingResult.hasFieldErrors()) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "Request body has invalid type or missing field"
@@ -65,19 +65,18 @@ public class AppointmentRestController {
     }
 
     @PostMapping(value = "/create")
-    private PasienModel createAppointment2(@RequestHeader("Authorization") String token, @RequestBody PasienModel pasien, @RequestBody AppointmentModel appointment) {
+    public PasienModel createAppointmentModel2(@RequestHeader("Authorization") String token, @RequestBody PasienModel pasien, @RequestBody AppointmentModel appointment) {
         Map<String, String> decodedToken = decode(token);
         String username = decodedToken.get("sub");
-        PasienModel pasienlama = pasienRestService.retrievePasienByUsername(username);
+        PasienModel pasienModel = pasienRestService.retrievePasienByUsername(username);
         appointment = appointmentRestService.createAppointment(appointment);
 
         List<AppointmentModel> listAppointmentPasien = pasien.getListAppointment();
         listAppointmentPasien.add(appointment);
-        appointment.setPasien(pasienlama);
+        appointment.setPasien(pasienModel);
         appointment.setIsDone(false);
 
-        pasien = pasienlama;
-        //pasienRestService.updateSaldo(pasien);
+        pasien = pasienModel;
         log.info("api menyimpan data baru appointment");
 
         return pasien;
@@ -93,7 +92,7 @@ public class AppointmentRestController {
     }
     //retrieve
     @GetMapping(value = "/{kode}")
-    private AppointmentModel retrieveAppointment(@PathVariable("kode") String code){
+    public AppointmentModel retrieveAppointment(@PathVariable("kode") String code){
         try{
             log.info("api mengambil data appointment");
             return appointmentRestService.getAppointmentByCode(code);

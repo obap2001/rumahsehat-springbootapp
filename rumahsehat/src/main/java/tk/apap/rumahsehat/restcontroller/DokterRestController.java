@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import tk.apap.rumahsehat.model.DokterModel;
-import tk.apap.rumahsehat.model.PasienModel;
 import tk.apap.rumahsehat.service.DokterRestService;
 
 import java.util.List;

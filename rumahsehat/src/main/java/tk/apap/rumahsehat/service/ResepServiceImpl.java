@@ -7,7 +7,6 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-import tk.apap.rumahsehat.model.JumlahIdModel;
 import tk.apap.rumahsehat.model.JumlahModel;
 import tk.apap.rumahsehat.model.ObatModel;
 import tk.apap.rumahsehat.model.ResepModel;
@@ -53,11 +52,6 @@ public class ResepServiceImpl implements ResepService {
             return null;
         }
     }
-
-//    @Override
-//    public List<JumlahModel> getListJumlah() {
-//        return jumlahDb.findall();
-//    }
 
     @Override
     public List<ObatModel> getListObat() {

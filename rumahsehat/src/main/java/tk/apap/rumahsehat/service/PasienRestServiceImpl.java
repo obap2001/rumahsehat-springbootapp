@@ -74,7 +74,7 @@ public class PasienRestServiceImpl implements PasienRestService{
     @Override
     public Map<String, Object> retrieveTagihanByPasien(PasienModel pasien) {
         Map<String, Object> map = new HashMap<String, Object>();
-        List<Map> list = new ArrayList();
+        List<Map<String, Object>> list = new ArrayList<>();
         List<AppointmentModel> listAppointmentPasien = pasien.getListAppointment();
         for (AppointmentModel appointment : listAppointmentPasien){
             TagihanModel tagihan = appointment.getTagihan();
@@ -89,11 +89,7 @@ public class PasienRestServiceImpl implements PasienRestService{
         }
         map.put("list_tagihan", list);
         return map;
-        //        if (map.isEmpty()){
-//            throw new NoSuchElementException();
-//        } else {
-//            return map;
-//        }
+
     }
 
     public PasienModel retrievePasien(String id){

@@ -2,7 +2,6 @@ package tk.apap.rumahsehat.service;
 
 import java.util.List;
 
-import tk.apap.rumahsehat.model.JumlahIdModel;
 import tk.apap.rumahsehat.model.JumlahModel;
 import tk.apap.rumahsehat.model.ObatModel;
 import tk.apap.rumahsehat.model.ResepModel;
@@ -12,7 +11,6 @@ public interface ResepService {
     List<ResepModel> getListResep();
     void deleteResep(ResepModel resep);
     ResepModel getResepById(Long id);
-    //    List<JumlahModel> getListJumlah();
     List<ObatModel> getListObat();
     List<JumlahModel>getListJumlah();
 }

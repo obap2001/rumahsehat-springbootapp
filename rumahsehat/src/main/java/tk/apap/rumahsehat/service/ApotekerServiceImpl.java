@@ -7,9 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import tk.apap.rumahsehat.model.ApotekerModel;
-// import tk.apap.rumahsehat.model.UserModel;
 import tk.apap.rumahsehat.repository.ApotekerDb;
-// import tk.apap.rumahsehat.repository.UserDb;
 
 @Service
 public class ApotekerServiceImpl implements ApotekerService {
@@ -39,10 +37,5 @@ public class ApotekerServiceImpl implements ApotekerService {
   public List<ApotekerModel> getListApoteker() {
     return apotekerDb.findAll();
   }
-
-  // @Override
-  // public void deleteApoteker(ApotekerModel apoteker) {
-  //   apotekerDb.delete(apoteker);
-  // }
 
 }

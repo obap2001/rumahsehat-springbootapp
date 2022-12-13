@@ -5,11 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import tk.apap.rumahsehat.model.PasienModel;
-// import tk.apap.rumahsehat.model.UserModel;
 import tk.apap.rumahsehat.repository.PasienDb;
-// import tk.apap.rumahsehat.repository.UserDb;
 
 @Service
 public class PasienServiceImpl implements PasienService {
@@ -39,10 +36,5 @@ public class PasienServiceImpl implements PasienService {
   public List<PasienModel> getListPasien() {
     return pasienDb.findAll();
   }
-
-  // @Override
-  // public void deletePasien(PasienModel pasien) {
-  //   pasienDb.delete(pasien);
-  // }
 
 }

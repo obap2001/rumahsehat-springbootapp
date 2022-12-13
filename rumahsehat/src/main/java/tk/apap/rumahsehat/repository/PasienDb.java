@@ -17,6 +17,5 @@ public interface PasienDb extends JpaRepository<PasienModel, String> {
   List<PasienModel> findAll();
   void delete(PasienModel appasienoteker);
 
-//  @Query("SELECT p FROM PasienModel p WHERE p.username = :username")
-//  Optional<PasienModel> findByUsername(@Param("username") String username);
+
 }

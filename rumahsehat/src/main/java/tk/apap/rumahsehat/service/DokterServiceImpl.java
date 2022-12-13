@@ -38,11 +38,6 @@ public class DokterServiceImpl implements DokterService {
     return dokterDb.findAll();
   }
 
-  // @Override
-  // public void deleteDokter(DokterModel dokter) {
-  //   dokterDb.delete(dokter);
-  // }
-
   @Override
   public DokterModel getDokterByUuid(String uuid) {
     List<DokterModel> listDokter = getListDokter();

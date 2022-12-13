@@ -10,6 +10,5 @@ public interface DokterService {
   public String encrypt(String password);
   DokterModel getDokterByUsername(String username);
   List<DokterModel> getListDokter();
-  // void deleteDokter(DokterModel dokter);
   DokterModel getDokterByUuid(String uuid);
 }

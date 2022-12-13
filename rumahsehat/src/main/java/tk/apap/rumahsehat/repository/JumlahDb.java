@@ -6,7 +6,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import tk.apap.rumahsehat.model.JumlahIdModel;
 import tk.apap.rumahsehat.model.JumlahModel;
-import tk.apap.rumahsehat.model.ObatModel;
 
 import java.util.List;
 
