@@ -44,7 +44,7 @@ public class PageController {
     @Autowired
     ServerProperties serverProperties;
 
-    final String rumahSehatStr = "rumahsehat";
+    final static String rumahSehatStr = "rumahsehat";
 
     @RequestMapping("/")
     public String home(Model model){

@@ -42,7 +42,7 @@ public class JwtAuthenticationController {
 
     @CrossOrigin
     @PostMapping("/login/pasien")
-    public ResponseEntity<?> loginUser(@RequestBody JwtRequestLogin request) {
+    public ResponseEntity loginUser(@RequestBody JwtRequestLogin request) {
         Map<String, Object> responseMap = new HashMap<>();
         String username = request.getUsername();
         String password = request.getPassword();

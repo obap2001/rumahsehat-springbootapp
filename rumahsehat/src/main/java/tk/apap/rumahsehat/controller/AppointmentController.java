@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -46,7 +45,7 @@ public class AppointmentController {
     @Autowired
     private UserService userService;
 
-    final String appointmentStr = "appointment";
+    final static String AppointmentStr = "appointment";
 
     @GetMapping("/appointment/add")
     public String addAppointmentFormPage(Model model, HttpServletRequest servreq) {
@@ -54,7 +53,7 @@ public class AppointmentController {
         AppointmentModel appointment = new AppointmentModel();
         List<DokterModel> listDokter = dokterService.getListDokter();
 
-        model.addAttribute(appointmentStr, appointment);
+        model.addAttribute(AppointmentStr, appointment);
         model.addAttribute("listDokter", listDokter);
         model.addAttribute("User", userModel);
         model.addAttribute("Dokter", appointment.getDokter());
@@ -112,7 +111,7 @@ public class AppointmentController {
     @GetMapping("/appointment/details/{kode}")
     public String viewDetailAppointment(@PathVariable String kode, Model model) {
         AppointmentModel appointment = appointmentService.getAppointmentById(kode);
-        model.addAttribute(appointmentStr, appointment);
+        model.addAttribute(AppointmentStr, appointment);
         log.info("mengambil data appointment terdaftar.");
         return "appointment/appointment-details";
     }
@@ -121,7 +120,7 @@ public class AppointmentController {
     public String finishAppointment(@PathVariable String kode, Model model) {
         AppointmentModel appointment = appointmentService.getAppointmentById(kode);
         appointment.setIsDone(true);
-        model.addAttribute(appointmentStr, appointment);
+        model.addAttribute(AppointmentStr, appointment);
         log.info("mengambil data appointment terdaftar.");
         return "appointment/appointment-details";
     }
