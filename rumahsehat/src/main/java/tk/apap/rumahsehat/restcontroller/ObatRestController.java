@@ -14,7 +14,7 @@ import tk.apap.rumahsehat.service.ObatRestService;
 import java.util.List;
 
 @Slf4j
-@CrossOrigin(origins = "*")
+@CrossOrigin("https://apap-078.cs.ui.ac.id/")
 @RestController
 @RequestMapping("/obat/api")
 public class ObatRestController {

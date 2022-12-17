@@ -26,7 +26,7 @@ import java.util.NoSuchElementException;
 import javax.validation.Valid;
 
 @Slf4j
-@RestController
+@RestController("https://apap-078.cs.ui.ac.id/")
 @CrossOrigin(value = "*", maxAge = 3600)
 @RequestMapping("/api/pasien")
 public class PasienRestController {
@@ -36,7 +36,7 @@ public class PasienRestController {
     @Autowired
     private TagihanRestService tagihanRestService;
 
-    @CrossOrigin
+    @CrossOrigin("https://apap-078.cs.ui.ac.id/")
     @PostMapping(value="/register")
     public PasienModel registerPasien(@Valid @RequestBody PasienModel pasien, BindingResult bindingResult) {
         if (bindingResult.hasFieldErrors()) {
@@ -54,7 +54,7 @@ public class PasienRestController {
     public Map retrievePasienByTagihan(@PathVariable("kode") String kode){
         return pasienRestService.retrievePasienByTagihan(kode);
     }
-    @CrossOrigin(value = "*", maxAge = 3600)
+    @CrossOrigin(value = "https://apap-078.cs.ui.ac.id/", maxAge = 3600)
     @GetMapping("/data-pasien")
     private PasienModel retrievePasienByUsername(@RequestHeader("Authorization") String token) {
         Map<String, String> decodedToken = decode(token);

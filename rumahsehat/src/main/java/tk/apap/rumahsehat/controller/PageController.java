@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.ModelAndView;
@@ -46,7 +47,7 @@ public class PageController {
 
     final static String rumahSehatStr = "rumahsehat";
 
-    @RequestMapping("/")
+    @RequestMapping(value="/", method = RequestMethod.GET )
     public String home(Model model){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) auth.getPrincipal();
@@ -57,7 +58,7 @@ public class PageController {
         return "home";
     }
 
-    @RequestMapping("/login")
+    @RequestMapping(value="/login", method = RequestMethod.GET)
     public String login(Model model) {
       return "login";
     }
@@ -126,7 +127,7 @@ public class PageController {
       return new ModelAndView("redirect:/");
     }
 
-    @RequestMapping("/user/viewall")
+    @RequestMapping(value="/user/viewall", method = RequestMethod.GET)
     public String manajemenUser(Model model) {
       Authentication auth = SecurityContextHolder.getContext().getAuthentication();
       User user = (User) auth.getPrincipal();

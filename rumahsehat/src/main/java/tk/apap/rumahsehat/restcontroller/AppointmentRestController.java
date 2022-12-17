@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 @Slf4j
-@CrossOrigin(origins = "*")
+@CrossOrigin("https://apap-078.cs.ui.ac.id/")
 @RestController
 @RequestMapping("/api/appointment")
 public class AppointmentRestController {
@@ -32,7 +32,7 @@ public class AppointmentRestController {
     private PasienRestService pasienRestService;
 
     //retrieve all
-    @CrossOrigin
+    @CrossOrigin("https://apap-078.cs.ui.ac.id/")
     @GetMapping("/list-appointment")
     public ResponseEntity getDataAppointment() {
         log.info("api mengambil data semua appointment");

@@ -16,13 +16,13 @@ import java.util.Map;
 
 @Slf4j
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin("https://apap-078.cs.ui.ac.id/")
 @RequestMapping("/api/resep/")
 public class ResepRestController {
     @Autowired
     private ResepRestService resepRestService;
 
-    @CrossOrigin(value = "*", maxAge = 3600)
+    @CrossOrigin(value = "https://apap-078.cs.ui.ac.id/", maxAge = 3600)
     @GetMapping(value = "/resep/view/{kode}")
     public ResepModel detailResep(@PathVariable("kode") String kode) {
         try {
