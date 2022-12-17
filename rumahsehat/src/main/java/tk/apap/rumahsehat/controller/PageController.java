@@ -6,13 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
@@ -44,14 +41,14 @@ public class PageController {
     @Autowired
     ServerProperties serverProperties;
 
-    final static String rumahSehatStr = "rumahsehat";
+    static final String RUMAHSEHATSTR = "rumahsehat";
 
     @RequestMapping("/")
     public String home(Model model){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = (User) auth.getPrincipal();
-        String username = user.getUsername();
-        UserModel userModel = userService.getUserByUsername(username);
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+        var user = (User) auth.getPrincipal();
+        var username = user.getUsername();
+        var userModel = userService.getUserByUsername(username);
 
         model.addAttribute("user", userModel);
         return "home";
@@ -81,7 +78,7 @@ public class PageController {
         }
 
         Attributes attributes = null;
-        String username = "";
+        var username = "";
         if (serviceResponse != null) {
             attributes = serviceResponse.getAuthenticationSuccess().getAttributes();
             username = serviceResponse.getAuthenticationSuccess().getUser();
@@ -94,7 +91,7 @@ public class PageController {
           admin.setEmail(username + "@ui.ac.id");
           if (attributes!=null)
             admin.setNama(attributes.getNama());
-          admin.setPassword(rumahSehatStr);
+          admin.setPassword(RUMAHSEHATSTR);
           admin.setUsername(username);
           admin.setIsSso(true);
           admin.setRole("admin");
@@ -107,7 +104,7 @@ public class PageController {
           user.setEmail(username + "@ui.ac.id");
           if (attributes!=null)
               user.setNama(attributes.getNama());
-          user.setPassword(rumahSehatStr);
+          user.setPassword(RUMAHSEHATSTR);
           user.setUsername(username);
           user.setIsSso(true);
           user.setRole("pasien");
@@ -115,12 +112,12 @@ public class PageController {
         }
       }
   
-      Authentication authentication = new UsernamePasswordAuthenticationToken(username, rumahSehatStr);
+      Authentication authentication = new UsernamePasswordAuthenticationToken(username, RUMAHSEHATSTR);
       
-      SecurityContext securityContext = SecurityContextHolder.getContext();
+      var securityContext = SecurityContextHolder.getContext();
       securityContext.setAuthentication(authentication);
   
-      HttpSession httpSession = request.getSession(true);
+      var httpSession = request.getSession(true);
       httpSession.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, securityContext);
   
       return new ModelAndView("redirect:/");
@@ -128,11 +125,11 @@ public class PageController {
 
     @RequestMapping("/user/viewall")
     public String manajemenUser(Model model) {
-      Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-      User user = (User) auth.getPrincipal();
-      String username = user.getUsername();
-      UserModel userModel = userService.getUserByUsername(username);
-      if (userModel.getRole().equals("admin")) {
+      var varAuth = SecurityContextHolder.getContext().getAuthentication();
+      var varUser = (User) varAuth.getPrincipal();
+      var varUsername = varUser.getUsername();
+      var varUserModel = userService.getUserByUsername(varUsername);
+      if (varUserModel.getRole().equals("admin")) {
         return "manajemen-user";
       }
         return "home";
@@ -153,7 +150,7 @@ public class PageController {
       }
     
       private boolean isAdmin(String username) {
-        boolean isAdmin = false;
+        var isAdmin = false;
         List<String> whitelist = new ArrayList<>();
         whitelist.add("dyta.dewipuspita01");
         whitelist.add("safira.rizki");

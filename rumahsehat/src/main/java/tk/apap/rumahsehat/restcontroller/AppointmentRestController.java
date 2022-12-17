@@ -9,8 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import tk.apap.rumahsehat.model.AppointmentModel;
-import tk.apap.rumahsehat.model.PasienModel;
+import tk.apap.rumahsehat.model.*;
 import tk.apap.rumahsehat.service.AppointmentRestService;
 import tk.apap.rumahsehat.service.PasienRestService;
 
@@ -53,13 +52,14 @@ public class AppointmentRestController {
     }
 
     @PostMapping(value = "/add")
-    public AppointmentModel createAppointmentModel(@Valid @RequestBody AppointmentModel course, BindingResult bindingResult) {
+    public AppointmentModel createAppointmentModel(@Valid @RequestBody AppointmentRequestModel appointmentRequestModel, BindingResult bindingResult) {
         if(bindingResult.hasFieldErrors()) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "Request body has invalid type or missing field"
             );
         } else {
             log.info("api menyimpan data baru appointment");
+            AppointmentModel appointmentModel = new AppointmentModel(appointmentRequestModel);
             return appointmentRestService.createAppointment(course);
         }
     }
